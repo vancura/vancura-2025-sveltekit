@@ -10,40 +10,142 @@
     argTypes: {
       title: {
         control: 'text',
+        description: 'Card title displayed in the header',
       },
       elevated: {
         control: 'boolean',
+        description: 'Whether to show shadow for elevated appearance',
+      },
+      variant: {
+        control: 'select',
+        options: ['default', 'primary', 'secondary'],
+        description: 'Card style variant',
+      },
+      hasFooter: {
+        control: 'boolean',
+        description: 'Whether to display the footer section',
+      },
+      class: {
+        control: 'text',
+        description: 'Additional CSS classes to apply',
       },
     },
   });
 </script>
 
-<Story name="Basic">
-  <Card>
-    <p>This is a basic card with no title or footer.</p>
-  </Card>
+<Story name="Variants">
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl">
+    <Card title="Default Variant" variant="default">
+      <p class="mb-4">This is the default card style with clean, minimal styling.</p>
+      <Button variant="outline" size="small">Learn More</Button>
+      <svelte:fragment slot="footer">Default footer</svelte:fragment>
+    </Card>
+
+    <Card title="Primary Variant" variant="primary">
+      <p class="mb-4">This card uses the primary color palette with blue accents.</p>
+      <Button variant="primary" size="small">Learn More</Button>
+      <svelte:fragment slot="footer">Primary footer</svelte:fragment>
+    </Card>
+
+    <Card title="Secondary Variant" variant="secondary">
+      <p class="mb-4">This card uses the secondary color palette with gray accents.</p>
+      <Button variant="secondary" size="small">Learn More</Button>
+      <svelte:fragment slot="footer">Secondary footer</svelte:fragment>
+    </Card>
+  </div>
 </Story>
 
-<Story name="With Title">
-  <Card title="Card Title">
-    <p>This card has a title in the header.</p>
-  </Card>
+<Story name="Elevation">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl">
+    <Card title="Standard Card" elevated={false}>
+      <p>This card has no elevation by default. Hover over it to see a subtle shadow effect.</p>
+      <svelte:fragment slot="footer">
+        <div class="text-sm text-gray-500">Last updated: today</div>
+      </svelte:fragment>
+    </Card>
+
+    <Card title="Elevated Card" elevated={true}>
+      <p>This card has elevation with a prominent shadow effect. Hover over it to see an enhanced shadow.</p>
+      <svelte:fragment slot="footer">
+        <div class="text-sm text-gray-500">Last updated: today</div>
+      </svelte:fragment>
+    </Card>
+  </div>
 </Story>
 
-<Story name="With Footer">
-  <Card title="Card With Footer">
-    <p>This card has both a title and footer content.</p>
-    <svelte:fragment slot="footer">
-      <div class="flex justify-end">
-        <Button variant="secondary" size="small">Cancel</Button>
-        <Button variant="primary" size="small" class="ml-2">Save</Button>
+<Story name="Header and Footer">
+  <div class="space-y-6 max-w-lg">
+    <Card title="Card With Header and Footer">
+      <p>This card displays both a header with title and a footer section.</p>
+      <svelte:fragment slot="footer">
+        <div class="flex justify-between items-center">
+          <span class="text-sm text-gray-500">2 min read</span>
+          <Button variant="outline" size="small">Read More</Button>
+        </div>
+      </svelte:fragment>
+    </Card>
+
+    <Card title="Card With Header Only" hasFooter={false}>
+      <p>This card displays a header with title but hides the footer section.</p>
+    </Card>
+
+    <Card hasFooter={true}>
+      <p>This card has no title in the header, but displays a footer section.</p>
+      <svelte:fragment slot="footer">
+        <div class="flex justify-end space-x-2">
+          <Button variant="secondary" size="small">Cancel</Button>
+          <Button variant="primary" size="small">Submit</Button>
+        </div>
+      </svelte:fragment>
+    </Card>
+  </div>
+</Story>
+
+<Story name="Content Examples">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl">
+    <Card title="Product Card" elevated variant="default">
+      <div class="flex flex-col space-y-4">
+        <div class="w-full h-48 bg-gray-200 rounded flex items-center justify-center">
+          <span class="text-gray-400">Product Image</span>
+        </div>
+        <h3 class="text-lg font-medium">Premium Headphones</h3>
+        <p class="text-gray-600">High-quality wireless headphones with noise cancellation.</p>
+        <div class="text-xl font-bold">$299.99</div>
       </div>
-    </svelte:fragment>
-  </Card>
-</Story>
+      <svelte:fragment slot="footer">
+        <div class="flex justify-between">
+          <Button variant="outline" size="small" icon={true}>
+            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+            </svg>
+            Save
+          </Button>
+          <Button variant="primary" size="small">Add to Cart</Button>
+        </div>
+      </svelte:fragment>
+    </Card>
 
-<Story name="Elevated">
-  <Card title="Elevated Card" elevated>
-    <p>This card has a shadow to give it an elevated appearance.</p>
-  </Card>
+    <Card title="Article Preview" elevated variant="primary">
+      <h3 class="text-lg font-medium text-blue-800 mb-2">Modern Web Development Techniques</h3>
+      <p class="text-blue-700 mb-4">
+        Learn about the latest trends in web development, including component-driven design,
+        utility-first CSS, and modern JavaScript frameworks.
+      </p>
+      <div class="flex items-center mt-4">
+        <div class="w-10 h-10 rounded-full bg-blue-200 flex items-center justify-center">
+          <span class="text-xs text-blue-800">JD</span>
+        </div>
+        <div class="ml-3">
+          <p class="text-sm font-medium text-blue-800">Jane Doe</p>
+          <p class="text-xs text-blue-600">Web Developer</p>
+        </div>
+      </div>
+      <svelte:fragment slot="footer">
+        <div class="flex justify-between items-center">
+          <span class="text-sm text-blue-600">May 10, 2025</span>
+          <Button variant="outline" size="small">Read Article</Button>
+        </div>
+      </svelte:fragment>
+    </Card>
+  </div>
 </Story>

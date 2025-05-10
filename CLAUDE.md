@@ -104,12 +104,36 @@ Components are structured with:
 
 1. **UI Components** (`src/lib/components/ui/`):
 
-   - Button.svelte - A customizable button with variants and sizes
-   - Card.svelte - A content container with optional title and footer
+   - **Button.svelte** - A customizable button with multiple variants, sizes, and states
+
+     - **Props**:
+       - `variant`: 'primary' | 'secondary' | 'danger' | 'outline' (default: 'primary')
+       - `size`: 'small' | 'medium' | 'large' (default: 'medium')
+       - `disabled`: boolean (default: false)
+       - `type`: 'button' | 'submit' | 'reset' (default: 'button')
+       - `icon`: boolean (default: false) - Adds flex alignment for button with icons
+       - `class`: string - Additional CSS classes
+
+   - **Card.svelte** - A content container with customizable variants, headers, and footers
+     - **Props**:
+       - `title`: string - Optional card title displayed in the header
+       - `elevated`: boolean - Adds shadow for an elevated appearance (default: false)
+       - `variant`: 'default' | 'primary' | 'secondary' (default: 'default')
+       - `hasFooter`: boolean - Whether to display the footer section (default: true)
+       - `class`: string - Additional CSS classes
+     - **Slots**:
+       - Default slot: Card content
+       - `footer`: Optional footer content
 
 2. **Layout Components** (`src/lib/components/layout/`):
 
-   - Header.svelte - Navigation header with customizable title and links
+   - **Header.svelte** - Responsive navigation header with mobile support
+     - **Props**:
+       - `title`: string - Site title/logo text (default: 'My Portfolio')
+       - `navItems`: Array of `{label: string, url: string}` objects for navigation links
+       - `theme`: 'light' | 'dark' | 'transparent' - Color theme (default: 'light')
+       - `sticky`: boolean - Whether header sticks to top while scrolling (default: false)
+       - `class`: string - Additional CSS classes
 
 3. **Feature Components** (`src/lib/components/feature/`):
    - This directory is set up for future feature-specific components
@@ -161,7 +185,9 @@ const config: StorybookConfig = {
 export default config;
 ```
 
-Stories use the new `defineMeta` pattern:
+Stories use the new `defineMeta` pattern with comprehensive examples for each component:
+
+#### Button Component Stories
 
 ```svelte
 <script module>
@@ -173,13 +199,75 @@ Stories use the new `defineMeta` pattern:
     title: 'UI/Button',
     component: Button,
     tags: ['autodocs'],
-    // ...configuration options
+    argTypes: {
+      variant: {
+        control: 'select',
+        options: ['primary', 'secondary', 'danger', 'outline'],
+        description: 'Button style variant',
+      },
+      size: {
+        control: 'select',
+        options: ['small', 'medium', 'large'],
+        description: 'Button size',
+      },
+      // Additional controls with descriptions
+    },
   });
 </script>
 
-<Story name="Primary">
-  <Button variant="primary">Primary Button</Button>
+<!-- Multiple stories showcasing variants -->
+<Story name="Variants">
+  <div class="flex flex-wrap gap-4">
+    <Button variant="primary">Primary</Button>
+    <Button variant="secondary">Secondary</Button>
+    <Button variant="danger">Danger</Button>
+    <Button variant="outline">Outline</Button>
+  </div>
 </Story>
+
+<!-- Stories for sizes, states, icons, etc. -->
+```
+
+#### Card Component Stories
+
+```svelte
+<script module>
+  import { defineMeta } from '@storybook/addon-svelte-csf';
+  import Card from './Card.svelte';
+  import Button from './Button.svelte';
+
+  const { Story } = defineMeta({
+    title: 'UI/Card',
+    component: Card,
+    tags: ['autodocs'],
+    argTypes: {
+      title: {
+        control: 'text',
+        description: 'Card title displayed in the header',
+      },
+      variant: {
+        control: 'select',
+        options: ['default', 'primary', 'secondary'],
+        description: 'Card style variant',
+      },
+      // Additional controls with descriptions
+    },
+  });
+</script>
+
+<!-- Multiple stories showcasing variants -->
+<Story name="Variants">
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl">
+    <Card title="Default Variant" variant="default">
+      <p class="mb-4">Default card style</p>
+      <Button variant="outline" size="small">Learn More</Button>
+      <svelte:fragment slot="footer">Default footer</svelte:fragment>
+    </Card>
+    <!-- More card variants -->
+  </div>
+</Story>
+
+<!-- Stories for elevation, header/footer options, etc. -->
 ```
 
 ### MDX Blog Support
