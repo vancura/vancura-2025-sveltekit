@@ -21,18 +21,18 @@
   <meta name="description" content="Read my latest blog posts" />
 </svelte:head>
 
-<div class="space-y-10">
+<div class="flex flex-col gap-10">
   {#each posts as post}
-    <article class="border-b pb-8">
+    <article class="border-b border-gray-200 pb-8">
       <h2 class="text-2xl font-semibold mb-2">
-        <a href="/blog/{post.slug}" class="text-blue-600 hover:text-blue-800">
+        <a href="/blog/{post.slug}" class="text-blue-600">
           {post.title}
         </a>
       </h2>
       <time class="text-sm text-gray-500 mb-3 block">{post.date}</time>
       <p class="text-gray-700">{post.description}</p>
       <div class="mt-4">
-        <a href="/blog/{post.slug}" class="text-blue-600 hover:underline">Read more &rarr;</a>
+        <a href="/blog/{post.slug}" class="text-blue-600">Read more &rarr;</a>
       </div>
     </article>
   {/each}

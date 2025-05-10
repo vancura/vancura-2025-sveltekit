@@ -1,6 +1,6 @@
 <script lang="ts">
   import { page } from '$app/stores';
-  
+
   $: title = $page.data.meta?.title || 'Blog';
   $: description = $page.data.meta?.description || '';
 </script>
@@ -14,7 +14,7 @@
   <header class="mb-8">
     <h1 class="text-4xl font-bold">{title}</h1>
   </header>
-  
+
   <main>
     <slot />
   </main>

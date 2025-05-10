@@ -3,42 +3,16 @@
   export let elevated: boolean = false;
 </script>
 
-<div class="card {elevated ? 'elevated' : ''}">
+<div class="bg-white rounded-lg overflow-hidden border border-gray-200 {elevated ? 'shadow-md' : ''}">
   {#if title}
-    <div class="card-header">
-      <h3 class="card-title">{title}</h3>
+    <div class="px-4 py-3 border-b border-gray-200 bg-gray-50">
+      <h3 class="text-lg font-medium text-gray-900">{title}</h3>
     </div>
   {/if}
-  <div class="card-body">
+  <div class="p-4">
     <slot />
   </div>
-  <div class="card-footer">
+  <div class="px-4 py-3 border-t border-gray-200 bg-gray-50">
     <slot name="footer" />
   </div>
 </div>
-
-<style>
-  .card {
-    @apply bg-white rounded-lg overflow-hidden border border-gray-200;
-  }
-  
-  .elevated {
-    @apply shadow-md;
-  }
-  
-  .card-header {
-    @apply px-4 py-3 border-b border-gray-200 bg-gray-50;
-  }
-  
-  .card-title {
-    @apply text-lg font-medium text-gray-900;
-  }
-  
-  .card-body {
-    @apply p-4;
-  }
-  
-  .card-footer {
-    @apply px-4 py-3 border-t border-gray-200 bg-gray-50;
-  }
-</style>

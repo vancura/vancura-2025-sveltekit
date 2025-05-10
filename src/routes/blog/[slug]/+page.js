@@ -4,8 +4,11 @@ export async function load({ params }) {
   return {
     slug: params.slug,
     meta: {
-      title: params.slug.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' '),
-      description: `This is the ${params.slug} blog post.`
-    }
+      title: params.slug
+        .split("-")
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(" "),
+      description: `This is the ${params.slug} blog post.`,
+    },
   };
 }

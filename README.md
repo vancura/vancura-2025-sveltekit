@@ -1,17 +1,19 @@
 # Modern SvelteKit Blog/Portfolio
 
-A modern blog/portfolio website built with SvelteKit 2.20+, Svelte 5+, Tailwind CSS 4+, Flowbite Svelte components, and Storybook 8.4+.
+A modern blog/portfolio website template built with cutting-edge web technologies.
 
-## Features
+## Overview
 
-- **Framework**: SvelteKit 2.20+ with Svelte 5+
-- **Styling**: Tailwind CSS 4+ via Vite plugin
-- **Components**: Flowbite Svelte (native Tailwind integration)
-- **Testing**: Storybook 8.4+ with proper Svelte 5 support
-- **Language**: TypeScript
-- **Content**: MDX support for blog posts
+This project provides a foundation for creating a modern blog or portfolio website with:
 
-## Getting Started
+- **SvelteKit 2.20+** with **Svelte 5+** for enhanced reactivity and performance
+- **Tailwind CSS 4+** using the new Vite plugin architecture
+- **Flowbite Svelte** components for rapid UI development
+- **Storybook 8.4+** for component development and testing
+- **TypeScript** for code quality and developer experience
+- **MDX** support for rich content authoring
+
+## Quick Start
 
 ```bash
 # Install dependencies
@@ -20,44 +22,30 @@ yarn
 # Start development server
 yarn dev
 
-# Start Storybook
+# Start Storybook component browser
 yarn storybook
-
-# Build for production
-yarn build
-
-# Preview production build
-yarn preview
 ```
+
+## Key Features
+
+- **Modern Stack**: Uses the latest versions of SvelteKit, Svelte 5, and Tailwind 4
+- **Component Library**: Includes ready-made UI components (Button, Card, Header) with Tailwind styling
+- **Blog Ready**: Built-in MDX support with dynamic routing for blog posts
+- **Developer Experience**: Type safety, component stories, and full build pipeline
+- **Tailwind 4 Integration**: Fully implemented with utility classes instead of inline styles
+
+## Documentation
+
+For detailed implementation information, troubleshooting, and advanced usage, see the [Implementation Guide](./CLAUDE.md).
 
 ## Project Structure
 
 ```
 src/
 ├── lib/                    # Reusable components for distribution
-│   ├── components/         # Base components
-│   │   ├── ui/            # Atomic UI components
-│   │   ├── layout/        # Layout components
-│   │   └── feature/       # Feature-specific components
-│   └── index.ts           # Export all components
+│   ├── components/         # UI and layout components
+│   └── index.ts           # Component exports
 ├── routes/                # SvelteKit routes
-│   ├── +layout.svelte     # Root layout
-│   ├── +page.svelte       # Home page
-│   └── blog/              # Blog routes
-│       └── [slug]/        # Dynamic blog posts
 ├── content/               # MDX blog content
-├── app.css               # Global styles
-└── app.html              # HTML template
+└── app.css               # Global styles
 ```
-
-## Development Scripts
-
-- `yarn dev` - Start development server
-- `yarn build` - Build for production
-- `yarn preview` - Preview production build
-- `yarn storybook` - Start Storybook
-- `yarn build-storybook` - Build Storybook
-- `yarn lint` - Run ESLint
-- `yarn format` - Run Prettier
-- `yarn type-check` - Run TypeScript type checking
-- `yarn package` - Package components for distribution

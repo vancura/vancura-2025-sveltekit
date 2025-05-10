@@ -5,6 +5,7 @@ This document provides comprehensive instructions for Claude CLI to assist in se
 ## Project Overview
 
 Help the user create a blog/portfolio website with these specifications:
+
 - **Framework**: SvelteKit 2.20+ with Svelte 5+
 - **Styling**: Tailwind CSS 4+ via Vite plugin
 - **Components**: Flowbite Svelte (native Tailwind integration)
@@ -53,15 +54,12 @@ Replace the default Tailwind configuration with the new Vite plugin approach:
 
 ```typescript
 // vite.config.ts
-import { sveltekit } from '@sveltejs/kit/vite';
-import { defineConfig } from 'vite';
-import tailwindcss from '@tailwindcss/vite';
+import { sveltekit } from "@sveltejs/kit/vite";
+import { defineConfig } from "vite";
+import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
-  plugins: [
-    tailwindcss(),
-    sveltekit(),
-  ],
+  plugins: [tailwindcss(), sveltekit()],
 });
 ```
 
@@ -71,17 +69,14 @@ Update `tailwind.config.js`:
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
-    './src/**/*.{html,js,svelte,ts}',
-    './node_modules/flowbite-svelte/**/*.{html,js,svelte,ts}'
+    "./src/**/*.{html,js,svelte,ts}",
+    "./node_modules/flowbite-svelte/**/*.{html,js,svelte,ts}",
   ],
   theme: {
     extend: {},
   },
-  plugins: [
-    require('@tailwindcss/typography'),
-    require('flowbite/plugin')
-  ],
-}
+  plugins: [require("@tailwindcss/typography"), require("flowbite/plugin")],
+};
 ```
 
 ## Step 4: Configure Storybook for Svelte 5
@@ -90,21 +85,21 @@ Create proper Storybook configuration with Svelte 5 support:
 
 ```typescript
 // .storybook/main.ts
-import type { StorybookConfig } from '@storybook/sveltekit';
+import type { StorybookConfig } from "@storybook/sveltekit";
 
 const config: StorybookConfig = {
-  stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|ts|tsx|svelte)'],
+  stories: ["../src/**/*.mdx", "../src/**/*.stories.@(js|jsx|ts|tsx|svelte)"],
   addons: [
-    '@storybook/addon-links',
-    '@storybook/addon-essentials',
-    '@storybook/addon-svelte-csf',
+    "@storybook/addon-links",
+    "@storybook/addon-essentials",
+    "@storybook/addon-svelte-csf",
   ],
   framework: {
-    name: '@storybook/sveltekit',
+    name: "@storybook/sveltekit",
     options: {},
   },
   docs: {
-    autodocs: 'tag',
+    autodocs: "tag",
   },
 };
 
@@ -113,12 +108,12 @@ export default config;
 
 ```typescript
 // .storybook/preview.ts
-import type { Preview } from '@storybook/svelte';
-import '../src/app.css';
+import type { Preview } from "@storybook/svelte";
+import "../src/app.css";
 
 const preview: Preview = {
   parameters: {
-    actions: { argTypesRegex: '^on[A-Z].*' },
+    actions: { argTypesRegex: "^on[A-Z].*" },
     controls: {
       matchers: {
         color: /(background|color)$/i,
@@ -158,17 +153,14 @@ src/
 Add MDsveX configuration to `vite.config.ts`:
 
 ```typescript
-import { sveltekit } from '@sveltejs/kit/vite';
-import { defineConfig } from 'vite';
-import tailwindcss from '@tailwindcss/vite';
-import mdsvex from 'mdsvex';
+import { sveltekit } from "@sveltejs/kit/vite";
+import { defineConfig } from "vite";
+import tailwindcss from "@tailwindcss/vite";
+import mdsvex from "mdsvex";
 
 export default defineConfig({
-  plugins: [
-    tailwindcss(),
-    sveltekit(),
-  ],
-  extensions: ['.svelte', '.md', '.mdx'],
+  plugins: [tailwindcss(), sveltekit()],
+  extensions: [".svelte", ".md", ".mdx"],
   preprocessors: [mdsvex.mdsvex()],
 });
 ```
@@ -199,27 +191,27 @@ Create reusable components for the blog/portfolio:
   .btn {
     @apply px-4 py-2 rounded transition-colors duration-200;
   }
-  
+
   .primary {
     @apply bg-blue-600 text-white hover:bg-blue-700;
   }
-  
+
   .secondary {
     @apply bg-gray-200 text-gray-800 hover:bg-gray-300;
   }
-  
+
   .danger {
     @apply bg-red-600 text-white hover:bg-red-700;
   }
-  
+
   .small {
     @apply text-sm px-3 py-1;
   }
-  
+
   .medium {
     @apply text-base;
   }
-  
+
   .large {
     @apply text-lg px-6 py-3;
   }
@@ -281,7 +273,7 @@ Create the blog layout and routing:
 <!-- src/routes/blog/+layout.svelte -->
 <script lang="ts">
   import { page } from '$app/stores';
-  
+
   $: title = $page.data.meta?.title || 'Blog';
   $: description = $page.data.meta?.description || '';
 </script>
@@ -295,7 +287,7 @@ Create the blog layout and routing:
   <header class="mb-8">
     <h1 class="text-4xl font-bold">{title}</h1>
   </header>
-  
+
   <main>
     <slot />
   </main>
@@ -308,9 +300,9 @@ Set up your components for easy reuse across projects:
 
 ```typescript
 // src/lib/index.ts
-export { default as Button } from './components/ui/Button.svelte';
-export { default as Card } from './components/ui/Card.svelte';
-export { default as Header } from './components/layout/Header.svelte';
+export { default as Button } from "./components/ui/Button.svelte";
+export { default as Card } from "./components/ui/Card.svelte";
+export { default as Header } from "./components/layout/Header.svelte";
 // ... export all reusable components
 ```
 
@@ -335,14 +327,17 @@ export { default as Header } from './components/layout/Header.svelte';
 ## Common Pitfalls and Solutions
 
 1. **ES Module vs CommonJS Issues**
+
    - Rename `.storybook/main.js` to `.storybook/main.cjs`
    - Use `type: "module"` in package.json
 
 2. **Tailwind Not Working in Storybook**
+
    - Ensure `app.css` is imported in preview.ts
    - Include Storybook paths in Tailwind config content array
 
 3. **SvelteKit Imports in Storybook**
+
    - Use `sveltekit_experimental` parameter for mocking stores
    - Avoid using SvelteKit-specific stores in components
 
