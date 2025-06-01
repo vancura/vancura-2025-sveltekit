@@ -4,16 +4,17 @@ This document provides detailed implementation instructions for working with thi
 
 ## Technical Stack
 
-- **SvelteKit 2.21+** with **Svelte 5.33+** for the framework
+- **SvelteKit 2.21.14** with **Svelte 5.33.11** for the framework
 - **Tailwind CSS 4.1.8** via Vite plugin for styling
 - **Storybook 8.6.14** for component testing and documentation
-- **TypeScript** for type safety
-- **MDX** support for blog content via mdsvex
+- **TypeScript 5.7.3** for type safety
+- **MDX** support for blog content via mdsvex 0.13.1
 - **Inter Font** from Google Fonts for typography
-- **ESLint 9.28+** with comprehensive rules for code quality
+- **ESLint 9.28.0** with comprehensive rules for code quality
 - **Prettier 3.5.3** with full plugin support for formatting
 - **Yarn 4.9.1** with Plug'n'Play (PnP) for package management
-- **Vercel adapter** for optimized deployment
+- **Vercel adapter 0.5.11** for optimized deployment
+- **Vite 6.3.5** with enhanced configuration
 
 ## Project Configuration
 
@@ -54,7 +55,7 @@ All packages are in `devDependencies` as this is a SvelteKit project that compil
 
 ### Tailwind 4 Setup
 
-Using Tailwind 4 with the Vite plugin:
+Using Tailwind 4 with the Vite plugin and CSS custom properties:
 
 ```typescript
 // vite.config.ts
@@ -64,34 +65,55 @@ import { defineConfig } from 'vite';
 
 export default defineConfig({
   plugins: [tailwindcss(), sveltekit()],
+  server: {
+    fs: {
+      allow: ['..'],
+    },
+    watch: {
+      usePolling: true,
+    },
+  },
 });
 ```
 
 ```javascript
-// tailwind.config.js
+// tailwind.config.js (minimal configuration)
 export default {
   content: ['./src/**/*.{html,js,svelte,ts,md,mdx}'],
-  coreUtilities: true,
-  theme: {
-    extend: {
-      fontFamily: {
-        sans: ['Inter', 'ui-sans-serif', 'system-ui' /* ... */],
-      },
-      colors: {
-        primary: {
-          50: '#faf5ff',
-          100: '#f3e8ff',
-          // ... full purple palette
-          950: '#3b0764',
-        },
-      },
-      boxShadow: {
-        soft: '0 2px 15px -3px rgba(0, 0, 0, 0.07), 0 10px 20px -2px rgba(0, 0, 0, 0.04)',
-      },
-    },
-  },
   plugins: [require('@tailwindcss/typography')],
 };
+```
+
+**Global Styles (app.css)** - Using Tailwind 4's new @theme syntax:
+
+```css
+@import 'tailwindcss';
+
+@theme {
+  --font-family-sans:
+    'Inter', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
+    'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  --font-family-mono:
+    ui-monospace, SFMono-Regular, 'SF Mono', Consolas, 'Liberation Mono', Menlo,
+    Courier, monospace;
+
+  /* Custom colors using CSS custom properties */
+  --color-primary-50: #faf5ff;
+  --color-primary-100: #f3e8ff;
+  --color-primary-200: #e9d5ff;
+  --color-primary-300: #d8b4fe;
+  --color-primary-400: #c084fc;
+  --color-primary-500: #a855f7;
+  --color-primary-600: #9333ea;
+  --color-primary-700: #7c3aed;
+  --color-primary-800: #6b21a8;
+  --color-primary-900: #581c87;
+  --color-primary-950: #3b0764;
+
+  /* Custom box shadow */
+  --shadow-soft:
+    0 2px 15px -3px rgba(0, 0, 0, 0.07), 0 10px 20px -2px rgba(0, 0, 0, 0.04);
+}
 ```
 
 ### MDX/Blog Setup
@@ -146,7 +168,7 @@ export default {
 
 ## Project Structure
 
-```
+```text
 src/
 ├── lib/                    # Reusable components
 │   ├── components/         # UI and layout components
@@ -396,12 +418,19 @@ yarn build  # Test build locally
 - `.pnp.cjs` and `.pnp.loader.mjs` files are auto-generated (keep them)
 - Use `yarn` as the package manager (configured in packageManager field)
 - Storybook 8.6.14 is stable - avoid upgrading to Storybook 9 (has breaking changes)
+- `@sveltejs/adapter-vercel` is configured as unplugged in dependenciesMeta
 
 **PnP Configuration (`.yarnrc.yml`):**
 
-- `pnpMode: strict` for better module resolution
-- `pnpFallbackMode: dependencies-only` for plugin compatibility
-- ESM loader enabled for modern JavaScript support
+```yaml
+enableGlobalCache: false
+enableTransparentWorkspaces: false
+nodeLinker: pnp
+pnpMode: strict
+pnpFallbackMode: dependencies-only
+pnpUnpluggedPackages:
+  - '@sveltejs/adapter-vercel' # Unplugged for Vercel compatibility
+```
 
 ## Recent Changes & Cleanup
 
@@ -445,6 +474,27 @@ yarn build  # Test build locally
    - Unmaintained packages (optimize-regex, organize-attributes)
    - Enhanced `.gitignore` and `.prettierignore` with better organization
 
+### Latest Updates (January 2025)
+
+1. **Tailwind 4 Implementation**:
+
+   - Migrated to Tailwind 4's new @theme syntax in app.css
+   - Custom properties defined using CSS variables
+   - Minimal tailwind.config.js (only content and typography plugin)
+   - Enhanced Vite configuration with file system and watch options
+
+2. **Dependency Updates**:
+
+   - Vite updated to 6.3.5
+   - TypeScript updated to 5.7.3
+   - All packages at latest stable versions
+   - Added vite-node 3.1.4 for enhanced development
+
+3. **Configuration Enhancements**:
+   - package.json includes eslintConfig extending storybook
+   - Vercel adapter configured as unplugged in dependenciesMeta
+   - Full .yarnrc.yml configuration documented
+
 **Current State:** The project is production-ready with:
 
 - ✅ All linting and formatting working
@@ -452,3 +502,5 @@ yarn build  # Test build locally
 - ✅ Modern Yarn PnP package management
 - ✅ Comprehensive code quality tools
 - ✅ Clean, well-documented configuration files
+- ✅ Tailwind 4 with CSS custom properties
+- ✅ Latest stable dependency versions
