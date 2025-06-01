@@ -1,18 +1,18 @@
 module.exports = {
-  parameters: {
-    actions: { argTypesRegex: "^on[A-Z].*" },
-    controls: {
-      matchers: {
-        color: /(background|color)$/i,
-        date: /Date$/,
-      },
+    parameters: {
+        actions: { argTypesRegex: '^on[A-Z].*' },
+        controls: {
+            matchers: {
+                color: /(background|color)$/i,
+                date: /Date$/,
+            },
+        },
     },
-  },
-  decorators: [
-    (Story) => {
-      // Import styles from app.css
-      require("../src/app.css");
-      return Story();
-    },
-  ],
+    decorators: [
+        (Story) => {
+            // Import styles from app.css
+            require('../src/app.css');
+            return Story();
+        },
+    ],
 };
