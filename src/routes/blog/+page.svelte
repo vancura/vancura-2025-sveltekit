@@ -22,7 +22,7 @@
 </svelte:head>
 
 <div class="flex flex-col gap-10">
-    {#each posts as post}
+    {#each posts as post (post.slug)}
         <article class="border-b border-gray-200 pb-8">
             <h2 class="mb-2 text-2xl font-semibold">
                 <a href="/blog/{post.slug}" class="text-blue-600">

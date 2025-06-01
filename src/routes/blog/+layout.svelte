@@ -2,6 +2,7 @@
     import { page } from '$app/stores';
 
     $: title = $page.data.meta?.title || 'Blog';
+
     $: description = $page.data.meta?.description || '';
 </script>
 
