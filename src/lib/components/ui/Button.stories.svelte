@@ -39,11 +39,31 @@
         },
         args: {
             onClick: fn(),
+            variant: 'primary',
+            size: 'medium',
+            disabled: false,
+            icon: false,
+            type: 'button',
+            class: '',
         },
     });
 </script>
 
-<Story name="Variants">
+<Story name="Default" let:args>
+    <Button
+        variant={args?.variant || 'primary'}
+        size={args?.size || 'medium'}
+        disabled={args?.disabled || false}
+        icon={args?.icon || false}
+        type={args?.type || 'button'}
+        class={args?.class || ''}
+        on:click={args.onClick}
+    >
+        Click me
+    </Button>
+</Story>
+
+<Story name="Variants" asChild>
     <div class="flex flex-wrap gap-4">
         <Button variant="primary">Primary</Button>
         <Button variant="secondary">Secondary</Button>
@@ -52,7 +72,7 @@
     </div>
 </Story>
 
-<Story name="Sizes">
+<Story name="Sizes" asChild>
     <div class="flex flex-wrap items-center gap-4">
         <Button size="small">Small</Button>
         <Button size="medium">Medium</Button>
@@ -60,7 +80,7 @@
     </div>
 </Story>
 
-<Story name="States">
+<Story name="States" asChild>
     <div class="flex flex-wrap gap-4">
         <Button>Normal</Button>
         <Button disabled>Disabled</Button>
@@ -68,9 +88,9 @@
     </div>
 </Story>
 
-<Story name="Icons">
+<Story name="With Icons" asChild>
     <div class="flex flex-wrap gap-4">
-        <Button icon={true} size="small">
+        <Button icon size="small">
             <svg class="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path
                     stroke-linecap="round"
@@ -87,7 +107,7 @@
             </svg>
             View
         </Button>
-        <Button icon={true} variant="outline">
+        <Button icon variant="outline">
             <svg class="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path
                     stroke-linecap="round"
@@ -101,7 +121,7 @@
     </div>
 </Story>
 
-<Story name="Combinations">
+<Story name="Combinations" asChild>
     <div class="space-y-4">
         <div class="flex flex-wrap gap-2">
             <Button variant="primary" size="small">Small Primary</Button>

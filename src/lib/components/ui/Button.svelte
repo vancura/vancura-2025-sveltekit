@@ -22,18 +22,20 @@
         large: 'text-base px-6 py-3 rounded-md',
     }[size];
 
-    $: iconClasses = icon ? 'inline-flex items-center justify-center' : '';
-
-    $: disabledClasses = disabled
-        ? 'opacity-60 cursor-not-allowed'
-        : 'focus:outline-none focus:ring-2 focus:ring-offset-2 active:translate-y-0.5';
+    $: baseClasses = [
+        'font-medium shadow-sm transition-all duration-200',
+        icon ? 'inline-flex items-center justify-center' : '',
+        disabled
+            ? 'opacity-60 cursor-not-allowed'
+            : 'focus:outline-none focus:ring-2 focus:ring-offset-2 active:translate-y-0.5',
+        variantClasses,
+        sizeClasses,
+        className,
+    ]
+        .filter(Boolean)
+        .join(' ');
 </script>
 
-<button
-    {type}
-    class="font-medium shadow-sm transition-all duration-200 {variantClasses} {sizeClasses} {iconClasses} {disabledClasses} {className}"
-    {disabled}
-    on:click
->
-    <slot />
+<button {type} class={baseClasses} {disabled} on:click>
+    <slot>Button</slot>
 </button>

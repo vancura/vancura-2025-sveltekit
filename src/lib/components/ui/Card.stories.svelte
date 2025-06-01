@@ -1,5 +1,6 @@
 <script module>
     import { defineMeta } from '@storybook/addon-svelte-csf';
+    import { fn } from '@storybook/test';
 
     import Button from './Button.svelte';
     import Card from './Card.svelte';
@@ -15,26 +16,58 @@
             },
             elevated: {
                 control: 'boolean',
-                description: 'Whether to show shadow for elevated appearance',
+                description: 'Whether to show enhanced shadow for elevated appearance',
             },
             variant: {
                 control: 'select',
                 options: ['default', 'primary', 'secondary'],
-                description: 'Card style variant',
+                description: 'Card style variant affecting colors',
             },
             hasFooter: {
                 control: 'boolean',
                 description: 'Whether to display the footer section',
+            },
+            content: {
+                control: 'text',
+                description: 'Main content of the card (alternative to slot)',
+            },
+            footerContent: {
+                control: 'text',
+                description: 'Footer content of the card (alternative to footer slot)',
             },
             class: {
                 control: 'text',
                 description: 'Additional CSS classes to apply',
             },
         },
+        args: {
+            onClick: fn(),
+            title: 'Sample Card Title',
+            content:
+                'This is the main content of the card. You can edit this text in the controls panel to see how the card adapts to different content lengths.',
+            footerContent: 'Footer content with additional information',
+            elevated: false,
+            variant: 'default',
+            hasFooter: true,
+            class: '',
+        },
     });
 </script>
 
-<Story name="Variants">
+<Story name="Default" let:args>
+    <Card
+        title={args?.title || 'Sample Card Title'}
+        elevated={args?.elevated || false}
+        variant={args?.variant || 'default'}
+        hasFooter={args?.hasFooter !== false}
+        content={args?.content ||
+            'This is the main content of the card. You can edit this text in the controls panel to see how the card adapts to different content lengths.'}
+        footerContent={args?.footerContent || 'Footer content with additional information'}
+        class={args?.class || ''}
+    />
+</Story>
+
+<Story name="Variants" asChild>
     <div class="grid max-w-4xl grid-cols-1 gap-4 md:grid-cols-3">
         <Card title="Default Variant" variant="default">
             <p class="mb-4">This is the default card style with clean, minimal styling.</p>
@@ -43,7 +76,7 @@
         </Card>
 
         <Card title="Primary Variant" variant="primary">
-            <p class="mb-4">This card uses the primary color palette with blue accents.</p>
+            <p class="mb-4">This card uses the primary color palette with purple accents.</p>
             <Button variant="primary" size="small">Learn More</Button>
             <svelte:fragment slot="footer">Primary footer</svelte:fragment>
         </Card>
@@ -56,7 +89,7 @@
     </div>
 </Story>
 
-<Story name="Elevation">
+<Story name="Elevation" asChild>
     <div class="grid max-w-3xl grid-cols-1 gap-6 md:grid-cols-2">
         <Card title="Standard Card" elevated={false}>
             <p>This card has no elevation by default. Hover over it to see a subtle shadow effect.</p>
@@ -74,7 +107,7 @@
     </div>
 </Story>
 
-<Story name="Header and Footer">
+<Story name="Layout Options" asChild>
     <div class="max-w-lg space-y-6">
         <Card title="Card With Header and Footer">
             <p>This card displays both a header with title and a footer section.</p>
@@ -102,7 +135,7 @@
     </div>
 </Story>
 
-<Story name="Content Examples">
+<Story name="Content Examples" asChild>
     <div class="grid max-w-4xl grid-cols-1 gap-6 md:grid-cols-2">
         <Card title="Product Card" elevated variant="default">
             <div class="flex flex-col space-y-4">
@@ -115,7 +148,7 @@
             </div>
             <svelte:fragment slot="footer">
                 <div class="flex justify-between">
-                    <Button variant="outline" size="small" icon={true}>
+                    <Button variant="outline" size="small" icon>
                         <svg class="mr-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path
                                 stroke-linecap="round"
@@ -132,23 +165,23 @@
         </Card>
 
         <Card title="Article Preview" elevated variant="primary">
-            <h3 class="mb-2 text-lg font-medium text-blue-800">Modern Web Development Techniques</h3>
-            <p class="mb-4 text-blue-700">
+            <h3 class="text-primary-800 mb-2 text-lg font-medium">Modern Web Development Techniques</h3>
+            <p class="text-primary-700 mb-4">
                 Learn about the latest trends in web development, including component-driven design, utility-first CSS,
                 and modern JavaScript frameworks.
             </p>
             <div class="mt-4 flex items-center">
-                <div class="flex h-10 w-10 items-center justify-center rounded-full bg-blue-200">
-                    <span class="text-xs text-blue-800">JD</span>
+                <div class="bg-primary-200 flex h-10 w-10 items-center justify-center rounded-full">
+                    <span class="text-primary-800 text-xs">JD</span>
                 </div>
                 <div class="ml-3">
-                    <p class="text-sm font-medium text-blue-800">Jane Doe</p>
-                    <p class="text-xs text-blue-600">Web Developer</p>
+                    <p class="text-primary-800 text-sm font-medium">Jane Doe</p>
+                    <p class="text-primary-600 text-xs">Web Developer</p>
                 </div>
             </div>
             <svelte:fragment slot="footer">
                 <div class="flex items-center justify-between">
-                    <span class="text-sm text-blue-600">May 10, 2025</span>
+                    <span class="text-primary-600 text-sm">May 10, 2025</span>
                     <Button variant="outline" size="small">Read Article</Button>
                 </div>
             </svelte:fragment>
