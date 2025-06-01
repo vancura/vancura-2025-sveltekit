@@ -4,14 +4,6 @@
   "framework": "sveltekit",
   "installCommand": "yarn install",
   "devCommand": "yarn dev",
-  "functions": {
-    "src/routes/api/**/*.js": {
-      "runtime": "nodejs20.x"
-    },
-    "src/routes/api/**/*.ts": {
-      "runtime": "nodejs20.x"
-    }
-  },
   "rewrites": [
     {
       "source": "/storybook/(.*)",
