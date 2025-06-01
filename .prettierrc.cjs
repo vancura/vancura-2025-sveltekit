@@ -47,5 +47,15 @@ module.exports = {
                 parser: 'yaml',
             },
         },
+        // Svelte files
+        {
+            files: ['*.svelte'],
+            options: {
+                parser: 'svelte',
+                svelteStrictMode: false,
+                svelteAllowShorthand: true,
+                svelteIndentScriptAndStyle: true,
+            },
+        },
     ],
 };
