@@ -23,7 +23,9 @@
     $: elevationClasses = elevated ? 'shadow-soft hover:shadow-lg' : 'shadow-sm hover:shadow-md';
 </script>
 
-<div class="{variantClasses} overflow-hidden rounded-lg border transition-all duration-300 {elevationClasses} {className}">
+<div
+    class="{variantClasses} overflow-hidden rounded-lg border transition-all duration-300 {elevationClasses} {className}"
+>
     {#if title}
         <div class="border-b px-5 py-4 {headerClasses}">
             <h3 class="text-lg font-semibold text-gray-900">{title}</h3>

@@ -12,7 +12,8 @@
         primary: 'bg-primary-600 text-white hover:bg-primary-700 focus:ring-primary-500 border border-transparent',
         secondary: 'bg-gray-100 text-gray-800 hover:bg-gray-200 focus:ring-gray-500 border border-transparent',
         danger: 'bg-red-600 text-white hover:bg-red-700 focus:ring-red-500 border border-transparent',
-        outline: 'bg-transparent text-primary-600 hover:bg-primary-50 border border-primary-300 hover:border-primary-400 focus:ring-primary-500',
+        outline:
+            'bg-transparent text-primary-600 hover:bg-primary-50 border border-primary-300 hover:border-primary-400 focus:ring-primary-500',
     }[variant];
 
     $: sizeClasses = {
@@ -23,9 +24,16 @@
 
     $: iconClasses = icon ? 'inline-flex items-center justify-center' : '';
 
-    $: disabledClasses = disabled ? 'opacity-60 cursor-not-allowed' : 'focus:outline-none focus:ring-2 focus:ring-offset-2 active:translate-y-0.5';
+    $: disabledClasses = disabled
+        ? 'opacity-60 cursor-not-allowed'
+        : 'focus:outline-none focus:ring-2 focus:ring-offset-2 active:translate-y-0.5';
 </script>
 
-<button {type} class="font-medium shadow-sm transition-all duration-200 {variantClasses} {sizeClasses} {iconClasses} {disabledClasses} {className}" {disabled} on:click>
+<button
+    {type}
+    class="font-medium shadow-sm transition-all duration-200 {variantClasses} {sizeClasses} {iconClasses} {disabledClasses} {className}"
+    {disabled}
+    on:click
+>
     <slot />
 </button>

@@ -12,9 +12,6 @@
     // Mobile menu state
     let mobileMenuOpen = false;
 
-    // Current path for active link highlighting
-    let currentPath: string;
-
     $: themeClasses = {
         light: 'bg-white text-gray-800 shadow-sm border-b border-gray-200',
         dark: 'bg-gray-900 text-white',
@@ -45,7 +42,7 @@
 
             <!-- Desktop navigation -->
             <div class="hidden md:flex md:items-center md:space-x-8">
-                {#each navItems as item}
+                {#each navItems as item (item.url)}
                     <a href={item.url} class="group relative flex items-center px-1 py-2 text-sm font-medium">
                         <span
                             class="relative transition-colors duration-200
@@ -74,12 +71,22 @@
                     {#if mobileMenuOpen}
                         <!-- X icon -->
                         <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12"
+                            />
                         </svg>
                     {:else}
                         <!-- Menu icon -->
                         <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16"
+                            />
                         </svg>
                     {/if}
                 </button>
@@ -91,11 +98,13 @@
     {#if mobileMenuOpen}
         <div class="md:hidden {mobileBgClasses} shadow-lg">
             <div class="space-y-1 border-t border-gray-200 px-2 pt-2 pb-3">
-                {#each navItems as item}
+                {#each navItems as item (item.url)}
                     <a
                         href={item.url}
                         class="block rounded-md px-3 py-2 text-base font-medium
-              {theme === 'light' ? 'text-gray-700 hover:bg-gray-50 hover:text-gray-900' : 'text-gray-200 hover:bg-gray-700 hover:text-white'}"
+              {theme === 'light'
+                            ? 'text-gray-700 hover:bg-gray-50 hover:text-gray-900'
+                            : 'text-gray-200 hover:bg-gray-700 hover:text-white'}"
                     >
                         {item.label}
                     </a>
