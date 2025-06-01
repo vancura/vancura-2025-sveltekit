@@ -1,33 +1,30 @@
-import adapter from "@sveltejs/adapter-auto";
-import { mdsvex } from "mdsvex";
-import sveltePreprocess from "svelte-preprocess";
+import adapter from '@sveltejs/adapter-auto';
+
+// Simple preprocessor for now
+const vitePreprocess = () => ({
+    markup: ({ content }) => ({ code: content }),
+    style: ({ content }) => ({ code: content }),
+    script: ({ content }) => ({ code: content }),
+});
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
-  // Consult https://kit.svelte.dev/docs/integrations#preprocessors
-  // for more information about preprocessors
-  preprocess: [
-    sveltePreprocess({
-      typescript: true,
-      postcss: true,
-    }),
-    mdsvex({
-      extensions: [".md", ".mdx"],
-    }),
-  ],
+    // Consult https://kit.svelte.dev/docs/integrations#preprocessors
+    // for more information about preprocessors
+    preprocess: [vitePreprocess()],
 
-  extensions: [".svelte", ".md", ".mdx"],
+    extensions: ['.svelte'],
 
-  kit: {
-    // adapter-auto only supports some environments, see https://kit.svelte.dev/docs/adapter-auto for a list.
-    // If your environment is not supported or you settled on a specific environment, switch out the adapter.
-    // See https://kit.svelte.dev/docs/adapters for more information about adapters.
-    adapter: adapter(),
-    alias: {
-      $lib: "./src/lib",
-      $content: "./src/content",
+    kit: {
+        // adapter-auto only supports some environments, see https://kit.svelte.dev/docs/adapter-auto for a list.
+        // If your environment is not supported or you settled on a specific environment, switch out the adapter.
+        // See https://kit.svelte.dev/docs/adapters for more information about adapters.
+        adapter: adapter(),
+        alias: {
+            $lib: './src/lib',
+            $content: './src/content',
+        },
     },
-  },
 };
 
 export default config;

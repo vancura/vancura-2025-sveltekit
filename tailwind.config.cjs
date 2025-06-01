@@ -1,12 +1,6 @@
 /** @type {import('tailwindcss').Config} */
-export default {
+module.exports = {
     content: ['./src/**/*.{html,js,svelte,ts}'],
-    coreUtilities: true,
-    corePlugins: {
-        colors: true,
-        backgroundColors: true,
-        backgroundColor: true,
-    },
     theme: {
         extend: {
             colors: {
