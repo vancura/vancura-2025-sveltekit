@@ -1,13 +1,12 @@
 {
   "recommendations": [
     "esbenp.prettier-vscode",
-    "arcanis.vscode-zipfs",
     "dbaeumer.vscode-eslint",
     "svelte.svelte-vscode",
     "bradlc.vscode-tailwindcss",
     "unifiedjs.vscode-mdx",
-    "streetsidesoftware.code-spell-checker"
+    "streetsidesoftware.code-spell-checker",
+    "arcanis.vscode-zipfs"
   ],
-
   "unwantedRecommendations": []
 }
