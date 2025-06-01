@@ -1,18 +1,30 @@
+# System files
 .DS_Store
+
+# Dependencies
 node_modules
+
+# Build outputs
 /build
 /.svelte-kit
 /package
+dist
+.output
+storybook-static
+
+# Environment variables
 .env
 .env.*
 !.env.example
+
+# Deployment
 .vercel
-.output
+
+# Generated files
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
-storybook-static
-dist
 
+# Yarn PnP (Plug'n'Play)
 .yarn/*
 !.yarn/patches
 !.yarn/plugins
@@ -27,4 +39,32 @@ dist
 #!.yarn/cache
 .pnp.*
 
+# Claude Code settings
 **/.claude/settings.local.json
+
+# IDE and editor files
+.vscode/settings.json
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory used by tools like istanbul
+coverage/
+*.lcov
+
+# Temporary folders
+tmp/
+temp/

@@ -1,55 +1,55 @@
 {
-    "version": "0.2.0",
-    "configurations": [
-        {
-            // Runs the development server with hot reloading
-            "name": "Development Server",
-            "type": "node-terminal",
-            "request": "launch",
-            "command": "yarn dev",
-            "env": {
-                "NODE_ENV": "development"
-            },
-            "serverReadyAction": {
-                "pattern": "Local: (https?://\\S+|[0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+:[0-9]+)",
-                "uriFormat": "http://localhost:%s",
-                "action": "openExternally"
-            }
-        },
+  "version": "0.2.0",
+  "configurations": [
+    {
+      // Runs the development server with hot reloading
+      "name": "Development Server",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "yarn dev",
+      "env": {
+        "NODE_ENV": "development"
+      },
+      "serverReadyAction": {
+        "pattern": "Local: (https?://\\S+|[0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+:[0-9]+)",
+        "uriFormat": "http://localhost:%s",
+        "action": "openExternally"
+      }
+    },
 
-        {
-            // Builds the project for production
-            "name": "Build",
-            "type": "node-terminal",
-            "request": "launch",
-            "command": "yarn build",
-            "env": {
-                "NODE_ENV": "production"
-            }
-        },
+    {
+      // Builds the project for production
+      "name": "Build",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "yarn build",
+      "env": {
+        "NODE_ENV": "production"
+      }
+    },
 
-        {
-            // Previews the production build locally
-            "name": "Preview Build",
-            "type": "node-terminal",
-            "request": "launch",
-            "command": "yarn preview",
-            "env": {
-                "NODE_ENV": "production"
-            },
-            "serverReadyAction": {
-                "pattern": "Local: (https?://\\S+|[0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+:[0-9]+)",
-                "uriFormat": "http://localhost:%s",
-                "action": "openExternally"
-            }
-        },
+    {
+      // Previews the production build locally
+      "name": "Preview Build",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "yarn preview",
+      "env": {
+        "NODE_ENV": "production"
+      },
+      "serverReadyAction": {
+        "pattern": "Local: (https?://\\S+|[0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+:[0-9]+)",
+        "uriFormat": "http://localhost:%s",
+        "action": "openExternally"
+      }
+    },
 
-        {
-            // Runs ESLint and Prettier to fix code style issues
-            "name": "Lint & Format",
-            "type": "node-terminal",
-            "request": "launch",
-            "command": "yarn lint:fix"
-        }
-    ]
+    {
+      // Runs ESLint and Prettier to fix code style issues
+      "name": "Lint & Format",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "yarn lint:fix"
+    }
+  ]
 }
