@@ -1,0 +1,56 @@
+# Development and build artifacts
+node_modules
+.svelte-kit
+storybook-static
+dist
+build
+
+# Source maps (optional - remove if you want them in production)
+**/*.map
+
+# Environment files
+.env.local
+.env.development
+.env.test
+
+# IDE files
+.vscode
+.idea
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Yarn PnP (these are handled automatically by Vercel)
+.yarn/cache
+.yarn/install-state.gz
+
+# Development configuration
+.editorconfig
+.gitattributes
+
+# Linting and formatting config (not needed in production)
+eslint.config.js
+.prettierrc.cjs
+.prettierignore
+
+# Documentation
+README.md
+CLAUDE.md
+
+# Storybook (unless you want to deploy it)
+.storybook
+**/*.stories.*
+
+# Tests
+**/*.test.*
+**/*.spec.*
+
+# Coverage reports
+coverage

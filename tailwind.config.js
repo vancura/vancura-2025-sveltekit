@@ -1,14 +1,23 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-    content: ['./src/**/*.{html,js,svelte,ts}'],
+    content: ['./src/**/*.{html,js,svelte,ts,md,mdx}'],
     coreUtilities: true,
-    corePlugins: {
-        colors: true,
-        backgroundColors: true,
-        backgroundColor: true,
-    },
     theme: {
         extend: {
+            fontFamily: {
+                sans: [
+                    'Inter',
+                    'ui-sans-serif',
+                    'system-ui',
+                    '-apple-system',
+                    'BlinkMacSystemFont',
+                    'Segoe UI',
+                    'Roboto',
+                    'Helvetica Neue',
+                    'Arial',
+                    'sans-serif',
+                ],
+            },
             colors: {
                 primary: {
                     50: '#faf5ff',
@@ -24,7 +33,10 @@ export default {
                     950: '#3b0764',
                 },
             },
+            boxShadow: {
+                soft: '0 2px 15px -3px rgba(0, 0, 0, 0.07), 0 10px 20px -2px rgba(0, 0, 0, 0.04)',
+            },
         },
     },
-    plugins: [],
+    plugins: [require('@tailwindcss/typography')],
 };
