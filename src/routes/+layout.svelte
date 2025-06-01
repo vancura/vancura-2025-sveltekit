@@ -1,27 +1,28 @@
-<script lang="ts">
-  import '../app.css';
-  import Header from '$lib/components/layout/Header.svelte';
+<script>
+    import '../app.css';
 </script>
 
-<div class="min-h-screen bg-gray-50">
-  <Header
-    title="My Portfolio"
-    navItems={[
-      { label: 'Home', url: '/' },
-      { label: 'Blog', url: '/blog' }
-    ]}
-    sticky={true}
-  />
+<div class="min-h-screen bg-slate-100 p-4">
+    <header class="mb-6 bg-white p-4">
+        <div class="flex items-center justify-between">
+            <h1 class="text-xl font-bold">My Portfolio</h1>
 
-  <main>
-    <slot />
-  </main>
+            <nav>
+                <ul class="flex gap-4">
+                    <li>
+                        <a href="/" class="text-blue-500 hover:text-blue-700">Home</a>
+                    </li>
+                    <li>
+                        <a href="/blog" class="text-blue-500 hover:text-blue-700">Blog</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
 
-  <footer class="bg-white mt-12 py-6">
-    <div class="max-w-7xl mx-auto px-4">
-      <p class="text-center text-gray-500 text-sm">
-        &copy; 2025 My Portfolio. All rights reserved.
-      </p>
-    </div>
-  </footer>
+    <main class="my-8">
+        <slot />
+    </main>
+
+    <footer class="py-4 text-center text-gray-500">&copy; 2025 My Portfolio. All rights reserved.</footer>
 </div>
