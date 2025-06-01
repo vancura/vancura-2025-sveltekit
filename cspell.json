@@ -1,0 +1,23 @@
+{
+    "version": "0.2",
+    "ignorePaths": [],
+    "dictionaryDefinitions": [],
+    "dictionaries": [],
+    "words": [
+        "Backlinks",
+        "Fira",
+        "frontmatter",
+        "iconify",
+        "ISEO",
+        "nosniff",
+        "opengraph",
+        "prerendering",
+        "sonarjs",
+        "Václav",
+        "Vančura",
+        "WCAG",
+        "wght"
+    ],
+    "ignoreWords": [],
+    "import": []
+}
