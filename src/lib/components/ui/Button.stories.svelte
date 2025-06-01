@@ -11,7 +11,7 @@
         argTypes: {
             variant: {
                 control: 'select',
-                options: ['primary', 'secondary', 'danger', 'outline'],
+                options: ['primary', 'secondary', 'danger'],
                 description: 'Button style variant',
             },
             size: {
@@ -68,7 +68,6 @@
         <Button variant="primary">Primary</Button>
         <Button variant="secondary">Secondary</Button>
         <Button variant="danger">Danger</Button>
-        <Button variant="outline">Outline</Button>
     </div>
 </Story>
 
@@ -107,17 +106,6 @@
             </svg>
             View
         </Button>
-        <Button icon variant="outline">
-            <svg class="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"
-                />
-            </svg>
-            Download
-        </Button>
     </div>
 </Story>
 
@@ -127,19 +115,16 @@
             <Button variant="primary" size="small">Small Primary</Button>
             <Button variant="secondary" size="small">Small Secondary</Button>
             <Button variant="danger" size="small">Small Danger</Button>
-            <Button variant="outline" size="small">Small Outline</Button>
         </div>
         <div class="flex flex-wrap gap-2">
             <Button variant="primary" size="medium">Medium Primary</Button>
             <Button variant="secondary" size="medium">Medium Secondary</Button>
             <Button variant="danger" size="medium">Medium Danger</Button>
-            <Button variant="outline" size="medium">Medium Outline</Button>
         </div>
         <div class="flex flex-wrap gap-2">
             <Button variant="primary" size="large">Large Primary</Button>
             <Button variant="secondary" size="large">Large Secondary</Button>
             <Button variant="danger" size="large">Large Danger</Button>
-            <Button variant="outline" size="large">Large Outline</Button>
         </div>
     </div>
 </Story>

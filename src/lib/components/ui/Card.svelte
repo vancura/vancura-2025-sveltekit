@@ -36,6 +36,7 @@
             <h3 class="text-lg font-semibold text-gray-900">{title}</h3>
         </div>
     {/if}
+
     <div class="p-5">
         {#if content}
             {content}
@@ -43,6 +44,7 @@
             <slot />
         {/if}
     </div>
+
     {#if hasFooter}
         <div class="border-t px-5 py-4 {headerFooterClasses}">
             {#if footerContent}

@@ -4,6 +4,11 @@
     /* Custom color variables */
     --color-debug: #ff00ff;
 
+    --color-page-bg-light: #ffffff;
+    --color-page-bg-dark: #1a1a1a;
+    --color-page-text-light: #000000;
+    --color-page-text-dark: #ffffff;
+
     /* Primary color palette */
     --color-primary-50: #faf5ff;
     --color-primary-100: #f3e8ff;
