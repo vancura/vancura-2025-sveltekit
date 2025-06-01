@@ -12,8 +12,37 @@ This project uses:
 - **Storybook 8.4+** for component testing and documentation
 - **TypeScript** for type safety
 - **MDX** support for blog content
+- **Inter Font** from Google Fonts for typography
 
 ## Implementation Details
+
+### Google Fonts Integration
+
+Inter font is preloaded in the app.html file:
+
+```html
+<!-- Preload Inter font -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+    rel="preload"
+    as="style"
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
+/>
+<link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
+/>
+```
+
+The font is then applied throughout the application through Tailwind configuration:
+
+```javascript
+// tailwind.config.js
+fontFamily: {
+  sans: ['Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
+},
+```
 
 ### Tailwind 4 Integration
 
@@ -21,46 +50,70 @@ Tailwind 4 requires different configuration compared to previous versions:
 
 1. Use `@tailwindcss/postcss` instead of direct Tailwind integration:
 
-   ```javascript
-   // postcss.config.js
-   export default {
-     plugins: {
-       "@tailwindcss/postcss": {},
-       autoprefixer: {},
-     },
-   };
-   ```
+    ```javascript
+    // postcss.config.js
+    export default {
+        plugins: {
+            '@tailwindcss/postcss': {},
+            autoprefixer: {},
+        },
+    };
+    ```
 
 2. Include `coreUtilities: true` in Tailwind config:
 
-   ```javascript
-   // tailwind.config.js
-   export default {
-     content: [
-       "./src/**/*.{html,js,svelte,ts}",
-       "./node_modules/flowbite-svelte/**/*.{html,js,svelte,ts}",
-     ],
-     coreUtilities: true, // Enable core utilities for Tailwind 4
-     presets: [require("@tailwindcss/typography")],
-     theme: {
-       extend: {},
-     },
-     plugins: [require("flowbite/plugin")],
-   };
-   ```
+    ```javascript
+    // tailwind.config.js
+    export default {
+        content: ['./src/**/*.{html,js,svelte,ts}', './node_modules/flowbite-svelte/**/*.{html,js,svelte,ts}'],
+        coreUtilities: true, // Enable core utilities for Tailwind 4
+        presets: [require('@tailwindcss/typography')],
+        theme: {
+            extend: {
+                fontFamily: {
+                    sans: [
+                        'Inter',
+                        'ui-sans-serif',
+                        'system-ui',
+                        '-apple-system',
+                        'BlinkMacSystemFont',
+                        'Segoe UI',
+                        'Roboto',
+                        'Helvetica Neue',
+                        'Arial',
+                        'sans-serif',
+                    ],
+                },
+                colors: {
+                    primary: {
+                        // Custom color palette
+                        50: '#eef2ff',
+                        100: '#e0e7ff',
+                        // ... other shades
+                        900: '#312e81',
+                    },
+                },
+                boxShadow: {
+                    soft: '0 2px 15px -3px rgba(0, 0, 0, 0.07), 0 10px 20px -2px rgba(0, 0, 0, 0.04)',
+                },
+            },
+        },
+        plugins: [require('flowbite/plugin')],
+    };
+    ```
 
 3. Use the Vite plugin for Tailwind:
 
-   ```typescript
-   // vite.config.ts
-   import { sveltekit } from "@sveltejs/kit/vite";
-   import { defineConfig } from "vite";
-   import tailwindcss from "@tailwindcss/vite";
+    ```typescript
+    // vite.config.ts
+    import { sveltekit } from '@sveltejs/kit/vite';
+    import { defineConfig } from 'vite';
+    import tailwindcss from '@tailwindcss/vite';
 
-   export default defineConfig({
-     plugins: [tailwindcss(), sveltekit()],
-   });
-   ```
+    export default defineConfig({
+        plugins: [tailwindcss(), sveltekit()],
+    });
+    ```
 
 ### SvelteKit Configuration
 
@@ -68,31 +121,31 @@ The SvelteKit configuration uses:
 
 ```javascript
 // svelte.config.js
-import adapter from "@sveltejs/adapter-auto";
-import { mdsvex } from "mdsvex";
-import sveltePreprocess from "svelte-preprocess";
+import adapter from '@sveltejs/adapter-auto';
+import { mdsvex } from 'mdsvex';
+import sveltePreprocess from 'svelte-preprocess';
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
-  preprocess: [
-    sveltePreprocess({
-      typescript: true,
-      postcss: true,
-    }),
-    mdsvex({
-      extensions: [".md", ".mdx"],
-    }),
-  ],
+    preprocess: [
+        sveltePreprocess({
+            typescript: true,
+            postcss: true,
+        }),
+        mdsvex({
+            extensions: ['.md', '.mdx'],
+        }),
+    ],
 
-  extensions: [".svelte", ".md", ".mdx"],
+    extensions: ['.svelte', '.md', '.mdx'],
 
-  kit: {
-    adapter: adapter(),
-    alias: {
-      $lib: "./src/lib",
-      $content: "./src/content",
+    kit: {
+        adapter: adapter(),
+        alias: {
+            $lib: './src/lib',
+            $content: './src/content',
+        },
     },
-  },
 };
 
 export default config;
@@ -104,39 +157,56 @@ Components are structured with:
 
 1. **UI Components** (`src/lib/components/ui/`):
 
-   - **Button.svelte** - A customizable button with multiple variants, sizes, and states
+    - **Button.svelte** - A customizable button with multiple variants, sizes, and states
 
-     - **Props**:
-       - `variant`: 'primary' | 'secondary' | 'danger' | 'outline' (default: 'primary')
-       - `size`: 'small' | 'medium' | 'large' (default: 'medium')
-       - `disabled`: boolean (default: false)
-       - `type`: 'button' | 'submit' | 'reset' (default: 'button')
-       - `icon`: boolean (default: false) - Adds flex alignment for button with icons
-       - `class`: string - Additional CSS classes
+        - **Props**:
+            - `variant`: 'primary' | 'secondary' | 'danger' | 'outline' (default: 'primary')
+            - `size`: 'small' | 'medium' | 'large' (default: 'medium')
+            - `disabled`: boolean (default: false)
+            - `type`: 'button' | 'submit' | 'reset' (default: 'button')
+            - `icon`: boolean (default: false) - Adds flex alignment for button with icons
+            - `class`: string - Additional CSS classes
+        - **Styling**:
+            - Uses Inter font with proper font weights
+            - Consistent rounded corners
+            - Smooth hover and focus states with transitions
+            - Active state with subtle transform effect
+            - Custom primary color palette from the theme
 
-   - **Card.svelte** - A content container with customizable variants, headers, and footers
-     - **Props**:
-       - `title`: string - Optional card title displayed in the header
-       - `elevated`: boolean - Adds shadow for an elevated appearance (default: false)
-       - `variant`: 'default' | 'primary' | 'secondary' (default: 'default')
-       - `hasFooter`: boolean - Whether to display the footer section (default: true)
-       - `class`: string - Additional CSS classes
-     - **Slots**:
-       - Default slot: Card content
-       - `footer`: Optional footer content
+    - **Card.svelte** - A content container with customizable variants, headers, and footers
+        - **Props**:
+            - `title`: string - Optional card title displayed in the header
+            - `elevated`: boolean - Adds shadow for an elevated appearance (default: false)
+            - `variant`: 'default' | 'primary' | 'secondary' (default: 'default')
+            - `hasFooter`: boolean - Whether to display the footer section (default: true)
+            - `class`: string - Additional CSS classes
+        - **Slots**:
+            - Default slot: Card content
+            - `footer`: Optional footer content
+        - **Styling**:
+            - Soft shadows with hover effects
+            - Consistent padding and spacing
+            - Smooth transitions between states
+            - Semantic color usage for different variants
 
 2. **Layout Components** (`src/lib/components/layout/`):
 
-   - **Header.svelte** - Responsive navigation header with mobile support
-     - **Props**:
-       - `title`: string - Site title/logo text (default: 'My Portfolio')
-       - `navItems`: Array of `{label: string, url: string}` objects for navigation links
-       - `theme`: 'light' | 'dark' | 'transparent' - Color theme (default: 'light')
-       - `sticky`: boolean - Whether header sticks to top while scrolling (default: false)
-       - `class`: string - Additional CSS classes
+    - **Header.svelte** - Responsive navigation header with mobile support
+        - **Props**:
+            - `title`: string - Site title/logo text (default: 'My Portfolio')
+            - `navItems`: Array of `{label: string, url: string}` objects for navigation links
+            - `theme`: 'light' | 'dark' | 'transparent' - Color theme (default: 'light')
+            - `sticky`: boolean - Whether header sticks to top while scrolling (default: false)
+            - `class`: string - Additional CSS classes
+        - **Styling**:
+            - Clean, minimal design with appropriate spacing
+            - Animated underline effect for navigation items
+            - Mobile-responsive with animated menu
+            - Seamless sticky behavior
+            - Theming support for different appearances
 
 3. **Feature Components** (`src/lib/components/feature/`):
-   - This directory is set up for future feature-specific components
+    - This directory is set up for future feature-specific components
 
 ### CSS Approach
 
@@ -144,10 +214,10 @@ Tailwind 4 supports utility classes similar to previous versions but with a more
 
 ```html
 <!-- Tailwind 4 with utility classes -->
-<div class="max-w-4xl mx-auto px-4 py-8">
-  <header class="mb-8">
-    <h1 class="text-4xl font-bold">Title</h1>
-  </header>
+<div class="mx-auto max-w-4xl px-4 py-8 font-sans">
+    <header class="mb-8">
+        <h1 class="text-4xl font-bold">Title</h1>
+    </header>
 </div>
 ```
 
@@ -157,6 +227,8 @@ Key differences with Tailwind 4:
 - Better performance through the Vite plugin integration
 - Core utilities enabled with `coreUtilities: true` in config
 - Enhanced composability with modern CSS features
+- Custom color schemes for consistent branding
+- Font family extensions for typography
 
 ### Storybook Integration
 
@@ -164,22 +236,18 @@ Storybook is set up with modern Svelte 5 support:
 
 ```typescript
 // .storybook/main.ts
-import type { StorybookConfig } from "@storybook/sveltekit";
+import type { StorybookConfig } from '@storybook/sveltekit';
 
 const config: StorybookConfig = {
-  stories: ["../src/**/*.mdx", "../src/**/*.stories.@(js|jsx|ts|tsx|svelte)"],
-  addons: [
-    "@storybook/addon-links",
-    "@storybook/addon-essentials",
-    "@storybook/addon-svelte-csf",
-  ],
-  framework: {
-    name: "@storybook/sveltekit",
-    options: {},
-  },
-  docs: {
-    autodocs: "tag",
-  },
+    stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|ts|tsx|svelte)'],
+    addons: ['@storybook/addon-links', '@storybook/addon-essentials', '@storybook/addon-svelte-csf'],
+    framework: {
+        name: '@storybook/sveltekit',
+        options: {},
+    },
+    docs: {
+        autodocs: 'tag',
+    },
 };
 
 export default config;
@@ -191,38 +259,38 @@ Stories use the new `defineMeta` pattern with comprehensive examples for each co
 
 ```svelte
 <script module>
-  import { defineMeta } from '@storybook/addon-svelte-csf';
-  import { fn } from '@storybook/test';
-  import Button from './Button.svelte';
+    import { defineMeta } from '@storybook/addon-svelte-csf';
+    import { fn } from '@storybook/test';
+    import Button from './Button.svelte';
 
-  const { Story } = defineMeta({
-    title: 'UI/Button',
-    component: Button,
-    tags: ['autodocs'],
-    argTypes: {
-      variant: {
-        control: 'select',
-        options: ['primary', 'secondary', 'danger', 'outline'],
-        description: 'Button style variant',
-      },
-      size: {
-        control: 'select',
-        options: ['small', 'medium', 'large'],
-        description: 'Button size',
-      },
-      // Additional controls with descriptions
-    },
-  });
+    const { Story } = defineMeta({
+        title: 'UI/Button',
+        component: Button,
+        tags: ['autodocs'],
+        argTypes: {
+            variant: {
+                control: 'select',
+                options: ['primary', 'secondary', 'danger', 'outline'],
+                description: 'Button style variant',
+            },
+            size: {
+                control: 'select',
+                options: ['small', 'medium', 'large'],
+                description: 'Button size',
+            },
+            // Additional controls with descriptions
+        },
+    });
 </script>
 
 <!-- Multiple stories showcasing variants -->
 <Story name="Variants">
-  <div class="flex flex-wrap gap-4">
-    <Button variant="primary">Primary</Button>
-    <Button variant="secondary">Secondary</Button>
-    <Button variant="danger">Danger</Button>
-    <Button variant="outline">Outline</Button>
-  </div>
+    <div class="flex flex-wrap gap-4">
+        <Button variant="primary">Primary</Button>
+        <Button variant="secondary">Secondary</Button>
+        <Button variant="danger">Danger</Button>
+        <Button variant="outline">Outline</Button>
+    </div>
 </Story>
 
 <!-- Stories for sizes, states, icons, etc. -->
@@ -232,39 +300,39 @@ Stories use the new `defineMeta` pattern with comprehensive examples for each co
 
 ```svelte
 <script module>
-  import { defineMeta } from '@storybook/addon-svelte-csf';
-  import Card from './Card.svelte';
-  import Button from './Button.svelte';
+    import { defineMeta } from '@storybook/addon-svelte-csf';
+    import Card from './Card.svelte';
+    import Button from './Button.svelte';
 
-  const { Story } = defineMeta({
-    title: 'UI/Card',
-    component: Card,
-    tags: ['autodocs'],
-    argTypes: {
-      title: {
-        control: 'text',
-        description: 'Card title displayed in the header',
-      },
-      variant: {
-        control: 'select',
-        options: ['default', 'primary', 'secondary'],
-        description: 'Card style variant',
-      },
-      // Additional controls with descriptions
-    },
-  });
+    const { Story } = defineMeta({
+        title: 'UI/Card',
+        component: Card,
+        tags: ['autodocs'],
+        argTypes: {
+            title: {
+                control: 'text',
+                description: 'Card title displayed in the header',
+            },
+            variant: {
+                control: 'select',
+                options: ['default', 'primary', 'secondary'],
+                description: 'Card style variant',
+            },
+            // Additional controls with descriptions
+        },
+    });
 </script>
 
 <!-- Multiple stories showcasing variants -->
 <Story name="Variants">
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl">
-    <Card title="Default Variant" variant="default">
-      <p class="mb-4">Default card style</p>
-      <Button variant="outline" size="small">Learn More</Button>
-      <svelte:fragment slot="footer">Default footer</svelte:fragment>
-    </Card>
-    <!-- More card variants -->
-  </div>
+    <div class="grid max-w-4xl grid-cols-1 gap-4 md:grid-cols-3">
+        <Card title="Default Variant" variant="default">
+            <p class="mb-4">Default card style</p>
+            <Button variant="outline" size="small">Learn More</Button>
+            <svelte:fragment slot="footer">Default footer</svelte:fragment>
+        </Card>
+        <!-- More card variants -->
+    </div>
 </Story>
 
 <!-- Stories for elevation, header/footer options, etc. -->
@@ -284,18 +352,18 @@ The package.json is configured for component publishing:
 
 ```json
 {
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "svelte": "./dist/index.js"
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "svelte": "./dist/index.js"
+        }
+    },
+    "svelte": "./dist/index.js",
+    "files": ["dist"],
+    "scripts": {
+        "package": "svelte-package && publint",
+        "prepublishOnly": "yarn package"
     }
-  },
-  "svelte": "./dist/index.js",
-  "files": ["dist"],
-  "scripts": {
-    "package": "svelte-package && publint",
-    "prepublishOnly": "yarn package"
-  }
 }
 ```
 
@@ -305,18 +373,25 @@ The package.json is configured for component publishing:
 
 1. **Tailwind Utility Classes Not Working**
 
-   - Ensure Tailwind 4 is properly configured with `@tailwindcss/postcss`
-   - Verify `coreUtilities: true` is set in your tailwind.config.js
-   - Check that the Vite plugin for Tailwind is correctly configured
+    - Ensure Tailwind 4 is properly configured with `@tailwindcss/postcss`
+    - Verify `coreUtilities: true` is set in your tailwind.config.js
+    - Check that the Vite plugin for Tailwind is correctly configured
 
 2. **MDX Content Not Rendering**
 
-   - Ensure MDsveX is properly configured in svelte.config.js
-   - Verify file extensions match the configured extensions (.md, .mdx)
+    - Ensure MDsveX is properly configured in svelte.config.js
+    - Verify file extensions match the configured extensions (.md, .mdx)
 
-3. **Build Errors**
-   - Run `yarn svelte-kit sync` to refresh SvelteKit types and configuration
-   - Ensure all dependencies are properly installed
+3. **Font Not Loading**
+
+    - Check that Google Fonts preloading is correctly set up in app.html
+    - Verify that Inter font is properly configured in tailwind.config.js
+    - Clear browser cache if font changes aren't visible
+
+4. **Build Errors**
+    - Run `yarn svelte-kit sync` to refresh SvelteKit types and configuration
+    - Ensure all dependencies are properly installed
+    - Add `@sveltejs/adapter-auto` if it's missing from your dependencies
 
 ### Development Commands
 

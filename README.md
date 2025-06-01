@@ -12,6 +12,7 @@ This project provides a foundation for creating a modern blog or portfolio websi
 - **Storybook 8.4+** for component development and testing
 - **TypeScript** for code quality and developer experience
 - **MDX** support for rich content authoring
+- **Inter Font** from Google Fonts for beautiful typography
 
 ## Quick Start
 
@@ -33,6 +34,8 @@ yarn storybook
 - **Blog Ready**: Built-in MDX support with dynamic routing for blog posts
 - **Developer Experience**: Type safety, component stories, and full build pipeline
 - **Tailwind 4 Integration**: Fully implemented with utility classes instead of inline styles
+- **Beautiful Typography**: Powered by Inter font (preloaded from Google Fonts)
+- **Enhanced UI**: Modern styling with soft shadows, consistent color palette, and smooth transitions
 
 ## Documentation
 
