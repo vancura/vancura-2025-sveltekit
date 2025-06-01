@@ -166,13 +166,49 @@ export default {
 };
 ```
 
+### Storybook Configuration
+
+Storybook 8.6.14 is configured with Tailwind CSS v4 integration:
+
+```javascript
+// .storybook/main.js
+const config = {
+  stories: ['../src/lib/**/*.stories.@(js|jsx|ts|tsx|svelte)'],
+  addons: [
+    '@storybook/addon-links',
+    '@storybook/addon-essentials',
+    '@storybook/addon-svelte-csf',
+  ],
+  framework: {
+    name: '@storybook/sveltekit',
+    options: {},
+  },
+  docs: {
+    autodocs: 'tag',
+  },
+  staticDirs: ['../static'],
+  core: {
+    disableTelemetry: true,
+  },
+  viteFinal: async (config) => {
+    // Add Tailwind CSS v4 plugin for Storybook compatibility
+    const { default: tailwindcss } = await import('@tailwindcss/vite');
+    config.plugins.unshift(tailwindcss());
+    return config;
+  },
+};
+```
+
+**Note:** The `viteFinal` function is essential for Tailwind CSS v4 integration with Storybook.
+
 ## Project Structure
 
 ```text
 src/
 ├── lib/                    # Reusable components
 │   ├── components/         # UI and layout components
-│   │   ├── ui/            # Button, Card, etc.
+│   │   ├── ui/            # Button, Card, etc. with stories
+│   │   ├── feature/       # Feature-specific components
 │   │   └── layout/        # Header, Footer, etc.
 │   ├── layouts/           # MDX layouts
 │   │   └── blog.svelte    # Blog post layout
@@ -188,9 +224,9 @@ src/
 
 ## Component Development
 
-### Component Patterns
+### Enhanced Component Patterns
 
-Components follow consistent patterns with proper TypeScript and ESLint compliance:
+Components follow consistent patterns with proper TypeScript, clean reactive statements, and comprehensive Storybook integration:
 
 ```svelte
 <!-- Example: Button.svelte -->
@@ -204,11 +240,16 @@ Components follow consistent patterns with proper TypeScript and ESLint complian
   let className = '';
   export { className as class };
 
-  // Reactive classes based on props
+  // Compute Tailwind classes based on variants using primary color palette
   $: variantClasses = {
-    primary: 'bg-primary-600 text-white hover:bg-primary-700 /* ... */',
-    secondary: 'bg-gray-100 text-gray-800 hover:bg-gray-200 /* ... */',
-    // ...
+    primary:
+      'bg-primary-600 text-white hover:bg-primary-700 focus:ring-primary-500 border border-transparent',
+    secondary:
+      'bg-gray-100 text-gray-800 hover:bg-gray-200 focus:ring-gray-500 border border-transparent',
+    danger:
+      'bg-red-600 text-white hover:bg-red-700 focus:ring-red-500 border border-transparent',
+    outline:
+      'bg-transparent text-primary-600 hover:bg-primary-50 border border-primary-300 hover:border-primary-400 focus:ring-primary-500',
   }[variant];
 
   $: sizeClasses = {
@@ -216,32 +257,110 @@ Components follow consistent patterns with proper TypeScript and ESLint complian
     medium: 'text-sm px-4 py-2 rounded-md',
     large: 'text-base px-6 py-3 rounded-md',
   }[size];
+
+  // Consolidated class composition for better maintainability
+  $: baseClasses = [
+    'font-medium shadow-sm transition-all duration-200',
+    icon ? 'inline-flex items-center justify-center' : '',
+    disabled
+      ? 'opacity-60 cursor-not-allowed'
+      : 'focus:outline-none focus:ring-2 focus:ring-offset-2 active:translate-y-0.5',
+    variantClasses,
+    sizeClasses,
+    className,
+  ]
+    .filter(Boolean)
+    .join(' ');
 </script>
 
-<button
-  {type}
-  {disabled}
-  class="font-medium shadow-sm transition-all duration-200 {variantClasses} {sizeClasses} {className}"
-  on:click
->
-  <slot />
+<button {type} class={baseClasses} {disabled} on:click>
+  <slot>Button</slot>
 </button>
+```
+
+### Card Component with Dual Content API
+
+The Card component supports both props (for Storybook controls) and slots (for complex content):
+
+```svelte
+<!-- Card.svelte -->
+<script lang="ts">
+  export let title: string = '';
+  export let elevated: boolean = false;
+  export let variant: 'default' | 'primary' | 'secondary' = 'default';
+  export let hasFooter: boolean = true;
+  export let content: string = ''; // For Storybook controls
+  export let footerContent: string = ''; // For Storybook controls
+  let className = '';
+  export { className as class };
+
+  $: variantClasses = {
+    default: 'bg-white border-gray-200',
+    primary: 'bg-primary-50 border-primary-200',
+    secondary: 'bg-gray-50 border-gray-200',
+  }[variant];
+
+  $: headerFooterClasses = {
+    default: 'border-gray-200 bg-gray-50',
+    primary: 'border-primary-200 bg-primary-100',
+    secondary: 'border-gray-200 bg-gray-100',
+  }[variant];
+
+  $: baseClasses = [
+    'overflow-hidden rounded-lg border transition-all duration-300',
+    elevated ? 'shadow-soft hover:shadow-lg' : 'shadow-sm hover:shadow-md',
+    variantClasses,
+    className,
+  ]
+    .filter(Boolean)
+    .join(' ');
+</script>
+
+<div class={baseClasses}>
+  {#if title}
+    <div class="border-b px-5 py-4 {headerFooterClasses}">
+      <h3 class="text-lg font-semibold text-gray-900">{title}</h3>
+    </div>
+  {/if}
+  <div class="p-5">
+    {#if content}
+      {content}
+    {:else}
+      <slot />
+    {/if}
+  </div>
+  {#if hasFooter}
+    <div class="border-t px-5 py-4 {headerFooterClasses}">
+      {#if footerContent}
+        {footerContent}
+      {:else}
+        <slot name="footer">
+          <!-- Default footer content if none is provided -->
+        </slot>
+      {/if}
+    </div>
+  {/if}
+</div>
 ```
 
 ### Key Implementation Notes
 
-- All `{#each}` blocks must have keys for performance: `{#each items as item (item.id)}`
-- Use proper TypeScript types for all props
-- Follow naming conventions (camelCase for variables, PascalCase for components)
-- Security warnings about object injection in component variant patterns are safe to ignore
+- **Primary Color Palette**: All components use the custom `primary-*` color variables defined in app.css
+- **Consolidated Reactive Statements**: Use array-based class composition for better maintainability
+- **Dual Content API**: Card component supports both props (for Storybook) and slots (for complex content)
+- **TypeScript**: All props have proper types with meaningful defaults
+- **Performance**: All `{#each}` blocks must have keys: `{#each items as item (item.id)}`
+- **Security**: Object injection warnings for component variant patterns are safe to ignore
 
-### Storybook Stories
+### Enhanced Storybook Stories
 
-Using the modern Svelte CSF format:
+Using modern Svelte CSF format with comprehensive controls and meaningful defaults:
 
 ```svelte
+<!-- Button.stories.svelte -->
 <script module>
   import { defineMeta } from '@storybook/addon-svelte-csf';
+  import { fn } from '@storybook/test';
   import Button from './Button.svelte';
 
   const { Story } = defineMeta({
@@ -252,13 +371,125 @@ Using the modern Svelte CSF format:
       variant: {
         control: 'select',
         options: ['primary', 'secondary', 'danger', 'outline'],
+        description: 'Button style variant',
       },
+      size: {
+        control: 'select',
+        options: ['small', 'medium', 'large'],
+        description: 'Button size',
+      },
+      disabled: {
+        control: 'boolean',
+        description: 'Whether the button is disabled',
+      },
+      icon: {
+        control: 'boolean',
+        description:
+          'Whether the button contains an icon (adds flex alignment)',
+      },
+      type: {
+        control: 'select',
+        options: ['button', 'submit', 'reset'],
+        description: 'HTML button type attribute',
+      },
+      class: {
+        control: 'text',
+        description: 'Additional CSS classes to apply',
+      },
+    },
+    args: {
+      onClick: fn(),
+      variant: 'primary',
+      size: 'medium',
+      disabled: false,
+      icon: false,
+      type: 'button',
+      class: '',
     },
   });
 </script>
 
-<Story name="Default">
-  <Button>Click me</Button>
+<!-- Interactive Default story with all controls -->
+<Story name="Default" let:args>
+  <Button
+    variant={args?.variant || 'primary'}
+    size={args?.size || 'medium'}
+    disabled={args?.disabled || false}
+    icon={args?.icon || false}
+    type={args?.type || 'button'}
+    class={args?.class || ''}
+    on:click={args.onClick}
+  >
+    Click me
+  </Button>
+</Story>
+
+<!-- Example stories with asChild for custom layouts -->
+<Story name="Variants" asChild>
+  <div class="flex flex-wrap gap-4">
+    <Button variant="primary">Primary</Button>
+    <Button variant="secondary">Secondary</Button>
+    <Button variant="danger">Danger</Button>
+    <Button variant="outline">Outline</Button>
+  </div>
+</Story>
+```
+
+### Card Stories with Content Controls
+
+```svelte
+<!-- Card.stories.svelte -->
+<script module>
+  import { defineMeta } from '@storybook/addon-svelte-csf';
+  import { fn } from '@storybook/test';
+  import Button from './Button.svelte';
+  import Card from './Card.svelte';
+
+  const { Story } = defineMeta({
+    title: 'UI/Card',
+    component: Card,
+    tags: ['autodocs'],
+    argTypes: {
+      title: {
+        control: 'text',
+        description: 'Card title displayed in the header',
+      },
+      content: {
+        control: 'text',
+        description: 'Main content of the card (alternative to slot)',
+      },
+      footerContent: {
+        control: 'text',
+        description: 'Footer content of the card (alternative to footer slot)',
+      },
+      // ... other argTypes
+    },
+    args: {
+      onClick: fn(),
+      title: 'Sample Card Title',
+      content:
+        'This is the main content of the card. You can edit this text in the controls panel to see how the card adapts to different content lengths.',
+      footerContent: 'Footer content with additional information',
+      elevated: false,
+      variant: 'default',
+      hasFooter: true,
+      class: '',
+    },
+  });
+</script>
+
+<!-- Fully controllable Default story -->
+<Story name="Default" let:args>
+  <Card
+    title={args?.title || 'Sample Card Title'}
+    elevated={args?.elevated || false}
+    variant={args?.variant || 'default'}
+    hasFooter={args?.hasFooter !== false}
+    content={args?.content || 'This is the main content of the card...'}
+    footerContent={args?.footerContent ||
+      'Footer content with additional information'}
+    class={args?.class || ''}
+  />
 </Story>
 ```
 
@@ -317,6 +548,7 @@ The blog layout (`src/lib/layouts/blog.svelte`) provides consistent styling:
 - `yarn build` - Build for production
 - `yarn preview` - Preview production build
 - `yarn storybook` - Start Storybook at localhost:6006
+- `yarn build-storybook` - Build Storybook for deployment
 - `yarn lint` - Run ESLint with auto-fix
 - `yarn format` - Format code with Prettier
 - `yarn type-check` - Run TypeScript type checking
@@ -325,20 +557,30 @@ The blog layout (`src/lib/layouts/blog.svelte`) provides consistent styling:
 
 1. **Development**: ESLint runs on save with comprehensive rules
 2. **Pre-commit**: Format code with Prettier
-3. **Component development**: Test in Storybook
+3. **Component development**: Test in Storybook with full controls
 4. **Type safety**: TypeScript checking with `yarn type-check`
 
 ### Adding New Components
 
 1. Create component in appropriate directory:
 
-   - `src/lib/components/ui/` for UI components
+   - `src/lib/components/ui/` for UI components (Button, Card, etc.)
    - `src/lib/components/layout/` for layout components
    - `src/lib/components/feature/` for feature-specific components
 
-2. Export from `src/lib/index.ts` if needed globally
+2. Follow the enhanced component patterns:
 
-3. Create a `.stories.svelte` file for Storybook
+   - Use consolidated reactive statements with array-based class composition
+   - Include proper TypeScript types with meaningful defaults
+   - Use custom primary color palette (`primary-*` classes)
+   - Export className as class for additional styling
+
+3. Create comprehensive `.stories.svelte` file:
+
+   - Include all props in argTypes with descriptions
+   - Provide meaningful default args
+   - Create interactive Default story with `let:args`
+   - Add example stories with `asChild` for custom layouts
 
 4. Follow ESLint rules:
    - Add JSDoc documentation for functions
@@ -395,6 +637,7 @@ yarn build  # Test build locally
 - Ensure file is included in `content` array in tailwind.config.js
 - Check that Tailwind Vite plugin is loaded before SvelteKit in vite.config.ts
 - Verify `@tailwind` directives are in app.css
+- Use custom `primary-*` colors defined in app.css
 
 ### MDX Not Rendering
 
@@ -407,6 +650,8 @@ yarn build  # Test build locally
 - Clear `.storybook-static` directory
 - Ensure story files match pattern `*.stories.svelte`
 - Check that component exports match imports
+- Verify `viteFinal` function is present in main.js for Tailwind v4 support
+- TypeScript errors in stories are often non-critical if Storybook builds successfully
 
 ### Package Management
 
@@ -495,6 +740,39 @@ pnpUnpluggedPackages:
    - Vercel adapter configured as unplugged in dependenciesMeta
    - Full .yarnrc.yml configuration documented
 
+### Component System Enhancement (January 2025)
+
+1. **Button Component Cleanup**:
+
+   - **Replaced hardcoded purple colors** with custom `primary-*` color palette
+   - **Consolidated reactive statements** into single `baseClasses` computed property
+   - **Enhanced Storybook stories** with comprehensive controls and meaningful defaults
+   - **Added interactive Default story** with `let:args` for full control testing
+   - **Improved maintainability** with array-based class composition
+
+2. **Card Component Enhancement**:
+
+   - **Dual Content API**: Supports both props (for Storybook) and slots (for complex content)
+   - **Added `content` and `footerContent` props** for Storybook control integration
+   - **Maintained backward compatibility** with existing slot-based usage
+   - **Enhanced color consistency** using `primary-*` color palette
+   - **Consolidated reactive statements** for better code organization
+
+3. **Storybook Integration Improvements**:
+
+   - **Complete prop coverage**: Every component prop exposed in Storybook controls
+   - **Descriptive argTypes**: All controls include helpful descriptions
+   - **Meaningful defaults**: Showcase component capabilities with sensible values
+   - **Interactive Default stories**: Fully controllable components for testing
+   - **Professional documentation**: Industry-standard design system experience
+
+4. **Design System Consistency**:
+
+   - **Custom primary color palette**: Consistent `primary-*` colors across all components
+   - **Enhanced shadow system**: Custom `shadow-soft` variable for elevated components
+   - **Improved component patterns**: Standardized reactive statement organization
+   - **Better TypeScript integration**: Proper types with meaningful defaults
+
 **Current State:** The project is production-ready with:
 
 - ✅ All linting and formatting working
@@ -504,3 +782,6 @@ pnpUnpluggedPackages:
 - ✅ Clean, well-documented configuration files
 - ✅ Tailwind 4 with CSS custom properties
 - ✅ Latest stable dependency versions
+- ✅ Professional component system with full Storybook integration
+- ✅ Consistent design system with custom color palette
+- ✅ Enhanced component patterns for maintainability
