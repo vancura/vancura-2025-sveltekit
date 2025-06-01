@@ -8,7 +8,10 @@
     <meta name="description" content="Welcome to my portfolio website" />
 </svelte:head>
 
-<div class="mx-auto max-w-7xl px-4 py-12 font-sans sm:px-6 lg:px-8">
+<div class="mx-auto max-w-7xl border-4 px-4 py-12 font-sans sm:px-6 lg:px-8">
+    <div class="border-2 bg-red-500 p-4">TEST RED BACKGROUND</div>
+    <div class="bg-debug border-2 p-4">HERE HERE HERE</div>
+
     <h1 class="mb-6 text-4xl font-bold text-gray-900">Welcome to My Portfolio</h1>
 
     <p class="mb-12 max-w-3xl text-xl text-gray-600">
