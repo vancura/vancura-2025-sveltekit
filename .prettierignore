@@ -1,9 +1,44 @@
-.git
-.nitro
-.output
-**/*.vue
-dist
+# Dependencies and lock files
 node_modules
 package-lock.json
 pnpm-lock.yaml
 yarn.lock
+
+# Build outputs
+dist
+build
+.output
+.svelte-kit
+storybook-static
+
+# Git and system files
+.git
+.DS_Store
+
+# Yarn PnP
+.pnp.*
+.yarn/cache
+.yarn/install-state.gz
+
+# Generated files
+vite.config.*.timestamp-*
+**/*.min.js
+**/*.min.css
+
+# Logs and temp files
+*.log
+*.tmp
+
+# Environment files
+.env*
+!.env.example
+
+# Coverage reports
+coverage
+
+# IDE files
+.vscode/settings.json
+.idea
+
+# Remove Vue-specific patterns (not needed)
+# **/*.vue

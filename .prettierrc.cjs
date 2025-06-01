@@ -1,110 +1,50 @@
-let organizeImportsPlugin = require.resolve('prettier-plugin-organize-imports');
-let organizeAttributesPlugin = require.resolve('prettier-plugin-organize-attributes');
-let jsdocPlugin = require.resolve('prettier-plugin-jsdoc');
-let sveltePlugin = require.resolve('prettier-plugin-svelte');
-let tailwindPlugin = require.resolve('prettier-plugin-tailwindcss');
+// @ts-check
 
-// Important: prettier-plugin-tailwindcss must be the last plugin in the array
-// or it won't properly sort Tailwind classes
-const plugins = [organizeImportsPlugin, organizeAttributesPlugin, jsdocPlugin, sveltePlugin, tailwindPlugin].filter(
-    Boolean
-);
-
+/** @type {import('prettier').Config} */
 module.exports = {
-    plugins,
+    // Plugins for enhanced formatting (load via require for Yarn PnP compatibility)
+    plugins: [
+        require.resolve('prettier-plugin-organize-imports'),
+        require.resolve('prettier-plugin-svelte'),
+        require.resolve('prettier-plugin-tailwindcss'),
+        require.resolve('prettier-plugin-jsdoc'),
+    ],
+
+    // Basic formatting options
+    semi: true,
+    singleQuote: true,
     tabWidth: 4,
     useTabs: false,
-    printWidth: 120,
-    proseWrap: 'never',
-    singleQuote: true,
-    singleAttributePerLine: false,
-    semi: true,
     trailingComma: 'es5',
-    bracketSpacing: true,
-    bracketSameLine: false,
-    arrowParens: 'always',
-    embeddedLanguageFormatting: 'auto',
-    htmlWhitespaceSensitivity: 'ignore',
+    printWidth: 120,
     endOfLine: 'lf',
-    quoteProps: 'as-needed',
 
+    // File-specific overrides
     overrides: [
+        // Markdown and MDX files
         {
-            files: '*.svelte',
+            files: ['*.md', '*.mdx'],
             options: {
-                parser: 'svelte',
-                printWidth: 1000,
-                htmlWhitespaceSensitivity: 'ignore',
+                parser: 'markdown',
+                proseWrap: 'preserve',
+                printWidth: 80,
+                tabWidth: 2,
             },
         },
+        // JSON files
         {
-            files: '*.mjs',
+            files: ['*.json', '*.jsonc'],
             options: {
-                parser: 'babel',
-            },
-        },
-        {
-            files: '*.mdx',
-            options: {
-                parser: 'mdx',
-            },
-        },
-        {
-            files: '*.json',
-            options: {
+                tabWidth: 2,
                 parser: 'json',
             },
         },
+        // YAML files
         {
-            files: '*.yml',
+            files: ['*.yml', '*.yaml'],
             options: {
+                tabWidth: 2,
                 parser: 'yaml',
-            },
-        },
-        {
-            files: '*.yaml',
-            options: {
-                parser: 'yaml',
-            },
-        },
-        {
-            files: '*.md',
-            options: {
-                parser: 'markdown',
-            },
-        },
-        {
-            files: '*.js',
-            options: {
-                parser: 'babel',
-                printWidth: 1000,
-            },
-        },
-        {
-            files: '*.ts',
-            options: {
-                parser: 'typescript',
-            },
-        },
-        {
-            files: '*.tsx',
-            options: {
-                parser: 'typescript',
-            },
-        },
-        {
-            files: '*.cjs',
-            options: {
-                parser: 'babel',
-            },
-        },
-
-        {
-            files: '*.css',
-            options: {
-                parser: 'css',
-                tabWidth: 4,
-                singleQuote: false,
             },
         },
     ],
