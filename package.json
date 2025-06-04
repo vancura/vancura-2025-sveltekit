@@ -18,12 +18,11 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.28.0",
-    "@storybook/addon-essentials": "^8.6.14",
-    "@storybook/addon-links": "^8.6.14",
+    "@storybook/addon-docs": "9.0.4",
+    "@storybook/addon-links": "^9.0.4",
     "@storybook/addon-svelte-csf": "^5.0.3",
-    "@storybook/svelte": "^8.6.14",
-    "@storybook/sveltekit": "^8.6.14",
-    "@storybook/test": "^8.6.14",
+    "@storybook/svelte": "^9.0.4",
+    "@storybook/sveltekit": "^9.0.4",
     "@sveltejs/adapter-vercel": "^5.7.2",
     "@sveltejs/kit": "^2.21.1",
     "@sveltejs/vite-plugin-svelte": "^5.0.3",
@@ -43,6 +42,7 @@
     "eslint-plugin-promise": "^7.2.1",
     "eslint-plugin-security": "^3.0.1",
     "eslint-plugin-sonarjs": "^3.0.2",
+    "eslint-plugin-storybook": "9.0.4",
     "eslint-plugin-svelte": "^3.9.0",
     "eslint-plugin-tailwindcss": "^3.18.0",
     "mdsvex": "^0.12.6",
@@ -53,7 +53,7 @@
     "prettier-plugin-organize-imports": "^4.1.0",
     "prettier-plugin-svelte": "^3.4.0",
     "prettier-plugin-tailwindcss": "^0.6.12",
-    "storybook": "^8.6.14",
+    "storybook": "^9.0.4",
     "svelte": "^5.33.11",
     "svelte-check": "^4.2.1",
     "svelte-eslint-parser": "^1.2.0",
@@ -68,6 +68,18 @@
     "extends": ["plugin:storybook/recommended"]
   },
   "dependenciesMeta": {
+    "@storybook/addon-docs@9.0.4": {
+      "unplugged": true
+    },
+    "@storybook/addon-links@9.0.4": {
+      "unplugged": true
+    },
+    "@storybook/svelte@9.0.4": {
+      "unplugged": true
+    },
+    "@storybook/sveltekit@9.0.4": {
+      "unplugged": true
+    },
     "@sveltejs/adapter-vercel@5.7.2": {
       "unplugged": true
     }

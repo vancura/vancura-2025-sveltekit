@@ -1,6 +1,6 @@
 <script module>
     import { defineMeta } from '@storybook/addon-svelte-csf';
-    import { fn } from '@storybook/test';
+    import { fn } from 'storybook/test';
 
     import Button from './Button.svelte';
 
@@ -11,7 +11,7 @@
         argTypes: {
             variant: {
                 control: 'select',
-                options: ['primary', 'secondary', 'danger'],
+                options: ['primary', 'secondary', 'danger', 'outline'],
                 description: 'Button style variant',
             },
             size: {
@@ -68,6 +68,7 @@
         <Button variant="primary">Primary</Button>
         <Button variant="secondary">Secondary</Button>
         <Button variant="danger">Danger</Button>
+        <Button variant="outline">Outline</Button>
     </div>
 </Story>
 

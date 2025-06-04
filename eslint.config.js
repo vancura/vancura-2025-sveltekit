@@ -1,3 +1,6 @@
+// For more info, see https://github.com/storybookjs/eslint-plugin-storybook#configuration-flat-config-format
+import storybook from 'eslint-plugin-storybook';
+
 import eslint from '@eslint/js';
 import tseslint from '@typescript-eslint/eslint-plugin';
 import tsParser from '@typescript-eslint/parser';
@@ -24,6 +27,7 @@ export default [
             '**/dist/**',
             '**/.yarn/**',
             '**/storybook-static/**',
+            '**/.vercel/**',
             'vite.config.ts.timestamp-*',
             '**/*.min.js',
             'package-lock.json',
@@ -33,9 +37,7 @@ export default [
             '.pnp.*',
             '.yarnrc.yml',
         ],
-    },
-
-    // Base config for TypeScript and Svelte files that need type checking
+    }, // Base config for TypeScript and Svelte files that need type checking
     {
         files: ['**/*.ts', '**/*.svelte'],
         languageOptions: {
@@ -170,9 +172,7 @@ export default [
             'max-len': ['warn', { code: 120, ignoreUrls: true, ignoreStrings: true }],
             complexity: ['warn', { max: 15 }],
         },
-    },
-
-    // JavaScript files configuration (no TypeScript type checking)
+    }, // JavaScript files configuration (no TypeScript type checking)
     {
         files: ['**/*.js', '**/*.mjs', '**/*.cjs'],
         languageOptions: {
@@ -229,9 +229,7 @@ export default [
             'max-len': ['warn', { code: 120, ignoreUrls: true, ignoreStrings: true }],
             complexity: ['warn', { max: 15 }],
         },
-    },
-
-    // Markdown/MDX configuration
+    }, // Markdown/MDX configuration
     {
         files: ['**/*.md', '**/*.mdx'],
         languageOptions: {
@@ -245,9 +243,7 @@ export default [
             'import/no-unresolved': 'off',
             'jsdoc/require-jsdoc': 'off',
         },
-    },
-
-    // Svelte-specific configuration
+    }, // Svelte-specific configuration
     {
         files: ['**/*.svelte'],
         languageOptions: {
@@ -274,18 +270,14 @@ export default [
             'svelte/no-inline-styles': 'warn',
             'svelte/prefer-class-directive': 'warn',
         },
-    },
-
-    // Storybook files
+    }, // Storybook files
     {
         files: ['**/*.stories.@(js|jsx|ts|tsx|svelte)'],
         rules: {
             'import/no-default-export': 'off',
             'jsdoc/require-jsdoc': 'off',
         },
-    },
-
-    // Configuration files
+    }, // Configuration files
     {
         files: ['*.config.js', '*.config.ts', '*.config.mjs', '**/.storybook/*.js'],
         rules: {
@@ -294,17 +286,14 @@ export default [
             '@typescript-eslint/no-require-imports': 'off',
             '@typescript-eslint/no-var-requires': 'off',
         },
-    },
-
-    // Special files that should be ignored
+    }, // Special files that should be ignored
     {
         files: ['.eslintrc.cjs', '.prettierrc.cjs'],
         rules: {
             '@typescript-eslint/no-require-imports': 'off',
             '@typescript-eslint/no-var-requires': 'off',
         },
-    },
-
-    // Apply prettier config to disable formatting rules
+    }, // Apply prettier config to disable formatting rules
     prettierConfig,
+    ...storybook.configs['flat/recommended'],
 ];
