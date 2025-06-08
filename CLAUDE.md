@@ -6,7 +6,7 @@ This document provides detailed implementation instructions for working with thi
 
 - **SvelteKit 2.21.14** with **Svelte 5.33.11** for the framework
 - **Tailwind CSS 4.1.8** via Vite plugin for styling
-- **Storybook 9.0.4** for component testing and documentation
+- **Storybook 9.0.5** for component testing and documentation
 - **TypeScript 5.7.3** for type safety
 - **MDX** support for blog content via mdsvex 0.13.1
 - **Inter Font** from Google Fonts for typography
@@ -22,7 +22,7 @@ This document provides detailed implementation instructions for working with thi
 
 All packages are in `devDependencies` as this is a SvelteKit project that compiles at build time:
 
-- All Storybook packages (9.0.4)
+- All Storybook packages (9.0.5)
 - ESLint and plugins with comprehensive rules
 - Prettier with plugins for Svelte, Tailwind, imports, and JSDoc
 - Tailwind CSS 4.1.8 with Vite integration
@@ -168,16 +168,19 @@ export default {
 
 ### Storybook Configuration
 
-Storybook 9.0.4 is configured with Tailwind CSS v4 integration:
+Storybook 9.0.5 is configured with Tailwind CSS v4 integration:
 
 ```javascript
 // .storybook/main.js
+/** @type {import('@storybook/sveltekit').StorybookConfig} */
 const config = {
   stories: ['../src/lib/**/*.stories.@(js|jsx|ts|tsx|svelte)'],
   addons: [
-    '@storybook/addon-links',
+    '@storybook/addon-a11y',
     '@storybook/addon-docs',
+    '@storybook/addon-links',
     '@storybook/addon-svelte-csf',
+    '@storybook/addon-themes',
   ],
   framework: {
     name: '@storybook/sveltekit',
@@ -196,23 +199,22 @@ const config = {
     config.server = config.server || {};
     config.server.fs = config.server.fs || {};
     config.server.fs.allow = [
-      // Default SvelteKit allowed paths
+      '.',
+      '.storybook',
+      '.svelte-kit',
+      '.yarn',
+      '~/.yarn/berry',
+      'node_modules',
+      'src',
       'src/lib',
       'src/routes',
-      '.svelte-kit',
-      'src',
-      'node_modules',
-      '.storybook',
-      // Add yarn cache paths for PnP
-      '~/.yarn/berry',
-      '.yarn',
-      // Add the project root for safety
-      '.',
     ];
 
     return config;
   },
 };
+
+export default config;
 ```
 
 **Note:** The `viteFinal` function is essential for Tailwind CSS v4 integration with Storybook and includes Yarn PnP compatibility fixes.
@@ -679,7 +681,7 @@ yarn build  # Test build locally
 - Prettier plugins configured with `require.resolve()` for PnP compatibility
 - `.pnp.cjs` and `.pnp.loader.mjs` files are auto-generated (keep them)
 - Use `yarn` as the package manager (configured in packageManager field)
-- Storybook 9.0.4 has been successfully upgraded with all breaking changes addressed
+- Storybook 9.0.5 has been successfully upgraded with all breaking changes addressed
 - `@sveltejs/adapter-vercel` is configured as unplugged in dependenciesMeta
 
 **PnP Configuration (`.yarnrc.yml`):**
@@ -694,8 +696,10 @@ pnpUnpluggedPackages:
   - '@sveltejs/adapter-vercel' # Unplugged for Vercel compatibility
   - '@storybook/svelte' # Unplugged for Yarn PnP compatibility
   - '@storybook/sveltekit' # Unplugged for Yarn PnP compatibility
-  - '@storybook/addon-links' # Unplugged for Yarn PnP compatibility
+  - '@storybook/addon-a11y' # Unplugged for Yarn PnP compatibility
   - '@storybook/addon-docs' # Unplugged for Yarn PnP compatibility
+  - '@storybook/addon-links' # Unplugged for Yarn PnP compatibility
+  - '@storybook/addon-themes' # Unplugged for Yarn PnP compatibility
 ```
 
 ## Recent Changes & Cleanup
@@ -798,17 +802,18 @@ pnpUnpluggedPackages:
 
 1. **Migration from Storybook 8 to 9**:
 
-   - **Upgraded all packages** from 8.6.14 to 9.0.4
+   - **Upgraded all packages** from 8.6.14 to 9.0.5
    - **Removed deprecated packages**: `@storybook/addon-essentials`, `@storybook/test`
-   - **Added new packages**: `@storybook/addon-docs`, `eslint-plugin-storybook`
+   - **Added new packages**: `@storybook/addon-a11y`, `@storybook/addon-docs`, `@storybook/addon-themes`, `eslint-plugin-storybook`
    - **Updated import paths**: `@storybook/test` → `storybook/test`
    - **Removed deprecated config**: `docs.autodocs` field from main.js
 
-2. **Yarn PnP Compatibility Fixes**:
+2. **Configuration Cleanup**:
 
-   - **Unplugged Storybook packages** for better Yarn PnP compatibility
+   - **Removed `getAbsolutePath()` wrapper** from main.js (deprecated in Storybook 9)
+   - **Simplified preview.js** by removing over-complex accessibility configuration
+   - **Added complete unplugged package coverage** for all Storybook addons in dependenciesMeta
    - **Updated Vite configuration** to allow access to Yarn cache directories
-   - **Simplified addon configuration** removing `getAbsolutePath` wrapper
 
 3. **ESLint Integration**:
 
