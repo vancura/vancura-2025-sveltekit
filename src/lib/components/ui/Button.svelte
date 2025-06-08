@@ -4,6 +4,11 @@
     export let disabled = false;
     export let type: 'button' | 'submit' | 'reset' = 'button';
     export let icon = false;
+    export let href: string | undefined = undefined;
+    export let target: '_blank' | '_self' | '_parent' | '_top' | undefined = undefined;
+    export let rel: string | undefined = undefined;
+    export let ariaLabel: string | undefined = undefined;
+    export let ariaDescribedBy: string | undefined = undefined;
 
     let className = '';
     export { className as class };
@@ -31,15 +36,55 @@
         icon ? 'inline-flex items-center justify-center' : '',
         disabled
             ? 'opacity-60 cursor-not-allowed'
-            : 'focus:outline-none focus:ring-2 focus:ring-offset-2 active:translate-y-0.5 cursor-pointer',
+            : 'focus:outline-none focus:ring-2 focus:ring-offset-2 active:translate-y-0.5 cursor-pointer hover:shadow-md',
         variantClasses,
         sizeClasses,
         className,
     ]
         .filter(Boolean)
         .join(' ');
+
+    // Handle link vs button rendering
+    $: isLink = href !== undefined;
+    $: linkProps = isLink ? { href, target, rel: target === '_blank' ? 'noopener noreferrer' : rel } : {};
+    $: buttonProps = isLink ? {} : { type, disabled: disabled };
+    $: ariaProps = {
+        'aria-label': ariaLabel,
+        'aria-describedby': ariaDescribedBy,
+        'aria-disabled': disabled,
+    };
 </script>
 
-<button {type} class={baseClasses} {disabled} on:click>
-    <slot>Button</slot>
-</button>
+{#if isLink}
+    <!-- Render as link -->
+    <a
+        class={baseClasses}
+        {...linkProps}
+        {...ariaProps}
+        on:click
+        on:keydown
+        on:keyup
+        on:mouseenter
+        on:mouseleave
+        on:focus
+        on:blur
+    >
+        <slot>Button</slot>
+    </a>
+{:else}
+    <!-- Render as button -->
+    <button
+        class={baseClasses}
+        {...buttonProps}
+        {...ariaProps}
+        on:click
+        on:keydown
+        on:keyup
+        on:mouseenter
+        on:mouseleave
+        on:focus
+        on:blur
+    >
+        <slot>Button</slot>
+    </button>
+{/if}

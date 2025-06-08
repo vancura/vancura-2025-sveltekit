@@ -1,4 +1,4 @@
-import adapter from '@sveltejs/adapter-vercel';
+import adapter from '@sveltejs/adapter-auto';
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 import { mdsvex } from 'mdsvex';
 
@@ -19,12 +19,7 @@ const config = {
     extensions: ['.svelte', '.md', '.mdx'],
 
     kit: {
-        // Using Vercel adapter for optimal deployment on Vercel
-        adapter: adapter({
-            runtime: 'nodejs20.x',
-            regions: ['iad1'],
-            split: false,
-        }),
+        adapter: adapter(),
         alias: {
             $lib: './src/lib',
             $content: './src/content',

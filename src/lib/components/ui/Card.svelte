@@ -5,6 +5,10 @@
     export let hasFooter: boolean = true;
     export let content: string = '';
     export let footerContent: string = '';
+    export let role: string = 'article';
+    export let ariaLabel: string | undefined = undefined;
+    export let ariaLabelledBy: string | undefined = undefined;
+
     let className = '';
     export { className as class };
 
@@ -28,25 +32,30 @@
     ]
         .filter(Boolean)
         .join(' ');
+
+    // Generate unique IDs for accessibility
+    let cardCounter = 0;
+    $: titleId = title ? `card-title-${++cardCounter}` : undefined;
+    $: computedAriaLabelledBy = ariaLabelledBy || titleId;
 </script>
 
-<div class={baseClasses}>
+<div class={baseClasses} {role} aria-label={ariaLabel} aria-labelledby={computedAriaLabelledBy}>
     {#if title}
-        <div class="border-b px-5 py-4 {headerFooterClasses}">
-            <h3 class="text-lg font-semibold text-gray-900">{title}</h3>
-        </div>
+        <header class="border-b px-5 py-4 {headerFooterClasses}">
+            <h3 id={titleId} class="text-lg font-semibold text-gray-900">{title}</h3>
+        </header>
     {/if}
 
-    <div class="p-5">
+    <main class="p-5">
         {#if content}
             {content}
         {:else}
             <slot />
         {/if}
-    </div>
+    </main>
 
     {#if hasFooter}
-        <div class="border-t px-5 py-4 {headerFooterClasses}">
+        <footer class="border-t px-5 py-4 {headerFooterClasses}">
             {#if footerContent}
                 {footerContent}
             {:else}
@@ -54,6 +63,6 @@
                     <!-- Default footer content if none is provided -->
                 </slot>
             {/if}
-        </div>
+        </footer>
     {/if}
 </div>
