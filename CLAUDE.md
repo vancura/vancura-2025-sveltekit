@@ -13,6 +13,7 @@ This document provides detailed implementation instructions for working with thi
 - **Prettier 3** with Svelte/Tailwind plugins
 - **Vercel adapter 5** for deployment
 - **Vite 6** as build tool
+- **Git LFS** for media asset management
 
 ## Project Configuration
 
@@ -35,4 +36,16 @@ All packages are in `devDependencies` (SvelteKit compiles at build time)
 - Markdown/MDX file linting enabled
 - Storybook integration maintained
 
-[... rest of the existing content remains unchanged ...]
+[... rest of the existing content remains unchanged ...]## Git LFS Configuration
+
+## Git LFS Configuration
+
+Media files are managed with Git LFS:
+
+- Images: jpg, jpeg, png, gif, webp, svg, ico
+- Videos: mp4, mov, avi, webm
+- Audio: mp3, wav, flac
+- Fonts: woff, woff2, ttf, otf
+- Documents: pdf, zip, rar, 7z
+
+Configuration in `.gitattributes` automatically tracks these file types.
