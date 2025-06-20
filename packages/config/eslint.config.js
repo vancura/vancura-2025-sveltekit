@@ -282,9 +282,15 @@ export default [
     // Custom Storybook config for Svelte (avoiding React plugin)
     {
         files: ['**/*.stories.@(js|jsx|ts|tsx|svelte)', '.storybook/**/*.@(js|ts)'],
+        languageOptions: {
+            parserOptions: {
+                project: null, // Disable TypeScript project for Storybook files
+            },
+        },
         rules: {
             'import/no-default-export': 'off',
             'jsdoc/require-jsdoc': 'off',
+            '@typescript-eslint/prefer-nullish-coalescing': 'off',
         },
     },
 ];
