@@ -28,16 +28,17 @@
     "clean:deps": "rm -rf node_modules apps/*/node_modules packages/*/node_modules",
     "install:workspace": "npm install --workspace=",
     "lint": "npm run lint --workspaces --if-present",
-    "format": "npm run format --workspaces --if-present",
+    "format": "prettier --write \"**/*.{js,ts,svelte,html,css,scss,json,yml,yaml,md,mdx}\"",
     "type-check": "npm run type-check --workspaces --if-present",
     "prepare": "husky"
   },
   "devDependencies": {
     "husky": "^9.1.7",
-    "lint-staged": "^16.1.2"
+    "lint-staged": "^16.1.2",
+    "prettier": "^3.5.3"
   },
   "lint-staged": {
-    "*.{js,ts,svelte,html,css,scss,json,yml,yaml,md,mdx}": "npm run format",
+    "*.{js,ts,svelte,html,css,scss,json,yml,yaml,md,mdx}": "prettier --write",
     "*.{js,ts,svelte}": "eslint --fix"
   }
 }
