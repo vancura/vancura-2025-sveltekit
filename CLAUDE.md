@@ -1,177 +1,247 @@
 # SvelteKit Monorepo Implementation Guide
 
-This document provides detailed implementation instructions for working with this SvelteKit monorepo hosting three websites: vancura.design, vancura.photos, and vancura.dev.
+Technical implementation documentation for the vancura-2025-sveltekit monorepo.
+
+## Architecture Overview
+
+**NPM Workspaces Monorepo** hosting three independent SvelteKit applications with shared component library:
+
+```
+apps/design/     → vancura.design (port 5173)
+apps/photos/     → vancura.photos (port 5174)
+apps/dev/        → vancura.dev (port 5175)
+packages/shared-ui/   → Component library + Storybook (port 6006)
+packages/config/      → Shared configurations
+```
 
 ## Technical Stack
 
-- **SvelteKit 2** with **Svelte 5**
-- **Tailwind CSS 4** via Vite plugin
+- **SvelteKit 2** with **Svelte 5** (apps)
+- **Vite 6** with **Tailwind CSS 4** via plugin
+- **TypeScript 5** with strict checking
 - **Storybook 9** for component documentation
-- **TypeScript 5** for type safety
-- **MDX** support via mdsvex
-- **ESLint 9** with flat config
-- **Prettier 3** with Svelte/Tailwind plugins
+- **ESLint 9** flat config + **Prettier 3**
+- **mdsvex** for MDX content support
 - **Vercel adapter 5** for deployment
-- **Vite 6** as build tool
-- **Git LFS** for media asset management
+- **Git LFS** for media assets
 
-## Project Configuration
+## Workspace Configuration
 
-### Monorepo Structure
+### Dependencies Strategy
 
-This is an NPM workspaces monorepo with the following structure:
+**Root Level** (`package.json`):
 
-- **`apps/`** - Contains the three individual websites
-  - `apps/design/` - vancura.design portfolio site
-  - `apps/photos/` - vancura.photos photography site
-  - `apps/dev/` - vancura.dev development blog
-- **`packages/`** - Contains shared packages
-  - `packages/shared-ui/` - Shared components and Storybook
-  - `packages/config/` - Shared configuration files
+- Monorepo management only: `husky`, `lint-staged`
+- Workspace scripts for cross-app commands
 
-### Dependencies Organization
+**Individual Apps** (`apps/*/package.json`):
 
-- Root level: Only monorepo management tools (husky, lint-staged)
-- Each app: Full SvelteKit dependencies (compiled at build time)
-- Shared packages: Only necessary dependencies for their function
-- All packages are in `devDependencies` (SvelteKit compiles at build time)
-- Project uses NPM workspaces for dependency management
+- Full SvelteKit stack in `devDependencies`
+- Dependency on `@vancura/shared-ui`
+- Independent build/dev configurations
 
-### Code Quality Setup
+**Shared UI** (`packages/shared-ui/package.json`):
 
-**ESLint Configuration** (`eslint.config.js`):
+- Component library as ES modules
+- Storybook with `@storybook/svelte-vite` framework
+- Build target: library, not SvelteKit app
 
-- ESLint 9 flat config format (ES modules)
-- Moderate TypeScript strictness
-- Import sorting with perfectionist plugin
-- JSDoc enforcement for functions and classes
-- Security rules (with safe suppressions for component patterns)
-- Code complexity limits (max 15)
-- Markdown/MDX file linting enabled
-- Storybook integration maintained
+**Config Package** (`packages/config/package.json`):
 
-**Shared Configuration Strategy**:
-- Configuration files are centralized in `packages/config/`
-- Each app references shared configs via `@vancura/config/*` imports
-- Tailwind, ESLint, Prettier, TypeScript, and PostCSS configs are shared
-- Individual apps can extend shared configs as needed
+- Centralized ESLint, Prettier, Tailwind configs
+- Imported via `@vancura/config/*` pattern
+
+### Package Exports Configuration
+
+**Shared UI Package Exports**:
+
+```json
+{
+  "exports": {
+    ".": { "svelte": "./src/lib/index.ts" },
+    "./components/*": { "svelte": "./src/lib/components/*" },
+    "./layouts/*": { "svelte": "./src/lib/layouts/*" },
+    "./styles/*": { "default": "./src/lib/styles/*" }
+  }
+}
+```
 
 ## Development Workflow
 
-### Starting Development
+### Component Development
+
+**1. Create Component**:
 
 ```bash
-# Install all dependencies
-npm install
-
-# Start individual sites
-npm run dev:design    # Port 5173
-npm run dev:photos    # Port 5174  
-npm run dev:dev       # Port 5175
-
-# Start all sites simultaneously
-npm run dev:all
-
-# Start shared Storybook
-npm run storybook     # Port 6006
+# Create in packages/shared-ui/src/lib/components/
+touch packages/shared-ui/src/lib/components/ui/NewComponent.svelte
+touch packages/shared-ui/src/lib/components/ui/NewComponent.stories.svelte
 ```
 
-### Working with Shared Components
+**2. Export Component**:
 
-1. **Develop components** in `packages/shared-ui/src/lib/components/`
-2. **Document components** with Storybook stories
-3. **Export components** from `packages/shared-ui/src/lib/index.ts`
-4. **Import in apps** via `import { Component } from '@vancura/shared-ui'`
+```typescript
+// packages/shared-ui/src/lib/index.ts
+export { default as NewComponent } from './components/ui/NewComponent.svelte';
+```
 
-### Site-Specific Development
+**3. Import in Apps**:
 
-Each app in `apps/` is a complete SvelteKit project with:
-- Own routes and pages
-- Custom content and MDX files
-- Site-specific styles (importing from shared-ui)
-- Individual build and deployment configuration
+```svelte
+<script>
+  import { NewComponent } from '@vancura/shared-ui';
+</script>
+```
 
-### Deployment Strategy
+### CSS and Styling Strategy
 
-- **Vercel Monorepo**: Each app deploys as separate Vercel project
-- **Domain Mapping**: 
-  - vancura.design → apps/design
-  - vancura.photos → apps/photos  
-  - vancura.dev → apps/dev
-- **Shared Dependencies**: Vercel handles workspace resolution automatically
+**Shared Styles** (`packages/shared-ui/src/lib/styles/app.css`):
 
-### Code Quality Commands
+- Base Tailwind imports and global styles
+- Design system tokens and custom CSS
+
+**App-Specific CSS** (`apps/*/src/app.css`):
+
+```css
+@import '@vancura/shared-ui/styles/app.css';
+/* Site-specific overrides */
+```
+
+### MDX Configuration
+
+**Layout Resolution** (`apps/*/svelte.config.js`):
+
+```javascript
+mdsvex({
+  layout: {
+    blog: '../../packages/shared-ui/src/lib/layouts/blog.svelte',
+  },
+});
+```
+
+## Build System
+
+### Individual App Builds
 
 ```bash
-# Run across all workspaces
-npm run lint          # ESLint all packages
-npm run format        # Prettier all packages
-npm run type-check    # TypeScript check all packages
-
-# Run for specific workspace
-npm run lint --workspace=@vancura/design
-npm run build --workspace=@vancura/photos
+npm run build:design  # → apps/design/.svelte-kit/output/
+npm run build:photos  # → apps/photos/.svelte-kit/output/
+npm run build:dev     # → apps/dev/.svelte-kit/output/
 ```
 
+### Shared Library Build
+
+```bash
+npm run build --workspace=@vancura/shared-ui  # → packages/shared-ui/dist/
+```
+
+### Storybook Build
+
+```bash
+npm run build-storybook --workspace=@vancura/shared-ui  # → storybook-static/
+```
+
+## Configuration Management
+
+### ESLint Setup
+
+- **Root config**: References `@vancura/config/eslint`
+- **Flat config format** (ESLint 9)
+- **Cross-workspace linting**: `npm run lint` runs on all packages
+
+### TypeScript Configuration
+
+- **Per-app tsconfig**: Extends `.svelte-kit/tsconfig.json`
+- **Workspace awareness**: Monorepo TypeScript resolution
+- **Strict checking**: Enabled across all packages
+
+### Tailwind Configuration
+
+- **Shared base config**: `packages/config/tailwind.config.js`
+- **Per-app extension**: Apps can customize themes
+- **Content scanning**: Configured for monorepo structure
+
+## Deployment Configuration
+
+### Vercel Monorepo Setup
+
+```json
+{
+  "projects": [
+    { "name": "vancura-design", "source": "apps/design" },
+    { "name": "vancura-photos", "source": "apps/photos" },
+    { "name": "vancura-dev", "source": "apps/dev" }
+  ]
+}
+```
+
+### Domain Mapping
+
+- `vancura.design` → `apps/design/`
+- `vancura.photos` → `apps/photos/`
+- `vancura.dev` → `apps/dev/`
 
 ## Git LFS Configuration
 
-Media files are managed with Git LFS:
+**Media Assets** (`.gitattributes`):
 
-- Images: jpg, jpeg, png, gif, webp, svg, ico
-- Videos: mp4, mov, avi, webm
-- Audio: mp3, wav, flac
-- Fonts: woff, woff2, ttf, otf
-- Documents: pdf, zip, rar, 7z
+```
+*.jpg *.jpeg *.png *.gif *.webp *.svg filter=lfs
+*.mp4 *.mov *.avi *.webm filter=lfs
+*.woff *.woff2 *.ttf *.otf filter=lfs
+*.pdf *.zip *.rar *.7z filter=lfs
+```
 
-## Component Library Management
+## Common Commands
 
-### Shared UI Package (`@vancura/shared-ui`)
-
-- **Components**: Reusable UI components (Button, Card, etc.)
-- **Layouts**: MDX layouts for content pages
-- **Styles**: Global CSS and Tailwind base styles
-- **Storybook**: Component documentation and testing
-
-### Adding New Components
-
-1. Create component in `packages/shared-ui/src/lib/components/`
-2. Create Storybook story alongside component
-3. Export from `packages/shared-ui/src/lib/index.ts`
-4. Document usage in Storybook
-5. Import in apps as needed
-
-### Site Customization
-
-While components are shared, each site can:
-- Override styles with site-specific CSS
-- Create site-specific component variants
-- Customize Tailwind theme per site
-- Add site-specific layouts and pages
-
-## Vercel Deployment Configuration
-
-The `vercel.json` configures monorepo deployment:
-- Each app deploys to separate Vercel project
-- Domain mapping handled via Vercel dashboard
-- Shared security headers and caching rules
-- Workspace dependencies resolved automatically
-
-## Important Commands Reference
+### Development
 
 ```bash
-# Monorepo Management
-npm run dev:all       # Start all sites
-npm run build         # Build all sites
-npm run storybook     # Shared component docs
+npm run dev:design && npm run dev:photos && npm run dev:dev  # All sites
+npm run storybook     # Component library documentation
+```
 
-# Individual Sites  
-npm run dev:design    # Design portfolio
-npm run dev:photos    # Photography site
-npm run dev:dev       # Development blog
+### Build & Deploy
 
-# Quality Assurance
-npm run lint          # Lint all workspaces
-npm run format        # Format all workspaces  
-npm run type-check    # Type check all workspaces
-```Configuration in `.gitattributes` automatically tracks these file types.
+```bash
+npm run build         # Build all three sites
+npm run preview       # Preview production builds
+```
+
+### Code Quality
+
+```bash
+npm run lint && npm run format && npm run type-check  # All workspaces
+npm run lint --workspace=@vancura/design              # Specific workspace
+```
+
+### Workspace Management
+
+```bash
+npm install <package> --workspace=@vancura/design     # Add dependency
+npm run <script> --workspace=@vancura/shared-ui       # Run workspace script
+```
+
+## Troubleshooting
+
+### Common Issues
+
+**Build Failures**:
+
+- Ensure shared-ui builds before apps: `npm run build --workspace=@vancura/shared-ui`
+- Check workspace dependency resolution in `package.json`
+
+**Import Errors**:
+
+- Verify exports in `packages/shared-ui/package.json`
+- Check component export in `packages/shared-ui/src/lib/index.ts`
+
+**CSS Import Issues**:
+
+- Use correct path: `@vancura/shared-ui/styles/app.css`
+- Ensure styles export exists in package.json
+
+**Storybook Problems**:
+
+- Use `@storybook/svelte-vite` framework (not sveltekit)
+- Check story files match pattern in `.storybook/main.ts`
