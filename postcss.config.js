@@ -1,1 +1,1 @@
-export { default } from '@vancura/config/postcss';
+export { default } from "@vancura/config/postcss";

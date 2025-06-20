@@ -57,12 +57,12 @@ packages/config/      → Shared configurations
 
 ```json
 {
-  "exports": {
-    ".": { "svelte": "./src/lib/index.ts" },
-    "./components/*": { "svelte": "./src/lib/components/*" },
-    "./layouts/*": { "svelte": "./src/lib/layouts/*" },
-    "./styles/*": { "default": "./src/lib/styles/*" }
-  }
+    "exports": {
+        ".": { "svelte": "./src/lib/index.ts" },
+        "./components/*": { "svelte": "./src/lib/components/*" },
+        "./layouts/*": { "svelte": "./src/lib/layouts/*" },
+        "./styles/*": { "default": "./src/lib/styles/*" }
+    }
 }
 ```
 
@@ -82,7 +82,7 @@ touch packages/shared-ui/src/lib/components/ui/NewComponent.stories.svelte
 
 ```typescript
 // packages/shared-ui/src/lib/index.ts
-export { default as NewComponent } from './components/ui/NewComponent.svelte';
+export { default as NewComponent } from "./components/ui/NewComponent.svelte";
 ```
 
 **3. Import in Apps**:
@@ -103,7 +103,7 @@ export { default as NewComponent } from './components/ui/NewComponent.svelte';
 **App-Specific CSS** (`apps/*/src/app.css`):
 
 ```css
-@import '@vancura/shared-ui/styles/app.css';
+@import "@vancura/shared-ui/styles/app.css";
 /* Site-specific overrides */
 ```
 
@@ -113,9 +113,9 @@ export { default as NewComponent } from './components/ui/NewComponent.svelte';
 
 ```javascript
 mdsvex({
-  layout: {
-    blog: '../../packages/shared-ui/src/lib/layouts/blog.svelte',
-  },
+    layout: {
+        blog: "../../packages/shared-ui/src/lib/layouts/blog.svelte",
+    },
 });
 ```
 
@@ -167,11 +167,11 @@ npm run build-storybook --workspace=@vancura/shared-ui  # → storybook-static/
 
 ```json
 {
-  "projects": [
-    { "name": "vancura-design", "source": "apps/design" },
-    { "name": "vancura-photos", "source": "apps/photos" },
-    { "name": "vancura-dev", "source": "apps/dev" }
-  ]
+    "projects": [
+        { "name": "vancura-design", "source": "apps/design" },
+        { "name": "vancura-photos", "source": "apps/photos" },
+        { "name": "vancura-dev", "source": "apps/dev" }
+    ]
 }
 ```
 

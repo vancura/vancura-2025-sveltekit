@@ -10,6 +10,9 @@
     "./typescript": "./tsconfig.json",
     "./postcss": "./postcss.config.js"
   },
+  "scripts": {
+    "format": "echo 'Config package - formatting handled at root level'"
+  },
   "dependencies": {
     "@eslint/js": "^9.29.0",
     "@typescript-eslint/eslint-plugin": "^8.11.0",

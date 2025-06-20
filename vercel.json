@@ -7,13 +7,13 @@
       "framework": "sveltekit"
     },
     {
-      "name": "vancura-photos", 
+      "name": "vancura-photos",
       "source": "apps/photos",
       "framework": "sveltekit"
     },
     {
       "name": "vancura-dev",
-      "source": "apps/dev", 
+      "source": "apps/dev",
       "framework": "sveltekit"
     }
   ],
