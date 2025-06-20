@@ -2,9 +2,7 @@
  * Loads the blog post data for the given slug
  *
  * @type {import('./$types').PageLoad}
- * @param {Object} args - The load function arguments
- * @param {Object} args.params - The route parameters
- * @param {string} args.params.slug - The blog post slug
+ * @param {{ params: { slug: string } }} loadArgs - The load function arguments with params containing slug
  * @returns {Promise<{ slug: string; meta: { title: string; description: string } }>} The blog post data
  */
 export async function load({ params }) {

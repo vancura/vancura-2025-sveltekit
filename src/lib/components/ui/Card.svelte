@@ -12,26 +12,21 @@
     let className = '';
     export { className as class };
 
+    // eslint-disable-next-line security/detect-object-injection
     $: variantClasses = {
         default: 'bg-white border-gray-200',
         primary: 'bg-primary-50 border-primary-200',
         secondary: 'bg-gray-50 border-gray-200',
     }[variant];
 
+    // eslint-disable-next-line security/detect-object-injection
     $: headerFooterClasses = {
         default: 'border-gray-200 bg-gray-50',
         primary: 'border-primary-200 bg-primary-100',
         secondary: 'border-gray-200 bg-gray-100',
     }[variant];
 
-    $: baseClasses = [
-        'overflow-hidden rounded-lg border transition-all duration-300',
-        elevated ? 'shadow-soft hover:shadow-lg' : 'shadow-sm hover:shadow-md',
-        variantClasses,
-        className,
-    ]
-        .filter(Boolean)
-        .join(' ');
+    $: baseClasses = ['overflow-hidden rounded-lg border transition-all duration-300', elevated ? 'shadow-soft hover:shadow-lg' : 'shadow-sm hover:shadow-md', variantClasses, className].filter(Boolean).join(' ');
 
     // Generate unique IDs for accessibility
     let cardCounter = 0;

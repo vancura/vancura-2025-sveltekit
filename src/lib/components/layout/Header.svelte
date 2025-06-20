@@ -12,12 +12,14 @@
     // Mobile menu state
     let mobileMenuOpen = false;
 
+    // eslint-disable-next-line security/detect-object-injection
     $: themeClasses = {
         light: 'bg-white text-gray-800 shadow-sm border-b border-gray-200',
         dark: 'bg-gray-900 text-white',
         transparent: 'bg-transparent text-white',
     }[theme];
 
+    // eslint-disable-next-line security/detect-object-injection
     $: mobileBgClasses = {
         light: 'bg-white',
         dark: 'bg-gray-900',
@@ -44,13 +46,7 @@
             <div class="hidden md:flex md:items-center md:space-x-8">
                 {#each navItems as item (item.url)}
                     <a href={item.url} class="group relative flex items-center px-1 py-2 text-sm font-medium">
-                        <span
-                            class="relative transition-colors duration-200
-              {theme === 'light' ? 'text-gray-600 hover:text-gray-900' : 'text-gray-300 hover:text-white'}
-              after:absolute after:inset-x-0 after:bottom-0 after:h-0.5 after:scale-x-0 after:bg-blue-600
-              after:transition-transform after:duration-300 after:ease-out after:content-['']
-              hover:after:scale-x-100"
-                        >
+                        <span class="relative transition-colors duration-200 {theme === 'light' ? 'text-gray-600 hover:text-gray-900' : 'text-gray-300 hover:text-white'} after:absolute after:inset-x-0 after:bottom-0 after:h-0.5 after:scale-x-0 after:bg-blue-600 after:transition-transform after:duration-300 after:ease-out after:content-[''] hover:after:scale-x-100">
                             {item.label}
                         </span>
                     </a>
@@ -71,22 +67,12 @@
                     {#if mobileMenuOpen}
                         <!-- X icon -->
                         <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M6 18L18 6M6 6l12 12"
-                            />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                         </svg>
                     {:else}
                         <!-- Menu icon -->
                         <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M4 6h16M4 12h16M4 18h16"
-                            />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                         </svg>
                     {/if}
                 </button>
@@ -99,13 +85,7 @@
         <div class="md:hidden {mobileBgClasses} shadow-lg">
             <div class="space-y-1 border-t border-gray-200 px-2 pt-2 pb-3">
                 {#each navItems as item (item.url)}
-                    <a
-                        href={item.url}
-                        class="block rounded-md px-3 py-2 text-base font-medium
-              {theme === 'light'
-                            ? 'text-gray-700 hover:bg-gray-50 hover:text-gray-900'
-                            : 'text-gray-200 hover:bg-gray-700 hover:text-white'}"
-                    >
+                    <a href={item.url} class="block rounded-md px-3 py-2 text-base font-medium {theme === 'light' ? 'text-gray-700 hover:bg-gray-50 hover:text-gray-900' : 'text-gray-200 hover:bg-gray-700 hover:text-white'}">
                         {item.label}
                     </a>
                 {/each}

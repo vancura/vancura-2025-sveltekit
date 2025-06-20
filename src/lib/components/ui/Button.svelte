@@ -13,15 +13,12 @@
     let className = '';
     export { className as class };
 
-    // Compute Tailwind classes based on variants
     // eslint-disable-next-line security/detect-object-injection
     $: variantClasses = {
-        primary:
-            'bg-page-bg-light dark:bg-page-bg-dark text-page-text-light dark:text-page-text-dark focus:ring-primary-500 border-2 border-page-text-light dark:border-page-text-dark',
+        primary: 'bg-page-bg-light dark:bg-page-bg-dark text-page-text-light dark:text-page-text-dark focus:ring-primary-500 border-2 border-page-text-light dark:border-page-text-dark',
         secondary: 'bg-gray-100 text-gray-800 hover:bg-gray-200 focus:ring-gray-500 border border-transparent',
         danger: 'bg-red-600 text-white hover:bg-red-700 focus:ring-red-500 border border-transparent',
-        outline:
-            'bg-transparent text-primary-600 hover:bg-primary-50 border border-primary-300 hover:border-primary-400 focus:ring-primary-500',
+        outline: 'bg-transparent text-primary-600 hover:bg-primary-50 border border-primary-300 hover:border-primary-400 focus:ring-primary-500',
     }[variant];
 
     // eslint-disable-next-line security/detect-object-injection
@@ -31,18 +28,7 @@
         large: 'text-base px-6 py-3',
     }[size];
 
-    $: baseClasses = [
-        'font-medium transition-all duration-200 select-none rounded-full',
-        icon ? 'inline-flex items-center justify-center' : '',
-        disabled
-            ? 'opacity-60 cursor-not-allowed'
-            : 'focus:outline-none focus:ring-2 focus:ring-offset-2 active:translate-y-0.5 cursor-pointer hover:shadow-md',
-        variantClasses,
-        sizeClasses,
-        className,
-    ]
-        .filter(Boolean)
-        .join(' ');
+    $: baseClasses = ['font-medium transition-all duration-200 select-none rounded-full', icon ? 'inline-flex items-center justify-center' : '', disabled ? 'opacity-60 cursor-not-allowed' : 'focus:outline-none focus:ring-2 focus:ring-offset-2 active:translate-y-0.5 cursor-pointer hover:shadow-md', variantClasses, sizeClasses, className].filter(Boolean).join(' ');
 
     // Handle link vs button rendering
     $: isLink = href !== undefined;
@@ -56,35 +42,11 @@
 </script>
 
 {#if isLink}
-    <!-- Render as link -->
-    <a
-        class={baseClasses}
-        {...linkProps}
-        {...ariaProps}
-        on:click
-        on:keydown
-        on:keyup
-        on:mouseenter
-        on:mouseleave
-        on:focus
-        on:blur
-    >
+    <a class={baseClasses} {...linkProps} {...ariaProps} on:click on:keydown on:keyup on:mouseenter on:mouseleave on:focus on:blur>
         <slot>Button</slot>
     </a>
 {:else}
-    <!-- Render as button -->
-    <button
-        class={baseClasses}
-        {...buttonProps}
-        {...ariaProps}
-        on:click
-        on:keydown
-        on:keyup
-        on:mouseenter
-        on:mouseleave
-        on:focus
-        on:blur
-    >
+    <button class={baseClasses} {...buttonProps} {...ariaProps} on:click on:keydown on:keyup on:mouseenter on:mouseleave on:focus on:blur>
         <slot>Button</slot>
     </button>
 {/if}
