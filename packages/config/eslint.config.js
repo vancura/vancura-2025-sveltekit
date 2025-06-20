@@ -9,7 +9,6 @@ import perfectionistPlugin from 'eslint-plugin-perfectionist';
 import promisePlugin from 'eslint-plugin-promise';
 import securityPlugin from 'eslint-plugin-security';
 import sonarjsPlugin from 'eslint-plugin-sonarjs';
-import storybook from 'eslint-plugin-storybook';
 import sveltePlugin from 'eslint-plugin-svelte';
 import svelteParser from 'svelte-eslint-parser';
 
@@ -280,5 +279,12 @@ export default [
         },
     },
     prettierConfig,
-    ...storybook.configs['flat/recommended'],
+    // Custom Storybook config for Svelte (avoiding React plugin)
+    {
+        files: ['**/*.stories.@(js|jsx|ts|tsx|svelte)', '.storybook/**/*.@(js|ts)'],
+        rules: {
+            'import/no-default-export': 'off',
+            'jsdoc/require-jsdoc': 'off',
+        },
+    },
 ];

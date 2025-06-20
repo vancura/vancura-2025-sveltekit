@@ -16,13 +16,17 @@
     "dev:photos": "npm run dev --workspace=@vancura/photos",
     "dev:dev": "npm run dev --workspace=@vancura/dev",
     "dev:all": "npm run dev --workspace=@vancura/design & npm run dev --workspace=@vancura/photos & npm run dev --workspace=@vancura/dev",
-    "build": "npm run build:design && npm run build:photos && npm run build:dev",
+    "build": "npm run build:shared-ui && npm run build:design && npm run build:photos && npm run build:dev",
+    "build:shared-ui": "npm run build --workspace=@vancura/shared-ui",
     "build:design": "npm run build --workspace=@vancura/design",
     "build:photos": "npm run build --workspace=@vancura/photos",
     "build:dev": "npm run build --workspace=@vancura/dev",
     "preview": "npm run preview --workspaces",
     "storybook": "npm run storybook --workspace=@vancura/shared-ui",
     "build-storybook": "npm run build-storybook --workspace=@vancura/shared-ui",
+    "clean": "rm -rf apps/*/dist apps/*/.svelte-kit packages/*/dist packages/*/storybook-static",
+    "clean:deps": "rm -rf node_modules apps/*/node_modules packages/*/node_modules",
+    "install:workspace": "npm install --workspace=",
     "lint": "npm run lint --workspaces --if-present",
     "format": "npm run format --workspaces --if-present",
     "type-check": "npm run type-check --workspaces --if-present",
@@ -33,7 +37,7 @@
     "lint-staged": "^16.1.2"
   },
   "lint-staged": {
-    "*.{js,ts,svelte,html,css,scss,json,yml,yaml,md,mdx}": "prettier --write",
+    "*.{js,ts,svelte,html,css,scss,json,yml,yaml,md,mdx}": "npm run format",
     "*.{js,ts,svelte}": "eslint --fix"
   }
 }

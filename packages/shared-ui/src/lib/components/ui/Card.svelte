@@ -31,7 +31,7 @@
     // Generate unique IDs for accessibility
     let cardCounter = 0;
     $: titleId = title ? `card-title-${++cardCounter}` : undefined;
-    $: computedAriaLabelledBy = ariaLabelledBy || titleId;
+    $: computedAriaLabelledBy = ariaLabelledBy ?? titleId;
 </script>
 
 <div class={baseClasses} {role} aria-label={ariaLabel} aria-labelledby={computedAriaLabelledBy}>

@@ -1,3 +1,27 @@
 {
-  "extends": "./.svelte-kit/tsconfig.json"
+  "compilerOptions": {
+    "target": "ES2022",
+    "useDefineForClassFields": true,
+    "module": "ESNext",
+    "lib": ["ES2022", "DOM"],
+    "moduleResolution": "bundler",
+    "strict": true,
+    "strictNullChecks": true,
+    "sourceMap": true,
+    "declaration": true,
+    "outDir": "./dist",
+    "noEmit": false,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "skipLibCheck": true
+  },
+  "include": ["src/**/*.ts", "src/**/*.svelte", ".storybook/**/*.ts", ".storybook/**/*.js", "vite.config.ts"],
+  "exclude": ["node_modules", "dist", "storybook-static"]
 }

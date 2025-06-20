@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Button, Card } from '@vancura/shared-ui';
+    import { Button, Card } from '@vancura/shared-ui';
 </script>
 
 <svelte:head>
