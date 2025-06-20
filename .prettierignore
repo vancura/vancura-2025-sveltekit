@@ -7,7 +7,11 @@ dist
 build
 .output
 .svelte-kit
+.vercel
 storybook-static
+.turbo
+.next
+out
 
 # Git and system files
 .git

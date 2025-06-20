@@ -1,7 +1,10 @@
 import baseConfig from '@vancura/config/eslint';
 
 export default [
-    ...baseConfig.map(config => {
+    {
+        ignores: ['.storybook/**/*'], // Exclude Storybook files globally
+    },
+    ...baseConfig.map((config) => {
         // Override tsconfig path for shared-ui
         if (config.languageOptions?.parserOptions?.project) {
             return {
