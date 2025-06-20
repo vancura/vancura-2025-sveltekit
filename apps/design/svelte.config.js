@@ -9,7 +9,7 @@ const config = {
         mdsvex({
             extensions: ['.md', '.mdx'],
             layout: {
-                blog: './src/lib/layouts/blog.svelte',
+                blog: '../../packages/shared-ui/src/lib/layouts/blog.svelte',
             },
         }),
     ],

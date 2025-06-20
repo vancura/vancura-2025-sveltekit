@@ -1,13 +1,20 @@
 {
-  "buildCommand": "npm run build",
-  "outputDirectory": "build",
-  "framework": "sveltekit",
-  "installCommand": "npm install",
-  "devCommand": "npm run dev",
-  "rewrites": [
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "projects": [
     {
-      "source": "/storybook/(.*)",
-      "destination": "/storybook-static/$1"
+      "name": "vancura-design",
+      "source": "apps/design",
+      "framework": "sveltekit"
+    },
+    {
+      "name": "vancura-photos", 
+      "source": "apps/photos",
+      "framework": "sveltekit"
+    },
+    {
+      "name": "vancura-dev",
+      "source": "apps/dev", 
+      "framework": "sveltekit"
     }
   ],
   "headers": [

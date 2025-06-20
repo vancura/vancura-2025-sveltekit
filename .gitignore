@@ -1,42 +1,81 @@
 # System files
 .DS_Store
+Thumbs.db
 
 # Dependencies
-node_modules
+node_modules/
+**/node_modules/
 
-# Build outputs
+# Build outputs - Monorepo structure
 /build
+build/
+/dist
+dist/
 /.svelte-kit
+**/.svelte-kit/
 /package
-dist
 .output
-storybook-static
+storybook-static/
+**/storybook-static/
+
+# App-specific build outputs
+apps/*/build/
+apps/*/dist/
+apps/*/.svelte-kit/
+packages/*/build/
+packages/*/dist/
+packages/*/.svelte-kit/
 
 # Environment variables
 .env
 .env.*
 !.env.example
+.env.local
+.env.production
 
 # Deployment
-.vercel
+.vercel/
+.netlify/
+.firebase/
 
 # Generated files
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+**/*vite.config.*.timestamp-*
+
+# TypeScript
+*.tsbuildinfo
+
+# Testing
+coverage/
+*.lcov
+.nyc_output
 
 # Claude Code settings
 **/.claude/settings.local.json
 
 # IDE and editor files
 .vscode/settings.json
+.vscode/launch.json
 .idea/
 *.swp
 *.swo
 *~
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+*.sublime-project
 
 # Logs
 *.log
 npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
 
 # Runtime data
 pids
@@ -44,10 +83,47 @@ pids
 *.seed
 *.pid.lock
 
-# Coverage directory used by tools like istanbul
-coverage/
-*.lcov
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Optional stylelint cache
+.stylelintcache
+
+# Microbundle cache
+.rpt2_cache/
+.rts2_cache_cjs/
+.rts2_cache_es/
+.rts2_cache_umd/
+
+# Optional REPL history
+.node_repl_history
+
+# Output of 'npm pack'
+*.tgz
+
+# Yarn Integrity file
+.yarn-integrity
 
 # Temporary folders
 tmp/
 temp/
+.tmp/
+
+# Cache directories
+.cache/
+.parcel-cache/
+
+# Storybook build outputs
+**/storybook-static/
+**/chromatic-build/
+
+# Playwright
+test-results/
+playwright-report/
+playwright/.cache/
+
+# Turborepo
+.turbo/
