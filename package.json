@@ -14,7 +14,8 @@
     "build-storybook": "storybook build",
     "lint": "eslint . --fix",
     "format": "prettier --write .",
-    "type-check": "svelte-check"
+    "type-check": "svelte-check",
+    "prepare": "husky"
   },
   "devDependencies": {
     "@eslint/js": "^9.28.0",
@@ -46,6 +47,8 @@
     "eslint-plugin-sonarjs": "^3.0.3",
     "eslint-plugin-storybook": "^9.0.12",
     "eslint-plugin-svelte": "^3.9.3",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.1.2",
     "mdsvex": "^0.12.6",
     "postcss": "^8.5.6",
     "postcss-load-config": "^6.0.1",
@@ -66,5 +69,9 @@
   },
   "eslintConfig": {
     "extends": ["plugin:storybook/recommended"]
+  },
+  "lint-staged": {
+    "*.{js,ts,svelte,html,css,scss,json,yml,yaml,md,mdx}": "prettier --write",
+    "*.{js,ts,svelte}": "eslint --fix"
   }
 }
