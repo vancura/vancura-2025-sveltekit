@@ -6,9 +6,8 @@ export default {
 	printWidth: 100,
 	plugins: [
 		'prettier-plugin-svelte',
-		'prettier-plugin-tailwindcss',
 		'prettier-plugin-organize-imports',
-		'prettier-plugin-jsdoc',
+		'prettier-plugin-tailwindcss',
 	],
 	overrides: [{ files: '*.svelte', options: { parser: 'svelte' } }],
 };
