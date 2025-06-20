@@ -22,13 +22,13 @@ This is the source code for [vancura.design](https://vancura.design), featuring:
 
 ```bash
 # Install dependencies
-yarn
+npm
 
 # Start development server
-yarn dev
+npm run dev
 
 # Run Storybook
-yarn storybook
+npm run storybook
 ```
 
 ## License

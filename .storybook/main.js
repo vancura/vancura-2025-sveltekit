@@ -21,20 +21,9 @@ const config = {
         const { default: tailwindcss } = await import('@tailwindcss/vite');
         config.plugins.unshift(tailwindcss());
 
-        // Fix Yarn PnP file serving issues
         config.server = config.server || {};
         config.server.fs = config.server.fs || {};
-        config.server.fs.allow = [
-            '.',
-            '.storybook',
-            '.svelte-kit',
-            '.yarn',
-            '~/.yarn/berry',
-            'node_modules',
-            'src',
-            'src/lib',
-            'src/routes',
-        ];
+        config.server.fs.allow = ['.', '.storybook', '.svelte-kit', 'node_modules', 'src', 'src/lib', 'src/routes'];
 
         return config;
     },

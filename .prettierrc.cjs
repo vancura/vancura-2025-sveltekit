@@ -2,12 +2,11 @@
 
 /** @type {import('prettier').Config} */
 module.exports = {
-    // Plugins for enhanced formatting (load via require for Yarn PnP compatibility)
     plugins: [
-        require.resolve('prettier-plugin-organize-imports'),
-        require.resolve('prettier-plugin-svelte'),
-        require.resolve('prettier-plugin-tailwindcss'),
-        require.resolve('prettier-plugin-jsdoc'),
+        'prettier-plugin-organize-imports',
+        'prettier-plugin-svelte',
+        'prettier-plugin-tailwindcss',
+        'prettier-plugin-jsdoc',
     ],
 
     // Basic formatting options
@@ -55,6 +54,7 @@ module.exports = {
                 svelteStrictMode: false,
                 svelteAllowShorthand: true,
                 svelteIndentScriptAndStyle: true,
+                printWidth: 2000,
             },
         },
     ],

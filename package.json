@@ -25,7 +25,7 @@
     "@storybook/addon-themes": "^9.0.5",
     "@storybook/svelte": "^9.0.5",
     "@storybook/sveltekit": "^9.0.5",
-    "@sveltejs/adapter-auto": "^6.0.1",
+    "@sveltejs/adapter-vercel": "^5.7.2",
     "@sveltejs/kit": "^2.21.2",
     "@sveltejs/vite-plugin-svelte": "^5.1.0",
     "@tailwindcss/postcss": "^4.1.8",
@@ -65,28 +65,7 @@
     "vite": "^6.3.5",
     "vite-node": "^3.2.1"
   },
-  "packageManager": "yarn@4.9.1",
   "eslintConfig": {
     "extends": ["plugin:storybook/recommended"]
-  },
-  "dependenciesMeta": {
-    "@storybook/addon-a11y@9.0.5": {
-      "unplugged": true
-    },
-    "@storybook/addon-docs@9.0.5": {
-      "unplugged": true
-    },
-    "@storybook/addon-links@9.0.5": {
-      "unplugged": true
-    },
-    "@storybook/addon-themes@9.0.5": {
-      "unplugged": true
-    },
-    "@storybook/svelte@9.0.5": {
-      "unplugged": true
-    },
-    "@storybook/sveltekit@9.0.5": {
-      "unplugged": true
-    }
   }
 }

@@ -12,7 +12,7 @@ This document provides detailed implementation instructions for working with thi
 - **Inter Font** from Google Fonts for typography
 - **ESLint 9.28.0** with comprehensive rules for code quality
 - **Prettier 3.5.3** with full plugin support for formatting
-- **Yarn 4.9.1** with Plug'n'Play (PnP) for package management
+- **NPM** for package management
 - **Vercel adapter 0.5.11** for optimized deployment
 - **Vite 6.3.5** with enhanced configuration
 
@@ -47,7 +47,7 @@ All packages are in `devDependencies` as this is a SvelteKit project that compil
 - Single quotes
 - Trailing commas
 - 120 character line width (80 for Markdown)
-- Full plugin support via require.resolve() for Yarn PnP compatibility:
+- Full plugin support for NPM compatibility:
   - `prettier-plugin-organize-imports` - Auto-organizes imports
   - `prettier-plugin-svelte` - Formats Svelte components
   - `prettier-plugin-tailwindcss` - Sorts Tailwind classes
@@ -195,15 +195,12 @@ const config = {
     const { default: tailwindcss } = await import('@tailwindcss/vite');
     config.plugins.unshift(tailwindcss());
 
-    // Fix Yarn PnP file serving issues
     config.server = config.server || {};
     config.server.fs = config.server.fs || {};
     config.server.fs.allow = [
       '.',
       '.storybook',
       '.svelte-kit',
-      '.yarn',
-      '~/.yarn/berry',
       'node_modules',
       'src',
       'src/lib',
@@ -217,7 +214,7 @@ const config = {
 export default config;
 ```
 
-**Note:** The `viteFinal` function is essential for Tailwind CSS v4 integration with Storybook and includes Yarn PnP compatibility fixes.
+**Note:** The `viteFinal` function is essential for Tailwind CSS v4 integration with Storybook and includes Node.js compatibility fixes.
 
 ## Project Structure
 
@@ -562,21 +559,21 @@ The blog layout (`src/lib/layouts/blog.svelte`) provides consistent styling:
 
 ### Commands
 
-- `yarn dev` - Start development server at localhost:5173
-- `yarn build` - Build for production
-- `yarn preview` - Preview production build
-- `yarn storybook` - Start Storybook at localhost:6006
-- `yarn build-storybook` - Build Storybook for deployment
-- `yarn lint` - Run ESLint with auto-fix
-- `yarn format` - Format code with Prettier
-- `yarn type-check` - Run TypeScript type checking
+- `npm run dev` - Start development server at localhost:5173
+- `npm run build` - Build for production
+- `npm run preview` - Preview production build
+- `npm run storybook` - Start Storybook at localhost:6006
+- `npm run build-storybook` - Build Storybook for deployment
+- `npm run lint` - Run ESLint with auto-fix
+- `npm run format` - Format code with Prettier
+- `npm run type-check` - Run TypeScript type checking
 
 ### Code Quality Workflow
 
 1. **Development**: ESLint runs on save with comprehensive rules
 2. **Pre-commit**: Format code with Prettier
 3. **Component development**: Test in Storybook with full controls
-4. **Type safety**: TypeScript checking with `yarn type-check`
+4. **Type safety**: TypeScript checking with `npm run type-check`
 
 ### Adding New Components
 
@@ -635,7 +632,7 @@ The project uses `@sveltejs/adapter-vercel` for optimal Vercel deployment:
 **Deployment:**
 
 ```bash
-yarn build  # Test build locally
+npm run build  # Test build locally
 # Deploy via Vercel CLI or GitHub integration
 ```
 
@@ -670,37 +667,16 @@ yarn build  # Test build locally
 - Check that component exports match imports
 - Verify `viteFinal` function is present in main.js for Tailwind v4 support
 - TypeScript errors in stories are often non-critical if Storybook builds successfully
-- For Yarn PnP compatibility issues, some Storybook packages are configured as unplugged
 
 ### Package Management
 
-**Yarn 4.9.1 with Plug'n'Play (PnP):**
+**NPM Package Management:**
 
 - All dependencies are in `devDependencies` for SvelteKit projects
-- Yarn PnP enabled for faster installs and smaller node_modules
-- Prettier plugins configured with `require.resolve()` for PnP compatibility
-- `.pnp.cjs` and `.pnp.loader.mjs` files are auto-generated (keep them)
-- Use `yarn` as the package manager (configured in packageManager field)
-- Storybook 9.0.5 has been successfully upgraded with all breaking changes addressed
-- `@sveltejs/adapter-vercel` is configured as unplugged in dependenciesMeta
-
-**PnP Configuration (`.yarnrc.yml`):**
-
-```yaml
-enableGlobalCache: false
-enableTransparentWorkspaces: false
-nodeLinker: pnp
-pnpMode: strict
-pnpFallbackMode: dependencies-only
-pnpUnpluggedPackages:
-  - '@sveltejs/adapter-vercel' # Unplugged for Vercel compatibility
-  - '@storybook/svelte' # Unplugged for Yarn PnP compatibility
-  - '@storybook/sveltekit' # Unplugged for Yarn PnP compatibility
-  - '@storybook/addon-a11y' # Unplugged for Yarn PnP compatibility
-  - '@storybook/addon-docs' # Unplugged for Yarn PnP compatibility
-  - '@storybook/addon-links' # Unplugged for Yarn PnP compatibility
-  - '@storybook/addon-themes' # Unplugged for Yarn PnP compatibility
-```
+- Standard node_modules structure for dependencies
+- Package scripts configured in package.json
+- Storybook 9.0.5 has been successfully configured
+- Use `npm` as the package manager
 
 ## Recent Changes & Cleanup
 
@@ -712,7 +688,7 @@ pnpUnpluggedPackages:
    - Updated to ESLint 9 flat config format
    - Proper Tailwind 4 integration with Vite plugin
    - MDX support fully configured
-   - Prettier plugin integration fixed for Yarn PnP
+   - Prettier plugin integration configured for NPM
 
 2. **Dependencies Reorganization**:
 
@@ -720,7 +696,7 @@ pnpUnpluggedPackages:
    - Removed Flowbite (not needed for custom portfolio)
    - Removed package publishing configuration
    - Updated all packages to latest stable versions
-   - Switched to Yarn 4.9.1 with Plug'n'Play
+   - Uses NPM for package management
 
 3. **Code Quality Improvements**:
 
@@ -762,8 +738,6 @@ pnpUnpluggedPackages:
 
 3. **Configuration Enhancements**:
    - package.json includes eslintConfig extending storybook
-   - Vercel adapter configured as unplugged in dependenciesMeta
-   - Full .yarnrc.yml configuration documented
 
 ### Component System Enhancement
 
@@ -812,8 +786,7 @@ pnpUnpluggedPackages:
 
    - **Removed `getAbsolutePath()` wrapper** from main.js (deprecated in Storybook 9)
    - **Simplified preview.js** by removing over-complex accessibility configuration
-   - **Added complete unplugged package coverage** for all Storybook addons in dependenciesMeta
-   - **Updated Vite configuration** to allow access to Yarn cache directories
+   - **Updated Vite configuration** to allow access to node_modules directories
 
 3. **ESLint Integration**:
 
@@ -825,7 +798,7 @@ pnpUnpluggedPackages:
 
 - ✅ All linting and formatting working
 - ✅ Optimized Vercel deployment configuration
-- ✅ Modern Yarn PnP package management
+- ✅ Standard NPM package management
 - ✅ Comprehensive code quality tools
 - ✅ Clean, well-documented configuration files
 - ✅ Tailwind 4 with CSS custom properties

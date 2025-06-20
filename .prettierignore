@@ -1,8 +1,6 @@
 # Dependencies and lock files
 node_modules
 package-lock.json
-pnpm-lock.yaml
-yarn.lock
 
 # Build outputs
 dist
@@ -14,11 +12,6 @@ storybook-static
 # Git and system files
 .git
 .DS_Store
-
-# Yarn PnP
-.pnp.*
-.yarn/cache
-.yarn/install-state.gz
 
 # Generated files
 vite.config.*.timestamp-*
