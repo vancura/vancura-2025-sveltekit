@@ -279,7 +279,6 @@ export default [
         },
     },
     prettierConfig,
-    // Custom Storybook config for Svelte (avoiding React plugin)
     {
         files: ['**/*.stories.@(js|jsx|ts|tsx|svelte)', '.storybook/**/*.@(js|ts)'],
         languageOptions: {
@@ -291,6 +290,7 @@ export default [
             'import/no-default-export': 'off',
             'jsdoc/require-jsdoc': 'off',
             '@typescript-eslint/prefer-nullish-coalescing': 'off',
+            'sonarjs/no-use-of-empty-return-value': 'off',
         },
     },
 ];
