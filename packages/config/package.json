@@ -15,21 +15,21 @@
   },
   "dependencies": {
     "@eslint/js": "^9.29.0",
-    "@typescript-eslint/eslint-plugin": "^8.11.0",
-    "@typescript-eslint/parser": "^8.11.0",
-    "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-import": "^2.31.0",
-    "eslint-plugin-jsdoc": "^50.5.0",
-    "eslint-plugin-n": "^17.12.0",
-    "eslint-plugin-perfectionist": "^3.9.1",
-    "eslint-plugin-promise": "^7.1.0",
+    "@typescript-eslint/eslint-plugin": "^8.35.0",
+    "@typescript-eslint/parser": "^8.35.0",
+    "eslint-config-prettier": "^10.1.5",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-jsdoc": "^51.2.3",
+    "eslint-plugin-n": "^17.20.0",
+    "eslint-plugin-perfectionist": "^4.15.0",
+    "eslint-plugin-promise": "^7.2.1",
     "eslint-plugin-security": "^3.0.1",
-    "eslint-plugin-sonarjs": "^2.0.4",
-    "eslint-plugin-storybook": "^0.11.1",
-    "eslint-plugin-svelte": "^2.46.0",
+    "eslint-plugin-sonarjs": "^3.0.3",
+    "eslint-plugin-storybook": "^9.0.13",
+    "eslint-plugin-svelte": "^3.9.3",
     "prettier-plugin-organize-imports": "^4.1.0",
     "prettier-plugin-svelte": "^3.4.0",
     "prettier-plugin-tailwindcss": "^0.6.13",
-    "svelte-eslint-parser": "^0.41.1"
+    "svelte-eslint-parser": "^1.2.0"
   }
 }
