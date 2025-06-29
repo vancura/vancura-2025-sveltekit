@@ -62,7 +62,7 @@
         <Card title="Default Variant" variant="default">
             <p class="mb-4">This is the default card style with clean, minimal styling.</p>
 
-            <Button variant="outline" size="small">Learn More</Button>
+            <Button variant="primary" size="small">Learn More</Button>
 
             <svelte:fragment slot="footer">Default footer</svelte:fragment>
         </Card>
@@ -114,7 +114,7 @@
                 <div class="flex items-center justify-between">
                     <span class="text-sm text-gray-500">2 min read</span>
 
-                    <Button variant="outline" size="small">Read More</Button>
+                    <Button variant="primary" size="small">Read More</Button>
                 </div>
             </svelte:fragment>
         </Card>
@@ -153,7 +153,7 @@
 
             <svelte:fragment slot="footer">
                 <div class="flex justify-between">
-                    <Button variant="outline" size="small" icon>
+                    <Button variant="primary" size="small" icon>
                         <svg class="mr-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                         </svg>
@@ -186,7 +186,7 @@
                 <div class="flex items-center justify-between">
                     <span class="text-primary-600 text-sm">May 10, 2025</span>
 
-                    <Button variant="outline" size="small">Read Article</Button>
+                    <Button variant="primary" size="small">Read Article</Button>
                 </div>
             </svelte:fragment>
         </Card>

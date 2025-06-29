@@ -18,7 +18,7 @@
 
             <div class="flex flex-wrap gap-4">
                 <Button variant="primary">Contact Me</Button>
-                <Button variant="outline">View Resume</Button>
+                <Button variant="secondary">View Resume</Button>
             </div>
 
             <svelte:fragment slot="footer">
@@ -44,7 +44,7 @@
 
             <svelte:fragment slot="footer">
                 <div class="flex justify-end">
-                    <Button variant="outline" size="small">View All Projects</Button>
+                    <Button variant="secondary" size="small">View All Projects</Button>
                 </div>
             </svelte:fragment>
         </Card>
