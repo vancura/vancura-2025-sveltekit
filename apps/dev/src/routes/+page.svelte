@@ -7,7 +7,7 @@
     <meta name="description" content="Development blog and technical writing by Václav Vančura" />
 </svelte:head>
 
-<div class="container mx-auto px-4 py-8">
+<div class="page-content">
     <h1 class="mb-8 text-4xl font-bold">Development Blog</h1>
 
     <Card>

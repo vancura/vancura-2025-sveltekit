@@ -8,7 +8,7 @@ export default {
     trailingComma: 'es5',
     printWidth: 120,
     endOfLine: 'lf',
-    plugins: ['prettier-plugin-organize-imports', 'prettier-plugin-svelte', 'prettier-plugin-tailwindcss'],
+    plugins: ['prettier-plugin-organize-imports', 'prettier-plugin-svelte'],
     // File-specific overrides
     overrides: [
         // Markdown and MDX files

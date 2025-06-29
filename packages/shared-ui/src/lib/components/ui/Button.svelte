@@ -32,19 +32,19 @@
 
     // eslint-disable-next-line security/detect-object-injection
     $: variantClasses = {
-        primary: 'bg-page-bg-light dark:bg-page-bg-dark text-page-text-light dark:text-page-text-dark focus:ring-primary-500 border-2 border-page-text-light dark:border-page-text-dark',
-        secondary: 'bg-gray-100 text-gray-800 hover:bg-gray-200 focus:ring-gray-500 border border-transparent',
-        danger: 'bg-red-600 text-white hover:bg-red-700 focus:ring-red-500 border border-transparent',
+        primary: 'btn-primary',
+        secondary: 'btn-secondary',
+        danger: 'btn-danger',
     }[variant];
 
     // eslint-disable-next-line security/detect-object-injection
     $: sizeClasses = {
-        small: 'text-xs px-2.5 py-1.5',
-        medium: 'text-sm px-4 py-2',
-        large: 'text-base px-6 py-3',
+        small: 'btn-small',
+        medium: 'btn-medium',
+        large: 'btn-large',
     }[size];
 
-    $: baseClasses = ['font-medium transition-all duration-200 select-none rounded-full', icon ? 'inline-flex items-center justify-center' : '', disabled ? 'opacity-60 cursor-not-allowed' : 'focus:outline-none focus:ring-2 focus:ring-offset-2 active:translate-y-0.5 cursor-pointer hover:shadow-md', variantClasses, sizeClasses, className].filter(Boolean).join(' ');
+    $: baseClasses = ['btn', icon ? 'btn-icon' : '', disabled ? 'btn-disabled' : '', variantClasses, sizeClasses, className].filter(Boolean).join(' ');
 
     // Handle link vs button rendering.
     $: isLink = href !== undefined;

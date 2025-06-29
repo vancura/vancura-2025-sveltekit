@@ -15,7 +15,7 @@ All sites share a common component library and design system while maintaining t
 ## Tech Stack
 
 - **Framework**: SvelteKit 2 with Svelte 5
-- **Styling**: Tailwind CSS 4 via Vite plugin
+- **Styling**: CSS custom properties with vanilla CSS
 - **Language**: TypeScript 5 with strict checking
 - **Content**: MDX support via mdsvex
 - **Components**: Storybook 9 for documentation
@@ -79,7 +79,7 @@ npm run lint && npm run format && npm run type-check
 
 - Reusable UI components (Button, Card, Header)
 - MDX layouts for consistent content presentation
-- Shared Tailwind design system and CSS
+- Shared CSS design system with custom properties
 - Interactive Storybook documentation
 
 ## Deployment

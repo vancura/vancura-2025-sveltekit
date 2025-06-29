@@ -17,7 +17,7 @@ packages/config/      → Shared configurations
 ## Technical Stack
 
 - **SvelteKit 2** with **Svelte 5** (apps)
-- **Vite 6** with **Tailwind CSS 4** via plugin
+- **Vite 6** with **CSS custom properties** and vanilla CSS
 - **TypeScript 5** with strict checking
 - **Storybook 9** for component documentation
 - **ESLint 9** flat config + **Prettier 3**
@@ -50,7 +50,7 @@ packages/config/      → Shared configurations
 
 **Config Package** (`packages/config/package.json`):
 
-- Centralized ESLint, Prettier, Tailwind configurations
+- Centralized ESLint, Prettier configurations
 - All linting/formatting plugins as dependencies
 - Imported via `@vancura/config/*` pattern
 
@@ -100,7 +100,7 @@ export { default as NewComponent } from "./components/ui/NewComponent.svelte";
 
 **Shared Styles** (`packages/shared-ui/src/lib/styles/app.css`):
 
-- Base Tailwind imports and global styles
+- Base CSS custom properties and global styles
 - Design system tokens and custom CSS
 
 **App-Specific CSS** (`apps/*/src/app.css`):
@@ -164,15 +164,16 @@ npm run build-storybook --workspace=@vancura/shared-ui  # → storybook-static/
 ### Prettier Configuration
 
 - **Centralized formatting**: Root-level `prettier` command with proper ignore patterns
-- **Plugin compatibility**: Resolved conflicts between tailwindcss and jsdoc plugins
+- **Plugin compatibility**: Optimized prettier plugin configuration
 - **Build artifact exclusion**: `.prettierignore` properly excludes `.vercel`, `.svelte-kit`
 - **Workspace integration**: lint-staged uses direct prettier commands for performance
 
-### Tailwind Configuration
+### CSS Configuration
 
-- **Shared base config**: `packages/config/tailwind.config.js`
-- **Per-app extension**: Apps can customize themes
-- **Content scanning**: Configured for monorepo structure
+- **Design system**: CSS custom properties with comprehensive color, spacing, and typography scales
+- **Component-based styling**: Semantic CSS classes for reusable components
+- **Dark mode support**: CSS media queries for automatic dark mode
+- **No build-time dependencies**: Pure CSS with no compilation required
 
 ## Deployment Configuration
 
@@ -253,6 +254,7 @@ npm run <script> --workspace=@vancura/shared-ui       # Run workspace script
 
 - Use correct path: `@vancura/shared-ui/styles/app.css`
 - Ensure styles export exists in package.json
+- CSS custom properties work reliably across all apps without tree-shaking issues
 
 **ESLint Configuration Issues**:
 

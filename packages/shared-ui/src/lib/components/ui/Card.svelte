@@ -14,19 +14,12 @@
 
     // eslint-disable-next-line security/detect-object-injection
     $: variantClasses = {
-        default: 'bg-white border-gray-200',
-        primary: 'bg-primary-50 border-primary-200',
-        secondary: 'bg-gray-50 border-gray-200',
+        default: 'card-default',
+        primary: 'card-primary',
+        secondary: 'card-secondary',
     }[variant];
 
-    // eslint-disable-next-line security/detect-object-injection
-    $: headerFooterClasses = {
-        default: 'border-gray-200 bg-gray-50',
-        primary: 'border-primary-200 bg-primary-100',
-        secondary: 'border-gray-200 bg-gray-100',
-    }[variant];
-
-    $: baseClasses = ['overflow-hidden rounded-lg border transition-all duration-300', elevated ? 'shadow-soft hover:shadow-lg' : 'shadow-sm hover:shadow-md', variantClasses, className].filter(Boolean).join(' ');
+    $: baseClasses = ['card', elevated ? 'card-elevated' : '', variantClasses, className].filter(Boolean).join(' ');
 
     // Generate unique IDs for accessibility
     let cardCounter = 0;
@@ -36,12 +29,12 @@
 
 <div class={baseClasses} {role} aria-label={ariaLabel} aria-labelledby={computedAriaLabelledBy}>
     {#if title}
-        <header class="border-b px-5 py-4 {headerFooterClasses}">
-            <h3 id={titleId} class="text-lg font-semibold text-gray-900">{title}</h3>
+        <header class="card-header card-header-{variant}">
+            <h3 id={titleId} class="card-title">{title}</h3>
         </header>
     {/if}
 
-    <main class="p-5">
+    <main class="card-content">
         {#if content}
             {content}
         {:else}
@@ -50,7 +43,7 @@
     </main>
 
     {#if hasFooter}
-        <footer class="border-t px-5 py-4 {headerFooterClasses}">
+        <footer class="card-footer card-footer-{variant}">
             {#if footerContent}
                 {footerContent}
             {:else}

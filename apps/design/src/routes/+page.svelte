@@ -7,12 +7,12 @@
     <meta name="description" content="Welcome to my portfolio website" />
 </svelte:head>
 
-<div class="mx-auto max-w-7xl border-4 px-4 py-12 font-sans sm:px-6 lg:px-8">
+<div class="design-hero">
     <h1 class="mb-6 text-4xl font-bold text-gray-900">Welcome to My Portfolio</h1>
 
-    <p class="mb-12 max-w-3xl text-xl text-gray-600">A modern SvelteKit portfolio showcasing Svelte 5, Tailwind CSS 4, and component-driven design.</p>
+    <p class="mb-12 max-w-3xl text-xl text-gray-600">A modern SvelteKit portfolio showcasing Svelte 5, CSS custom properties, and component-driven design.</p>
 
-    <div class="mb-12 grid grid-cols-1 gap-8 md:grid-cols-2">
+    <div class="design-grid-2">
         <Card title="About Me" elevated={true} variant="default">
             <p class="mb-6 text-gray-700">I'm a designer and developer focused on creating beautiful, usable interfaces. This portfolio showcases my work with modern web technologies.</p>
 
@@ -27,18 +27,18 @@
         </Card>
 
         <Card title="Recent Projects" elevated={true} variant="primary">
-            <ul class="space-y-4">
-                <li class="border-primary-200 border-b pb-4">
-                    <h3 class="text-primary-800 mb-1 font-semibold">E-Commerce Platform</h3>
-                    <p class="text-primary-700">A full-featured online store with product management</p>
+            <ul class="project-list">
+                <li class="project-item">
+                    <h3 class="project-title">E-Commerce Platform</h3>
+                    <p class="project-description">A full-featured online store with product management</p>
                 </li>
-                <li class="border-primary-200 border-b pb-4">
-                    <h3 class="text-primary-800 mb-1 font-semibold">Portfolio Website</h3>
-                    <p class="text-primary-700">This website built with SvelteKit and Tailwind</p>
+                <li class="project-item">
+                    <h3 class="project-title">Portfolio Website</h3>
+                    <p class="project-description">This website built with SvelteKit and CSS</p>
                 </li>
-                <li>
-                    <h3 class="text-primary-800 mb-1 font-semibold">Task Management App</h3>
-                    <p class="text-primary-700">Productivity tool for teams and individuals</p>
+                <li class="project-item">
+                    <h3 class="project-title">Task Management App</h3>
+                    <p class="project-description">Productivity tool for teams and individuals</p>
                 </li>
             </ul>
 
@@ -50,17 +50,17 @@
         </Card>
     </div>
 
-    <div class="shadow-soft rounded-lg bg-gray-50 p-8">
+    <div class="cta-section">
         <h2 class="mb-4 text-3xl font-bold text-gray-900">Let's Work Together</h2>
         <p class="mb-6 text-lg text-gray-700">I'm available for freelance projects and collaborations. Feel free to reach out if you have a project in mind.</p>
         <Button variant="primary" size="large">Get in Touch</Button>
     </div>
 
-    <div class="mt-12 grid grid-cols-1 gap-4 md:grid-cols-3">
+    <div class="design-grid-3">
         <Card hasFooter={false}>
             <div class="flex flex-col items-center">
-                <div class="bg-primary-100 mb-4 flex h-16 w-16 items-center justify-center rounded-full">
-                    <svg class="text-primary-500 h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="feature-icon">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
                     </svg>
                 </div>
@@ -71,8 +71,8 @@
 
         <Card hasFooter={false}>
             <div class="flex flex-col items-center">
-                <div class="bg-primary-100 mb-4 flex h-16 w-16 items-center justify-center rounded-full">
-                    <svg class="text-primary-500 h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="feature-icon">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
                     </svg>
                 </div>
@@ -83,8 +83,8 @@
 
         <Card hasFooter={false}>
             <div class="flex flex-col items-center">
-                <div class="bg-primary-100 mb-4 flex h-16 w-16 items-center justify-center rounded-full">
-                    <svg class="text-primary-500 h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="feature-icon">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
                     </svg>
                 </div>

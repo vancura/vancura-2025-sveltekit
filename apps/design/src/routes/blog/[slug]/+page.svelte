@@ -12,6 +12,6 @@
     <p class="mb-6 text-lg leading-relaxed">In a real application, this would be rendered from markdown or MDX content.</p>
 
     <div class="mt-8">
-        <a href="/blog" class="text-blue-600">&larr; Back to blog</a>
+        <a href="/blog" class="blog-post-link">&larr; Back to blog</a>
     </div>
 </article>

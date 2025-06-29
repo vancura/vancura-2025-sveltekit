@@ -7,7 +7,7 @@
     <meta name="description" content="Photography portfolio by Václav Vančura" />
 </svelte:head>
 
-<div class="container mx-auto px-4 py-8">
+<div class="page-content">
     <h1 class="mb-8 text-4xl font-bold">Photography Portfolio</h1>
 
     <Card>
