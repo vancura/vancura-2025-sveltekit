@@ -14,8 +14,8 @@
     "type-check": "svelte-check"
   },
   "dependencies": {
-    "@vancura/config": "*",
-    "@vancura/shared-ui": "*"
+    "@vancura/config": "workspace:*",
+    "@vancura/shared-ui": "workspace:*"
   },
   "devDependencies": {
     "@sveltejs/adapter-vercel": "^5.7.2",

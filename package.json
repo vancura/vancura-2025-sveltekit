@@ -6,39 +6,48 @@
   "author": "Václav Vančura",
   "description": "Monorepo for vancura.design, vancura.photos, and vancura.dev websites",
   "homepage": "https://github.com/vancura/vancura-2025-sveltekit",
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ],
   "scripts": {
-    "dev": "npm run dev --workspace=@vancura/design",
-    "dev:design": "npm run dev --workspace=@vancura/design",
-    "dev:photos": "npm run dev --workspace=@vancura/photos",
-    "dev:dev": "npm run dev --workspace=@vancura/dev",
-    "dev:all": "npm run dev --workspace=@vancura/design & npm run dev --workspace=@vancura/photos & npm run dev --workspace=@vancura/dev",
-    "build": "npm run build:shared-ui && npm run build:design && npm run build:photos && npm run build:dev",
-    "build:shared-ui": "npm run build --workspace=@vancura/shared-ui",
-    "build:design": "npm run build --workspace=@vancura/design",
-    "build:photos": "npm run build --workspace=@vancura/photos",
-    "build:dev": "npm run build --workspace=@vancura/dev",
-    "preview": "npm run preview --workspaces",
-    "storybook": "npm run storybook --workspace=@vancura/shared-ui",
-    "build-storybook": "npm run build-storybook --workspace=@vancura/shared-ui",
+    "dev": "pnpm --filter @vancura/design dev",
+    "dev:design": "pnpm --filter @vancura/design dev",
+    "dev:photos": "pnpm --filter @vancura/photos dev",
+    "dev:dev": "pnpm --filter @vancura/dev dev",
+    "dev:all": "pnpm --filter @vancura/design dev & pnpm --filter @vancura/photos dev & pnpm --filter @vancura/dev dev",
+    "build": "pnpm --filter @vancura/shared-ui build && pnpm --filter @vancura/design build && pnpm --filter @vancura/photos build && pnpm --filter @vancura/dev build",
+    "build:shared-ui": "pnpm --filter @vancura/shared-ui build",
+    "build:design": "pnpm --filter @vancura/design build",
+    "build:photos": "pnpm --filter @vancura/photos build",
+    "build:dev": "pnpm --filter @vancura/dev build",
+    "preview": "pnpm --parallel preview",
+    "storybook": "pnpm --filter @vancura/shared-ui storybook",
+    "build-storybook": "pnpm --filter @vancura/shared-ui build-storybook",
     "clean": "rm -rf apps/*/dist apps/*/.svelte-kit packages/*/dist packages/*/storybook-static",
     "clean:deps": "rm -rf node_modules apps/*/node_modules packages/*/node_modules",
-    "install:workspace": "npm install --workspace=",
-    "lint": "npm run lint --workspaces --if-present",
+    "install:workspace": "pnpm --filter",
+    "lint": "pnpm --parallel lint",
     "format": "prettier --write \"**/*.{js,ts,svelte,html,css,scss,json,yml,yaml,md,mdx}\"",
-    "type-check": "npm run type-check --workspaces --if-present",
+    "type-check": "pnpm --parallel type-check",
     "prepare": "husky"
   },
   "devDependencies": {
     "husky": "^9.1.7",
     "lint-staged": "^16.1.2",
-    "prettier": "^3.6.0"
+    "prettier": "^3.6.0",
+    "prettier-plugin-organize-imports": "^4.1.0",
+    "prettier-plugin-svelte": "^3.4.0"
   },
   "lint-staged": {
     "*.{js,ts,svelte,html,css,scss,json,yml,yaml,md,mdx}": "prettier --write",
     "*.{js,ts,svelte}": "eslint --fix"
+  },
+  "packageManager": "pnpm@10.11.0+sha512.6540583f41cc5f628eb3d9773ecee802f4f9ef9923cc45b69890fb47991d4b092964694ec3a4f738a420c918a333062c8b925d312f42e4f0c263eb603551f977",
+  "pnpm": {
+    "allowed-build-scripts": [
+      "esbuild",
+      "svelte-preprocess"
+    ],
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "svelte-preprocess"
+    ]
   }
 }

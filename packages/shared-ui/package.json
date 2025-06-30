@@ -30,7 +30,7 @@
     "format": "prettier --write ."
   },
   "dependencies": {
-    "@vancura/config": "*"
+    "@vancura/config": "workspace:*"
   },
   "devDependencies": {
     "@storybook/addon-a11y": "^9.0.13",
