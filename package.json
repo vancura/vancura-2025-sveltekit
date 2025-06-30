@@ -45,10 +45,6 @@
     "allowed-build-scripts": [
       "esbuild",
       "svelte-preprocess"
-    ],
-    "onlyBuiltDependencies": [
-      "esbuild",
-      "svelte-preprocess"
     ]
   }
 }
