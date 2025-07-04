@@ -179,15 +179,32 @@ npm run build-storybook --workspace=@vancura/shared-ui  # → storybook-static/
 
 ### Vercel Monorepo Setup
 
-```json
-{
-    "projects": [
-        { "name": "vancura-design", "source": "apps/design" },
-        { "name": "vancura-photos", "source": "apps/photos" },
-        { "name": "vancura-dev", "source": "apps/dev" }
-    ]
-}
+**Dashboard Deployment** (Recommended):
+
+- Import the same repository multiple times - once for each app
+- Each import creates a separate Vercel project
+- Configure each with different root directories and build commands
+
+**Build Commands for Dashboard Deployment**:
+
+```bash
+# Design app
+Root Directory: apps/design
+Build Command: cd ../.. && pnpm install && pnpm run build:design
+Output Directory: .svelte-kit
+
+# Photos app
+Root Directory: apps/photos
+Build Command: cd ../.. && pnpm install && pnpm run build:photos
+Output Directory: .svelte-kit
+
+# Dev app
+Root Directory: apps/dev
+Build Command: cd ../.. && pnpm install && pnpm run build:dev
+Output Directory: .svelte-kit
 ```
+
+**Note**: The `vercel.json` file should NOT contain a `projects` array when deploying via dashboard. That configuration is only for Vercel CLI deployments.
 
 ### Domain Mapping
 
@@ -279,3 +296,27 @@ npm run <script> --workspace=@vancura/shared-ui       # Run workspace script
 - Verify lint-staged configuration in root `package.json`
 - Check that all required plugins are installed in centralized config
 - Ensure formatting and linting commands work independently
+
+## Performance Considerations
+
+### SvelteKit vs Astro
+
+**Bundle Strategy Differences**:
+
+- **SvelteKit**: Full SPA with code-splitting, ships JS for interactivity by default
+- **Astro**: Zero JS by default, opt-in interactivity with islands architecture
+
+**Current Performance Metrics**:
+
+- Multiple JS chunks due to automatic code-splitting (normal for SvelteKit)
+- ~130KB total JS bundle size (reasonable for interactive SPA)
+- ~41ms total load time (excellent performance)
+
+**Optimization Options** (if needed):
+
+1. Disable client-side rendering for static pages: `export const csr = false`
+2. Implement lazy loading for heavy components
+3. Configure manual chunks in Vite for better caching
+4. Use prerendering (already enabled with adapter-vercel)
+
+**Recommendation**: Current setup performs well. Focus on features over premature optimization unless targeting specific constraints (low bandwidth, etc.)
