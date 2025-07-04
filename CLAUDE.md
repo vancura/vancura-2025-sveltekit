@@ -127,9 +127,9 @@ mdsvex({
 ### Individual App Builds
 
 ```bash
-npm run build:design  # → apps/design/.svelte-kit/output/
-npm run build:photos  # → apps/photos/.svelte-kit/output/
-npm run build:dev     # → apps/dev/.svelte-kit/output/
+npm run build:design  # → apps/design/.vercel/output/
+npm run build:photos  # → apps/photos/.vercel/output/
+npm run build:dev     # → apps/dev/.vercel/output/
 ```
 
 ### Shared Library Build
@@ -261,6 +261,7 @@ npm run <script> --workspace=@vancura/shared-ui       # Run workspace script
 
 - Ensure shared-ui builds before apps: `npm run build --workspace=@vancura/shared-ui`
 - Check workspace dependency resolution in `package.json`
+- Turbo cache issues: Ensure `.vercel/**` is in turbo.json outputs for Vercel deployments
 
 **Import Errors**:
 
