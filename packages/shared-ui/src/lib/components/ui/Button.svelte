@@ -7,8 +7,6 @@
 
     export let type: 'button' | 'submit' | 'reset' = 'button';
 
-    export let icon = false;
-
     export let href: string | undefined = undefined;
 
     export let target: '_blank' | '_self' | '_parent' | '_top' | undefined = undefined;
