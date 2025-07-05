@@ -9,30 +9,63 @@
     "md",
     "css"
   ],
-  "eslint.nodePath": ".yarn/sdks",
-  "editor.formatOnSave": false,
+  "eslint.workingDirectories": ["apps/design", "apps/photos", "apps/dev", "packages/shared-ui"],
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+    "source.organizeImports": "explicit"
+  },
   "prettier.useEditorConfig": true,
   "prettier.requireConfig": false,
-  "prettier.configPath": "",
+  "prettier.configPath": ".prettierrc",
   "prettier.tabWidth": 4,
   "prettier.singleQuote": true,
   "prettier.trailingComma": "es5",
   "prettier.semi": true,
   "prettier.printWidth": 120,
-  "prettier.prettierPath": ".yarn/sdks/prettier/index.cjs",
-  "typescript.tsdk": ".yarn/sdks/typescript/lib",
   "typescript.enablePromptUseWorkspaceTsdk": true,
+  "typescript.tsdk": "./node_modules/typescript/lib",
+  "typescript.preferences.includePackageJsonAutoImports": "on",
+  "typescript.suggest.autoImports": true,
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "typescript.preferences.useAliasesForRenames": false,
+  "svelte.enable-ts-plugin": true,
+  "svelte.plugin.svelte.compilerWarnings": {
+    "css-unused-selector": "ignore"
+  },
   "[javascript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[svelte]": {
+    "editor.defaultFormatter": "svelte.svelte-vscode"
   },
   "[cjs]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
   "files.associations": {
-    "*.cjs": "javascript"
+    "*.cjs": "javascript",
+    "*.svelte": "svelte"
   },
   "search.exclude": {
-    "**/.yarn": true,
-    "**/.pnp.*": true
+    "**/node_modules": true,
+    "**/.pnpm-store": true,
+    "**/pnpm-lock.yaml": true,
+    "**/dist": true,
+    "**/.svelte-kit": true,
+    "**/storybook-static": true
+  },
+  "npm.packageManager": "pnpm",
+  "npm.autoDetect": "off",
+  "terminal.integrated.defaultProfile.osx": "zsh",
+  "terminal.integrated.defaultProfile.linux": "bash",
+  "terminal.integrated.env.osx": {
+    "PATH": "${workspaceFolder}/node_modules/.bin:${env:PATH}"
   }
 }

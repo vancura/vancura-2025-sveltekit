@@ -1,12 +1,41 @@
 {
   "recommendations": [
+    // Core SvelteKit Stack
+    "svelte.svelte-vscode",
     "esbenp.prettier-vscode",
     "dbaeumer.vscode-eslint",
-    "svelte.svelte-vscode",
     "bradlc.vscode-tailwindcss",
     "unifiedjs.vscode-mdx",
+    "ms-vscode.vscode-typescript-next",
+    "ms-vscode.vscode-json",
+    "redhat.vscode-yaml",
+
+    // Monorepo & Package Management
+    "arcanis.vscode-zipfs",
+    "christian-kohler.npm-intellisense",
+    "ms-vscode.vscode-npm-script",
+
+    // Enhanced Development Experience
+    "usernamehw.errorlens",
+    "gruntfuggly.todo-tree",
+    "aaron-bond.better-comments",
+    "oderwat.indent-rainbow",
+    "alefragnani.project-manager",
+
+    // Git & Version Control
+    "eamodio.gitlens",
+    "mhutchie.git-graph",
+    "donjayamanne.githistory",
+
+    // UI & Navigation
+    "PKief.material-icon-theme",
+    "christian-kohler.path-intellisense",
+    "formulahendry.auto-rename-tag",
     "streetsidesoftware.code-spell-checker",
-    "arcanis.vscode-zipfs"
+
+    // Workspace Management
+    "ms-vscode.remote-explorer",
+    "ms-vscode.vscode-file-tree"
   ],
-  "unwantedRecommendations": []
+  "unwantedRecommendations": ["sonarsource.sonarlint-vscode"]
 }

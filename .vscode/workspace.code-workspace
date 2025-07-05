@@ -1,0 +1,41 @@
+{
+  "folders": [
+    {
+      "name": "Root",
+      "path": ".."
+    },
+    {
+      "name": "Design App",
+      "path": "../apps/design"
+    },
+    {
+      "name": "Photos App",
+      "path": "../apps/photos"
+    },
+    {
+      "name": "Dev Blog App",
+      "path": "../apps/dev"
+    },
+    {
+      "name": "Shared UI",
+      "path": "../packages/shared-ui"
+    }
+  ],
+  "settings": {
+    "typescript.preferences.includePackageJsonAutoImports": "on",
+    "editor.formatOnSave": true,
+    "npm.packageManager": "pnpm"
+  },
+  "extensions": {
+    "recommendations": [
+      "svelte.svelte-vscode",
+      "esbenp.prettier-vscode",
+      "dbaeumer.vscode-eslint",
+      "pmneo.tsimporter",
+      "christian-kohler.path-intellisense",
+      "formulahendry.auto-rename-tag",
+      "eamodio.gitlens",
+      "ChakrounAnas.turbo-console-log"
+    ]
+  }
+}

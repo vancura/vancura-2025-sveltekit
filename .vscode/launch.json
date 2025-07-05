@@ -6,7 +6,7 @@
       "name": "Development Server",
       "type": "node-terminal",
       "request": "launch",
-      "command": "npm run dev",
+      "command": "pnpm run dev",
       "env": {
         "NODE_ENV": "development"
       },
@@ -22,7 +22,7 @@
       "name": "Build",
       "type": "node-terminal",
       "request": "launch",
-      "command": "npm run build",
+      "command": "pnpm run build",
       "env": {
         "NODE_ENV": "production"
       }
@@ -33,7 +33,7 @@
       "name": "Preview Build",
       "type": "node-terminal",
       "request": "launch",
-      "command": "npm run preview",
+      "command": "pnpm run preview",
       "env": {
         "NODE_ENV": "production"
       },
@@ -49,7 +49,7 @@
       "name": "Lint & Format",
       "type": "node-terminal",
       "request": "launch",
-      "command": "npm run lint:fix"
+      "command": "pnpm run lint"
     }
   ]
 }
