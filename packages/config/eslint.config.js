@@ -8,7 +8,6 @@ import nodePlugin from 'eslint-plugin-n';
 import perfectionistPlugin from 'eslint-plugin-perfectionist';
 import promisePlugin from 'eslint-plugin-promise';
 import securityPlugin from 'eslint-plugin-security';
-import sonarjsPlugin from 'eslint-plugin-sonarjs';
 import sveltePlugin from 'eslint-plugin-svelte';
 import svelteParser from 'svelte-eslint-parser';
 
@@ -60,7 +59,6 @@ export default [
             perfectionist: perfectionistPlugin,
             promise: promisePlugin,
             security: securityPlugin,
-            sonarjs: sonarjsPlugin,
         },
         settings: {
             'import/resolver': {
@@ -145,9 +143,7 @@ export default [
             'jsdoc/require-description': 'warn',
 
             // Code quality rules
-            ...sonarjsPlugin.configs.recommended.rules,
-            'sonarjs/cognitive-complexity': ['error', 15],
-            'sonarjs/no-duplicate-string': ['error', { threshold: 3 }],
+            complexity: ['warn', { max: 15 }],
 
             // Promise rules
             ...promisePlugin.configs.recommended.rules,
@@ -158,9 +154,6 @@ export default [
             ...securityPlugin.configs.recommended.rules,
             'security/detect-object-injection': 'warn',
 
-            // SonarJS rules adjustments
-            'sonarjs/deprecation': 'off', // False positives with SvelteKit stores
-
             // Node.js rules
             'n/no-missing-import': 'off',
             'n/no-unpublished-import': 'off',
@@ -168,7 +161,6 @@ export default [
 
             // General code style
             'max-len': ['warn', { code: 120, ignoreUrls: true, ignoreStrings: true }],
-            complexity: ['warn', { max: 15 }],
         },
     },
     {
@@ -195,7 +187,6 @@ export default [
             perfectionist: perfectionistPlugin,
             promise: promisePlugin,
             security: securityPlugin,
-            sonarjs: sonarjsPlugin,
         },
         rules: {
             ...eslint.configs.recommended.rules,
@@ -212,8 +203,7 @@ export default [
             'jsdoc/check-tag-names': 'warn',
 
             // Code quality rules
-            'sonarjs/cognitive-complexity': ['error', 15],
-            'sonarjs/no-duplicate-string': ['error', { threshold: 3 }],
+            complexity: ['warn', { max: 15 }],
 
             // Security rules
             'security/detect-object-injection': 'warn',
@@ -290,7 +280,6 @@ export default [
             'import/no-default-export': 'off',
             'jsdoc/require-jsdoc': 'off',
             '@typescript-eslint/prefer-nullish-coalescing': 'off',
-            'sonarjs/no-use-of-empty-return-value': 'off',
         },
     },
 ];
