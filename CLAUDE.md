@@ -321,3 +321,73 @@ npm run <script> --workspace=@vancura/shared-ui       # Run workspace script
 4. Use prerendering (already enabled with adapter-vercel)
 
 **Recommendation**: Current setup performs well. Focus on features over premature optimization unless targeting specific constraints (low bandwidth, etc.)
+
+## IDE Setup
+
+### VS Code/Cursor Settings
+
+Create `.vscode/settings.json` with:
+
+```json
+{
+    "typescript.preferences.includePackageJsonAutoImports": "on",
+    "typescript.tsdk": "./node_modules/typescript/lib",
+    "eslint.workingDirectories": [
+        "apps/design",
+        "apps/photos",
+        "apps/dev",
+        "packages/shared-ui"
+    ],
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": "explicit"
+    }
+}
+```
+
+### Essential Extensions
+
+- `svelte.svelte-vscode` - Svelte language support
+- `esbenp.prettier-vscode` - Code formatting
+- `dbaeumer.vscode-eslint` - Linting
+
+## Pre-commit Hook Troubleshooting
+
+If pre-commit hooks fail with "Cannot find package '@vancura/config'":
+
+1. The root ESLint config uses direct file import:
+
+    ```javascript
+    export { default } from "./packages/config/eslint.config.js";
+    ```
+
+2. Lint-staged runs formatting, Turborepo handles linting:
+    ```json
+    "lint-staged": {
+        "*.{js,ts,svelte,html,css,json,md}": "prettier --write"
+    }
+    ```
+
+## Common Issues & Solutions
+
+### TypeScript Server Errors
+
+- TypeScript is installed at root level for IDE compatibility
+- Restart TS server: Cmd/Ctrl + Shift + P → "TypeScript: Restart TS Server"
+
+### Import Resolution
+
+- Build shared-ui first: `pnpm run build --workspace=@vancura/shared-ui`
+- Check exports in `packages/shared-ui/package.json`
+
+### ESLint Issues
+
+- All plugins must be in `@vancura/config/package.json`
+- Storybook files excluded from TypeScript parsing in shared-ui
+
+# important-instruction-reminders
+
+Do what has been asked; nothing more, nothing less.
+NEVER create files unless they're absolutely necessary for achieving your goal.
+ALWAYS prefer editing an existing file to creating a new one.
+NEVER proactively create documentation files (\*.md) or README files. Only create documentation files if explicitly requested by the User.

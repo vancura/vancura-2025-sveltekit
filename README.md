@@ -1,101 +1,63 @@
 # Václav Vančura – Monorepo
 
-Monorepo hosting three distinct websites: vancura.design, vancura.photos, and vancura.dev, with shared component library and modern web technologies.
+Monorepo hosting three distinct websites with shared component library.
 
-## About
+## Sites
 
-This monorepo contains the source code for three specialized websites:
-
-- **vancura.design** - Design portfolio showcasing UI/UX work and design insights
-- **vancura.photos** - Photography portfolio with galleries and visual storytelling
-- **vancura.dev** - Development blog with technical writing and programming tutorials
-
-All sites share a common component library and design system while maintaining their unique content focus.
-
-## Tech Stack
-
-- **Framework**: SvelteKit 2 with Svelte 5
-- **Styling**: CSS custom properties with vanilla CSS
-- **Language**: TypeScript 5 with strict checking
-- **Content**: MDX support via mdsvex
-- **Components**: Storybook 9 for documentation
-- **Package Manager**: NPM workspaces
-- **Deployment**: Vercel monorepo
-- **Assets**: Git LFS for media files
+- **[vancura.design](https://vancura.design)** - Design portfolio
+- **[vancura.photos](https://vancura.photos)** - Photography portfolio
+- **[vancura.dev](https://vancura.dev)** - Development blog
 
 ## Quick Start
 
 ```bash
-# Install all dependencies
-npm install
+# Install dependencies
+pnpm install
 
-# Development servers
-npm run dev:design    # vancura.design on localhost:5173
-npm run dev:photos    # vancura.photos on localhost:5174
-npm run dev:dev       # vancura.dev on localhost:5175
-npm run dev:all       # Start all three sites
+# Start development
+pnpm run dev:all       # All three sites
+pnpm run storybook     # Component library
 
-# Component development
-npm run storybook     # Shared components on localhost:6006
+# Or start individual sites
+pnpm run dev:design    # localhost:5173
+pnpm run dev:photos    # localhost:5174
+pnpm run dev:dev       # localhost:5175
+```
 
-# Production builds
-npm run build         # Build all three sites
-npm run build:design  # Build specific site
+## Structure
+
+```text
+├── apps/
+│   ├── design/       # vancura.design
+│   ├── photos/       # vancura.photos
+│   └── dev/          # vancura.dev
+├── packages/
+│   ├── shared-ui/    # Component library
+│   └── config/       # Shared configurations
+```
+
+## Tech Stack
+
+- SvelteKit 2 + Svelte 5
+- TypeScript, CSS custom properties
+- pnpm workspaces + Turborepo
+- Vercel deployment
+
+## Development
+
+```bash
+# Package management
+pnpm add <package> --filter @vancura/design
 
 # Code quality
-npm run lint && npm run format && npm run type-check
+pnpm run lint
+pnpm run format
+pnpm run type-check
+
+# Production build
+pnpm run build
 ```
-
-## Monorepo Structure
-
-```
-├── apps/
-│   ├── design/       # vancura.design - Design portfolio
-│   ├── photos/       # vancura.photos - Photography site
-│   └── dev/          # vancura.dev - Development blog
-├── packages/
-│   ├── shared-ui/    # Component library with Storybook
-│   └── config/       # Shared configurations
-└── .gitattributes    # Git LFS for media assets
-```
-
-## Development Workflow
-
-### Shared Components
-
-- Develop in `packages/shared-ui/src/lib/components/`
-- Document with Storybook stories
-- Export from `packages/shared-ui/src/lib/index.ts`
-- Import via `import { Component } from '@vancura/shared-ui'`
-
-### Site-Specific Work
-
-- Each app is independent SvelteKit project
-- Custom routes, content, and styling
-- Site-specific MDX content and layouts
-- Individual deployment configuration
-
-### Component Library Features
-
-- Reusable UI components (Button, Card, Header)
-- MDX layouts for consistent content presentation
-- Shared CSS design system with custom properties
-- Interactive Storybook documentation
-
-## Deployment
-
-Each site deploys independently via Vercel:
-
-- **vancura.design** → `apps/design/`
-- **vancura.photos** → `apps/photos/`
-- **vancura.dev** → `apps/dev/`
-
-Vercel automatically handles workspace dependencies and builds.
-
-## License
-
-© 2025 Václav Vančura. All rights reserved.
 
 ---
 
-📖 **Technical Documentation**: [CLAUDE.md](./CLAUDE.md)
+**Technical Documentation**: [CLAUDE.md](./CLAUDE.md)
