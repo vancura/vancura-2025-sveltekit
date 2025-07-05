@@ -1,1 +1,1 @@
-export { default } from "@vancura/config/eslint";
+export { default } from "./packages/config/eslint.config.js";

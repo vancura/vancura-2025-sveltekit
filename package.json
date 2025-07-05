@@ -24,6 +24,7 @@
     "clean:deps": "rm -rf node_modules apps/*/node_modules packages/*/node_modules",
     "install:workspace": "pnpm --filter",
     "lint": "turbo run lint",
+    "lint:staged": "turbo run lint",
     "format": "prettier --write \"**/*.{js,ts,svelte,html,css,scss,json,yml,yaml,md,mdx}\"",
     "type-check": "turbo run type-check",
     "prepare": "husky"
@@ -35,11 +36,11 @@
     "prettier": "^3.6.0",
     "prettier-plugin-organize-imports": "^4.1.0",
     "prettier-plugin-svelte": "^3.4.0",
-    "turbo": "^2.5.4"
+    "turbo": "^2.5.4",
+    "typescript": "^5.8.3"
   },
   "lint-staged": {
-    "*.{js,ts,svelte,html,css,scss,json,yml,yaml,md,mdx}": "prettier --write",
-    "*.{js,ts,svelte}": "eslint --fix"
+    "*.{js,ts,svelte,html,css,scss,json,yml,yaml,md,mdx}": "prettier --write"
   },
   "packageManager": "pnpm@10.12.4+sha512.5ea8b0deed94ed68691c9bad4c955492705c5eeb8a87ef86bc62c74a26b037b08ff9570f108b2e4dbd1dd1a9186fea925e527f141c648e85af45631074680184",
   "pnpm": {
