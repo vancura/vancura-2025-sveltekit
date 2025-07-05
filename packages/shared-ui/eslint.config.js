@@ -2,10 +2,9 @@ import baseConfig from '@vancura/config/eslint';
 
 export default [
     {
-        ignores: ['.storybook/**/*'], // Exclude Storybook files globally
+        ignores: ['.storybook/**/*'],
     },
     ...baseConfig.map((config) => {
-        // Override tsconfig path for shared-ui
         if (config.languageOptions?.parserOptions?.project) {
             return {
                 ...config,
@@ -21,10 +20,9 @@ export default [
         return config;
     }),
     {
-        // Disable React warnings for Svelte-only package
         settings: {
             react: {
-                version: 'detect', // Suppress React version warning
+                version: 'detect', // suppress React version warning
             },
         },
     },
